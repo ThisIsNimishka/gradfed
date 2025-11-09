@@ -93,7 +93,7 @@ dependencies:
       - tensorflow-io-gcs-filesystem==0.34.0
       - termcolor==2.3.0
       - threadpoolctl==3.2.0
-      - torch==2.0.0+cu118
+      - torch==2.0.0+cu118 -f https://download.pytorch.org/whl/torch_stable.html
       - torchaudio==2.0.1+cu118
       - torchdata==0.6.0
       - torchtext==0.15.1
@@ -104,5 +104,5 @@ dependencies:
       - urllib3==2.0.7
       - werkzeug==3.0.1
       - wrapt==1.14.1
-      - zipp==3.17.0
-prefix: /root/anaconda3/envs/nlp
+      - zipp==3.17.0X
+

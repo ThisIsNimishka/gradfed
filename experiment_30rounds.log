@@ -1,0 +1,1431 @@
+2025-11-07 05:21:09.856050: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-11-07 05:21:09.900842: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-11-07 05:21:10.785439: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-11-07 05:21:12,858 - __main__ - INFO - Model: resnet10, Device: cuda:0
+2025-11-07 05:21:12,859 - __main__ - INFO - GradientMonitor initialized
+2025-11-07 05:21:12,991 - __main__ - INFO - PPO initialized - State dim: 6, Action dim: 50
+2025-11-07 05:21:12,991 - __main__ - INFO - GradFedPPO initialized
+2025-11-07 05:21:15,400 - __main__ - INFO - Initial Test Accuracy: 10.00%
+2025-11-07 05:21:15,401 - __main__ - INFO - 
+ | Global Training Round: 1/30 |
+
+2025-11-07 05:21:15,427 - __main__ - INFO - Selected 10 clients: [11, 1, 2, 19, 5, 30, 48, 22, 41, 3]
+2025-11-07 05:21:15,427 - __main__ - INFO - Avg quality score: 0.500
+2025-11-07 05:21:15,427 - __main__ - INFO - Noisy clients: 0/10
+/media/csedept/user8/fedppov2/src/gradfed_main.py:53: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  return torch.tensor(image), torch.tensor(label)
+2025-11-07 05:21:22,920 - __main__ - INFO -   Client 11: Loss=1.2477, Quality=0.350
+2025-11-07 05:21:35,129 - __main__ - INFO -   Client 1: Loss=1.7693, Quality=0.350
+2025-11-07 05:21:39,897 - __main__ - INFO -   Client 2: Loss=1.2970, Quality=0.350
+2025-11-07 05:21:45,137 - __main__ - INFO -   Client 19: Loss=1.2623, Quality=0.350
+2025-11-07 05:21:57,041 - __main__ - INFO -   Client 5: Loss=1.7795, Quality=0.350
+2025-11-07 05:22:07,466 - __main__ - INFO -   Client 30: Loss=1.6800, Quality=0.350
+2025-11-07 05:22:17,040 - __main__ - INFO -   Client 48: Loss=1.8044, Quality=0.350
+2025-11-07 05:22:22,779 - __main__ - INFO -   Client 22: Loss=1.2975, Quality=0.350
+2025-11-07 05:22:29,245 - __main__ - INFO -   Client 41: Loss=1.4358, Quality=0.350
+2025-11-07 05:22:36,735 - __main__ - INFO -   Client 3: Loss=1.5177, Quality=0.350
+2025-11-07 05:22:36,754 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.08689404100402376, 0.14782525388005366, 0.057769687679632115, 0.06591301015520215, 0.14945391837516767, 0.12732324200038322, 0.11812607779268058, 0.06974516190841157, 0.08239126269400268, 0.09455834451044261], Quality: [np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998), np.float64(0.09999999999999998)], Final: [np.float64(0.09213642460241425), np.float64(0.1286951523280322), np.float64(0.07466181260777927), np.float64(0.07954780609312129), np.float64(0.1296723510251006), np.float64(0.11639394520022993), np.float64(0.11087564667560834), np.float64(0.08184709714504693), np.float64(0.0894347576164016), np.float64(0.09673500670626556)]
+2025-11-07 05:22:38,782 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 6.78, Loss: 1.26, Quality: 1.75, Diversity: 0.00, Comm: -1.00, Total: 8.79
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 1 Statistics ===
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.1678, Loss: 2.1801
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [11, 1, 2, 19, 5, 30, 48, 22, 41, 3]
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.350, Noisy: 0/10
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 19: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 5: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 30: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 48: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.350, Participations=1
+2025-11-07 05:22:38,788 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.350, Participations=1
+2025-11-07 05:22:38,789 - __main__ - INFO - 
+ | Global Training Round: 2/30 |
+
+2025-11-07 05:22:38,799 - ppo_server.gradfed_ppo_update - INFO - Exploration mode: 2 low-quality, 8 high-quality
+2025-11-07 05:22:38,799 - __main__ - INFO - Selected 10 clients: [3, 22, 38, 0, 45, 20, 40, 24, 49, 26]
+2025-11-07 05:22:38,799 - __main__ - INFO - Avg quality score: 0.470
+2025-11-07 05:22:38,799 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:22:46,459 - __main__ - INFO -   Client 3: Loss=1.3940, Quality=0.600
+2025-11-07 05:22:52,049 - __main__ - INFO -   Client 22: Loss=1.1610, Quality=0.600
+2025-11-07 05:23:02,276 - __main__ - INFO -   Client 38: Loss=1.4458, Quality=0.350
+2025-11-07 05:23:13,395 - __main__ - INFO -   Client 0: Loss=1.6187, Quality=0.350
+2025-11-07 05:23:20,402 - __main__ - INFO -   Client 45: Loss=1.1156, Quality=0.350
+2025-11-07 05:23:27,227 - __main__ - INFO -   Client 20: Loss=1.2959, Quality=0.350
+2025-11-07 05:23:33,602 - __main__ - INFO -   Client 40: Loss=1.3214, Quality=0.350
+2025-11-07 05:23:41,192 - __main__ - INFO -   Client 24: Loss=1.4657, Quality=0.350
+2025-11-07 05:23:45,394 - __main__ - INFO -   Client 49: Loss=1.2955, Quality=0.350
+2025-11-07 05:23:51,942 - __main__ - INFO -   Client 26: Loss=1.2431, Quality=0.350
+2025-11-07 05:23:51,957 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1045661616696684, 0.07712681428117385, 0.1398453225977328, 0.15043966521877317, 0.09534908358936328, 0.0932302150651552, 0.08867464773810785, 0.10414238796482678, 0.05922237525161564, 0.08740332662358301], Quality: [np.float64(0.14999840640090895), np.float64(0.1499958474320256), np.float64(0.08750071827088315), np.float64(0.08750071827088315), np.float64(0.08750071827088315), np.float64(0.08750071827088315), np.float64(0.08750071827088315), np.float64(0.08750071827088315), np.float64(0.08750071827088315), np.float64(0.08750071827088315)], Final: [np.float64(0.12273905956216463), np.float64(0.10627442754151457), np.float64(0.11890748086699297), np.float64(0.1252640864396172), np.float64(0.09220973746197124), np.float64(0.0909384163474464), np.float64(0.08820507595121799), np.float64(0.09748572008724936), np.float64(0.07053371245932266), np.float64(0.08744228328250307)]
+2025-11-07 05:23:54,000 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 16.75, Loss: 4.33, Quality: 2.00, Diversity: 0.02, Comm: -1.00, Total: 22.09
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 2 Statistics ===
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.3353, Loss: 1.7474
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [3, 22, 38, 0, 45, 20, 40, 24, 49, 26]
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.378, Noisy: 0/18
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=2
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=2
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 38: Quality=0.350, Participations=1
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.350, Participations=1
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.350, Participations=1
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.350, Participations=1
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 40: Quality=0.350, Participations=1
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 24: Quality=0.350, Participations=1
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 49: Quality=0.350, Participations=1
+2025-11-07 05:23:54,006 - ppo_server.gradfed_ppo_update - INFO -   Client 26: Quality=0.350, Participations=1
+2025-11-07 05:23:54,007 - __main__ - INFO - 
+ | Global Training Round: 3/30 |
+
+2025-11-07 05:23:54,019 - __main__ - INFO - Selected 10 clients: [3, 22, 14, 34, 29, 13, 36, 25, 27, 4]
+2025-11-07 05:23:54,019 - __main__ - INFO - Avg quality score: 0.520
+2025-11-07 05:23:54,019 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:24:01,663 - __main__ - INFO -   Client 3: Loss=1.2627, Quality=0.600
+2025-11-07 05:24:07,331 - __main__ - INFO -   Client 22: Loss=1.0188, Quality=0.600
+2025-11-07 05:24:22,694 - __main__ - INFO -   Client 14: Loss=1.3819, Quality=0.350
+2025-11-07 05:24:26,729 - __main__ - INFO -   Client 34: Loss=0.8869, Quality=0.350
+2025-11-07 05:24:35,414 - __main__ - INFO -   Client 29: Loss=1.4149, Quality=0.350
+2025-11-07 05:24:40,972 - __main__ - INFO -   Client 13: Loss=1.1088, Quality=0.350
+2025-11-07 05:24:49,395 - __main__ - INFO -   Client 36: Loss=1.2939, Quality=0.350
+2025-11-07 05:24:54,941 - __main__ - INFO -   Client 25: Loss=1.2800, Quality=0.350
+2025-11-07 05:25:03,079 - __main__ - INFO -   Client 27: Loss=1.2719, Quality=0.350
+2025-11-07 05:25:09,358 - __main__ - INFO -   Client 4: Loss=1.1754, Quality=0.350
+2025-11-07 05:25:09,373 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.10269482884195193, 0.07574654042243263, 0.20320466132556445, 0.05212777026324004, 0.1152845697638123, 0.07356154406409322, 0.11174695661221518, 0.07439392362917491, 0.10914577047133493, 0.08209343460618042], Quality: [np.float64(0.14999848740777225), np.float64(0.14999608380439688), np.float64(0.08750067859847883), np.float64(0.08750067859847883), np.float64(0.08750067859847883), np.float64(0.08750067859847883), np.float64(0.08750067859847883), np.float64(0.08750067859847883), np.float64(0.08750067859847883), np.float64(0.08750067859847883)], Final: [np.float64(0.12161629226828005), np.float64(0.10544635777521834), np.float64(0.15692306823473018), np.float64(0.06627693359733555), np.float64(0.10417101329767892), np.float64(0.07913719787784747), np.float64(0.10204844540672064), np.float64(0.07963662561689648), np.float64(0.1004877337221925), np.float64(0.08425633220309978)]
+2025-11-07 05:25:11,426 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 7.01, Loss: 2.15, Quality: 2.00, Diversity: 0.06, Comm: -1.00, Total: 10.23
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 3 Statistics ===
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.4054, Loss: 1.5322
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [3, 22, 14, 34, 29, 13, 36, 25, 27, 4]
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.369, Noisy: 0/26
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=3
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=3
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 14: Quality=0.350, Participations=1
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 34: Quality=0.350, Participations=1
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 29: Quality=0.350, Participations=1
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 13: Quality=0.350, Participations=1
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.350, Participations=1
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 25: Quality=0.350, Participations=1
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 27: Quality=0.350, Participations=1
+2025-11-07 05:25:11,432 - ppo_server.gradfed_ppo_update - INFO -   Client 4: Quality=0.350, Participations=1
+2025-11-07 05:25:11,433 - __main__ - INFO - 
+ | Global Training Round: 4/30 |
+
+2025-11-07 05:25:11,445 - __main__ - INFO - Selected 10 clients: [3, 22, 17, 47, 12, 46, 7, 32, 9, 18]
+2025-11-07 05:25:11,445 - __main__ - INFO - Avg quality score: 0.520
+2025-11-07 05:25:11,445 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:25:19,172 - __main__ - INFO -   Client 3: Loss=1.1611, Quality=0.600
+2025-11-07 05:25:24,907 - __main__ - INFO -   Client 22: Loss=0.9218, Quality=0.600
+2025-11-07 05:25:32,704 - __main__ - INFO -   Client 17: Loss=1.2651, Quality=0.350
+2025-11-07 05:25:38,641 - __main__ - INFO -   Client 47: Loss=1.0267, Quality=0.350
+2025-11-07 05:25:48,210 - __main__ - INFO -   Client 12: Loss=1.2255, Quality=0.350
+2025-11-07 05:25:56,390 - __main__ - INFO -   Client 46: Loss=1.2543, Quality=0.350
+2025-11-07 05:26:02,885 - __main__ - INFO -   Client 7: Loss=0.9947, Quality=0.350
+2025-11-07 05:26:12,635 - __main__ - INFO -   Client 32: Loss=1.3937, Quality=0.350
+2025-11-07 05:26:20,262 - __main__ - INFO -   Client 9: Loss=1.3498, Quality=0.350
+2025-11-07 05:26:28,874 - __main__ - INFO -   Client 18: Loss=1.0903, Quality=0.350
+2025-11-07 05:26:28,889 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.09936575052854123, 0.07329105003523609, 0.10097654283700795, 0.07510319138226115, 0.12382965871337964, 0.10701701399375818, 0.08416389811738649, 0.1256418000604047, 0.0987617034128662, 0.11184939091915837], Quality: [np.float64(0.1499986038791516), np.float64(0.14999639997018782), np.float64(0.08750062451883255), np.float64(0.08750062451883255), np.float64(0.08750062451883255), np.float64(0.08750062451883255), np.float64(0.08750062451883255), np.float64(0.08750062451883255), np.float64(0.08750062451883255), np.float64(0.08750062451883255)], Final: [np.float64(0.11961889186878541), np.float64(0.10397319000921681), np.float64(0.0955861755097378), np.float64(0.08006216463688971), np.float64(0.10929804503556081), np.float64(0.09921045820378796), np.float64(0.08549858867796492), np.float64(0.11038532984377586), np.float64(0.09425727185525276), np.float64(0.10210988435902807)]
+2025-11-07 05:26:30,934 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 9.50, Loss: 1.84, Quality: 2.00, Diversity: 0.14, Comm: -1.00, Total: 12.49
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 4 Statistics ===
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.5004, Loss: 1.3481
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [3, 22, 17, 47, 12, 46, 7, 32, 9, 18]
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.365, Noisy: 0/34
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=4
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=4
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 17: Quality=0.350, Participations=1
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 47: Quality=0.350, Participations=1
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 12: Quality=0.350, Participations=1
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 46: Quality=0.350, Participations=1
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 7: Quality=0.350, Participations=1
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 32: Quality=0.350, Participations=1
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 9: Quality=0.350, Participations=1
+2025-11-07 05:26:30,941 - ppo_server.gradfed_ppo_update - INFO -   Client 18: Quality=0.350, Participations=1
+2025-11-07 05:26:30,942 - __main__ - INFO - 
+ | Global Training Round: 5/30 |
+
+2025-11-07 05:26:30,954 - __main__ - INFO - Selected 10 clients: [3, 22, 8, 10, 33, 31, 35, 37, 28, 39]
+2025-11-07 05:26:30,954 - __main__ - INFO - Avg quality score: 0.520
+2025-11-07 05:26:30,954 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:26:38,534 - __main__ - INFO -   Client 3: Loss=1.0630, Quality=0.600
+2025-11-07 05:26:44,275 - __main__ - INFO -   Client 22: Loss=0.8716, Quality=0.600
+2025-11-07 05:26:52,357 - __main__ - INFO -   Client 8: Loss=0.8842, Quality=0.350
+2025-11-07 05:26:59,425 - __main__ - INFO -   Client 10: Loss=0.9160, Quality=0.350
+2025-11-07 05:27:04,701 - __main__ - INFO -   Client 33: Loss=1.0989, Quality=0.350
+2025-11-07 05:27:10,432 - __main__ - INFO -   Client 31: Loss=1.1401, Quality=0.350
+2025-11-07 05:27:15,701 - __main__ - INFO -   Client 35: Loss=1.2715, Quality=0.350
+2025-11-07 05:27:26,151 - __main__ - INFO -   Client 37: Loss=1.2068, Quality=0.350
+2025-11-07 05:27:31,897 - __main__ - INFO -   Client 28: Loss=1.0254, Quality=0.350
+2025-11-07 05:27:40,252 - __main__ - INFO -   Client 39: Loss=1.1710, Quality=0.350
+2025-11-07 05:27:40,265 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.11078684476372208, 0.08171511954203614, 0.11550117858345493, 0.10023571669098665, 0.07453137276910989, 0.0909192950948479, 0.07947019867549669, 0.14715456280166125, 0.08137838141205522, 0.11830732966662925], Quality: [np.float64(0.14999870898483433), np.float64(0.149996669281427), np.float64(0.08750057771671732), np.float64(0.08750057771671732), np.float64(0.08750057771671732), np.float64(0.08750057771671732), np.float64(0.08750057771671732), np.float64(0.08750057771671732), np.float64(0.08750057771671732), np.float64(0.08750057771671732)], Final: [np.float64(0.126471590452167), np.float64(0.10902773943779248), np.float64(0.10430093823675989), np.float64(0.09514166110127892), np.float64(0.07971905474815286), np.float64(0.08955180814359567), np.float64(0.08268235029198495), np.float64(0.12329296876768368), np.float64(0.08382725993392007), np.float64(0.10598462888666448)]
+2025-11-07 05:27:42,223 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -5.89, Loss: -2.13, Quality: 2.00, Diversity: 0.26, Comm: -1.00, Total: -6.77
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 5 Statistics ===
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.4415, Loss: 1.5614
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [3, 22, 8, 10, 33, 31, 35, 37, 28, 39]
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.362, Noisy: 0/42
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=5
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=5
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 8: Quality=0.350, Participations=1
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 10: Quality=0.350, Participations=1
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 33: Quality=0.350, Participations=1
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 31: Quality=0.350, Participations=1
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 35: Quality=0.350, Participations=1
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 37: Quality=0.350, Participations=1
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.350, Participations=1
+2025-11-07 05:27:42,230 - ppo_server.gradfed_ppo_update - INFO -   Client 39: Quality=0.350, Participations=1
+2025-11-07 05:27:42,231 - __main__ - INFO - 
+ | Global Training Round: 6/30 |
+
+2025-11-07 05:27:42,243 - ppo_server.gradfed_ppo_update - INFO - Exploration mode: 2 low-quality, 8 high-quality
+2025-11-07 05:27:42,243 - __main__ - INFO - Selected 10 clients: [28, 41, 3, 22, 43, 15, 21, 23, 42, 16]
+2025-11-07 05:27:42,243 - __main__ - INFO - Avg quality score: 0.490
+2025-11-07 05:27:42,243 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:27:47,672 - __main__ - INFO -   Client 28: Loss=0.9710, Quality=0.600
+2025-11-07 05:27:54,417 - __main__ - INFO -   Client 41: Loss=0.9157, Quality=0.600
+2025-11-07 05:28:02,121 - __main__ - INFO -   Client 3: Loss=0.9986, Quality=0.600
+2025-11-07 05:28:07,828 - __main__ - INFO -   Client 22: Loss=0.8194, Quality=0.600
+2025-11-07 05:28:15,662 - __main__ - INFO -   Client 43: Loss=1.0557, Quality=0.350
+2025-11-07 05:28:23,138 - __main__ - INFO -   Client 15: Loss=1.0860, Quality=0.350
+2025-11-07 05:28:30,401 - __main__ - INFO -   Client 21: Loss=1.0723, Quality=0.350
+2025-11-07 05:28:39,135 - __main__ - INFO -   Client 23: Loss=1.1227, Quality=0.350
+2025-11-07 05:28:47,491 - __main__ - INFO -   Client 42: Loss=1.2358, Quality=0.350
+2025-11-07 05:28:57,259 - __main__ - INFO -   Client 16: Loss=1.1170, Quality=0.350
+2025-11-07 05:28:57,273 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.07471915902298258, 0.08863238173760693, 0.10172111718025353, 0.07502834174997423, 0.10244254354323405, 0.09749561991136761, 0.09388848809646501, 0.11718025352983613, 0.11450066989590849, 0.13439142533237144], Quality: [np.float64(0.1333337843491498), np.float64(0.13333044218955328), np.float64(0.1333337584640269), np.float64(0.13333375757547333), np.float64(0.0777780429036328), np.float64(0.0777780429036328), np.float64(0.0777780429036328), np.float64(0.0777780429036328), np.float64(0.0777780429036328), np.float64(0.0777780429036328)], Final: [np.float64(0.09816500915344945), np.float64(0.10651160591838543), np.float64(0.11436617369376285), np.float64(0.09835050808017384), np.float64(0.09257674328739354), np.float64(0.08960858910827367), np.float64(0.08744431001933212), np.float64(0.10141936927935477), np.float64(0.09981161909899819), np.float64(0.11174607236087596)]
+2025-11-07 05:28:59,322 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 3.80, Loss: 1.88, Quality: 2.25, Diversity: 0.38, Comm: -1.00, Total: 7.30
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 6 Statistics ===
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.4795, Loss: 1.3738
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [28, 41, 3, 22, 43, 15, 21, 23, 42, 16]
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.371, Noisy: 0/48
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=2
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=2
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=6
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=6
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 43: Quality=0.350, Participations=1
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 15: Quality=0.350, Participations=1
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 21: Quality=0.350, Participations=1
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 23: Quality=0.350, Participations=1
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 42: Quality=0.350, Participations=1
+2025-11-07 05:28:59,328 - ppo_server.gradfed_ppo_update - INFO -   Client 16: Quality=0.350, Participations=1
+2025-11-07 05:28:59,329 - __main__ - INFO - 
+ | Global Training Round: 7/30 |
+
+2025-11-07 05:28:59,341 - __main__ - INFO - Selected 10 clients: [41, 3, 22, 28, 6, 44, 1, 11, 2, 0]
+2025-11-07 05:28:59,342 - __main__ - INFO - Avg quality score: 0.480
+2025-11-07 05:28:59,342 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:29:05,941 - __main__ - INFO -   Client 41: Loss=0.8837, Quality=0.600
+2025-11-07 05:29:13,645 - __main__ - INFO -   Client 3: Loss=0.9747, Quality=0.600
+2025-11-07 05:29:19,314 - __main__ - INFO -   Client 22: Loss=0.7874, Quality=0.600
+2025-11-07 05:29:24,931 - __main__ - INFO -   Client 28: Loss=0.9357, Quality=0.600
+2025-11-07 05:29:34,440 - __main__ - INFO -   Client 6: Loss=1.2180, Quality=0.350
+2025-11-07 05:29:41,010 - __main__ - INFO -   Client 44: Loss=0.9072, Quality=0.350
+2025-11-07 05:29:52,922 - __main__ - INFO -   Client 1: Loss=1.1744, Quality=0.600
+2025-11-07 05:29:59,704 - __main__ - INFO -   Client 11: Loss=0.7973, Quality=0.600
+2025-11-07 05:30:04,374 - __main__ - INFO -   Client 2: Loss=0.8281, Quality=0.600
+2025-11-07 05:30:15,310 - __main__ - INFO -   Client 0: Loss=1.2218, Quality=0.600
+2025-11-07 05:30:15,325 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.08686868686868687, 0.0996969696969697, 0.07353535353535354, 0.07323232323232323, 0.1294949494949495, 0.08535353535353535, 0.15585858585858586, 0.09161616161616161, 0.060909090909090906, 0.14343434343434344], Quality: [np.float64(0.1090895964576107), np.float64(0.10909217617566368), np.float64(0.10909215829340647), np.float64(0.10909218346611718), np.float64(0.0636371083817169), np.float64(0.0636371083817169), np.float64(0.10909139036947448), np.float64(0.10908969855749884), np.float64(0.10908641884702641), np.float64(0.10909216106976832)], Final: [np.float64(0.09575705070425641), np.float64(0.10345505228844729), np.float64(0.08775807543857472), np.float64(0.08757626732584081), np.float64(0.10315181304965645), np.float64(0.07666696456480797), np.float64(0.1371517076629413), np.float64(0.09860557639269651), np.float64(0.08018002208426511), np.float64(0.12969747048851338)]
+2025-11-07 05:30:17,398 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 8.30, Loss: 2.22, Quality: 2.75, Diversity: 0.44, Comm: -1.00, Total: 12.71
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 7 Statistics ===
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.5625, Loss: 1.1516
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [41, 3, 22, 28, 6, 44, 1, 11, 2, 0]
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.390, Noisy: 0/50
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=3
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=7
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=7
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=3
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 6: Quality=0.350, Participations=1
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 44: Quality=0.350, Participations=1
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=2
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=2
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=2
+2025-11-07 05:30:17,405 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=2
+2025-11-07 05:30:17,406 - __main__ - INFO - 
+ | Global Training Round: 8/30 |
+
+2025-11-07 05:30:17,418 - __main__ - INFO - Selected 10 clients: [1, 11, 0, 2, 41, 3, 22, 28, 45, 20]
+2025-11-07 05:30:17,418 - __main__ - INFO - Avg quality score: 0.550
+2025-11-07 05:30:17,418 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:30:29,193 - __main__ - INFO -   Client 1: Loss=1.1050, Quality=0.600
+2025-11-07 05:30:36,044 - __main__ - INFO -   Client 11: Loss=0.7167, Quality=0.600
+2025-11-07 05:30:46,957 - __main__ - INFO -   Client 0: Loss=1.1589, Quality=0.600
+2025-11-07 05:30:51,643 - __main__ - INFO -   Client 2: Loss=0.7702, Quality=0.600
+2025-11-07 05:30:58,294 - __main__ - INFO -   Client 41: Loss=0.8093, Quality=0.600
+2025-11-07 05:31:05,759 - __main__ - INFO -   Client 3: Loss=0.9124, Quality=0.600
+2025-11-07 05:31:11,542 - __main__ - INFO -   Client 22: Loss=0.7284, Quality=0.600
+2025-11-07 05:31:17,221 - __main__ - INFO -   Client 28: Loss=0.8765, Quality=0.600
+2025-11-07 05:31:24,309 - __main__ - INFO -   Client 45: Loss=0.7216, Quality=0.600
+2025-11-07 05:31:31,264 - __main__ - INFO -   Client 20: Loss=0.9075, Quality=0.600
+2025-11-07 05:31:31,278 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1615199413796713, 0.09494399665026693, 0.14864440489898462, 0.06312153250287868, 0.0900240762064273, 0.10331832932063226, 0.07620642730032451, 0.0758923898251858, 0.09421124254160997, 0.09211765937401863], Quality: [np.float64(0.10000032697787777), np.float64(0.09999886644837752), np.float64(0.10000099137851712), np.float64(0.0999960236718217), np.float64(0.09999883462710668), np.float64(0.10000101017005535), np.float64(0.10000099754285406), np.float64(0.10000099934311031), np.float64(0.10000096549157123), np.float64(0.10000098434870827)], Final: [np.float64(0.13691209561895393), np.float64(0.09696594456951117), np.float64(0.12918703949079766), np.float64(0.0778713289704559), np.float64(0.09401397957469908), np.float64(0.1019914016604015), np.float64(0.08572425539733634), np.float64(0.08553583363235562), np.float64(0.09652713172159448), np.float64(0.0952709893638945)]
+2025-11-07 05:31:33,311 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 4.84, Loss: 0.73, Quality: 3.00, Diversity: 0.44, Comm: -1.00, Total: 8.01
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 8 Statistics ===
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6109, Loss: 1.0785
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [1, 11, 0, 2, 41, 3, 22, 28, 45, 20]
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.400, Noisy: 0/50
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=3
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=3
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=3
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=3
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=4
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=8
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=8
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=4
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=2
+2025-11-07 05:31:33,317 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=2
+2025-11-07 05:31:33,318 - __main__ - INFO - 
+ | Global Training Round: 9/30 |
+
+2025-11-07 05:31:33,330 - __main__ - INFO - Selected 10 clients: [1, 11, 0, 45, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:31:33,330 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:31:33,331 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:31:45,493 - __main__ - INFO -   Client 1: Loss=1.0525, Quality=0.600
+2025-11-07 05:31:52,714 - __main__ - INFO -   Client 11: Loss=0.6610, Quality=0.600
+2025-11-07 05:32:03,903 - __main__ - INFO -   Client 0: Loss=1.1093, Quality=0.600
+2025-11-07 05:32:10,991 - __main__ - INFO -   Client 45: Loss=0.6804, Quality=0.600
+2025-11-07 05:32:17,886 - __main__ - INFO -   Client 20: Loss=0.8702, Quality=0.600
+2025-11-07 05:32:22,633 - __main__ - INFO -   Client 2: Loss=0.7687, Quality=0.600
+2025-11-07 05:32:29,286 - __main__ - INFO -   Client 41: Loss=0.7825, Quality=0.600
+2025-11-07 05:32:36,495 - __main__ - INFO -   Client 3: Loss=0.8670, Quality=0.600
+2025-11-07 05:32:41,805 - __main__ - INFO -   Client 22: Loss=0.6887, Quality=0.600
+2025-11-07 05:32:47,180 - __main__ - INFO -   Client 28: Loss=0.8677, Quality=0.600
+2025-11-07 05:32:47,193 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1615199413796713, 0.09494399665026693, 0.14864440489898462, 0.09421124254160997, 0.09211765937401863, 0.06312153250287868, 0.0900240762064273, 0.10331832932063226, 0.07620642730032451, 0.0758923898251858], Quality: [np.float64(0.10000030067336833), np.float64(0.09999895888576271), np.float64(0.10000091173872408), np.float64(0.10000088492161516), np.float64(0.10000090823841369), np.float64(0.09999635001668981), np.float64(0.09999891845435595), np.float64(0.10000092684360064), np.float64(0.10000092158725768), np.float64(0.10000091864021178)], Final: [np.float64(0.13691208509715014), np.float64(0.09696598154446524), np.float64(0.12918700763488042), np.float64(0.09652709949361206), np.float64(0.09527095891977667), np.float64(0.07787145950840314), np.float64(0.09401401310559877), np.float64(0.10199136832981963), np.float64(0.08572422501509779), np.float64(0.0855358013511962)]
+2025-11-07 05:32:49,238 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.14, Loss: 0.06, Quality: 3.00, Diversity: 0.44, Comm: -1.00, Total: 2.64
+2025-11-07 05:32:49,242 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 9 Statistics ===
+2025-11-07 05:32:49,242 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6123, Loss: 1.0721
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [1, 11, 0, 45, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.400, Noisy: 0/50
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=4
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=4
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=4
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=3
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=3
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=4
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=5
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=9
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=9
+2025-11-07 05:32:49,243 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=5
+2025-11-07 05:32:49,244 - __main__ - INFO - 
+ | Global Training Round: 10/30 |
+
+2025-11-07 05:32:49,254 - __main__ - INFO - Selected 10 clients: [1, 0, 11, 45, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:32:49,254 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:32:49,254 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:33:01,322 - __main__ - INFO -   Client 1: Loss=1.0030, Quality=0.600
+2025-11-07 05:33:12,424 - __main__ - INFO -   Client 0: Loss=1.0704, Quality=0.600
+2025-11-07 05:33:19,163 - __main__ - INFO -   Client 11: Loss=0.6569, Quality=0.600
+2025-11-07 05:33:25,720 - __main__ - INFO -   Client 45: Loss=0.6217, Quality=0.600
+2025-11-07 05:33:32,402 - __main__ - INFO -   Client 20: Loss=0.8433, Quality=0.600
+2025-11-07 05:33:37,219 - __main__ - INFO -   Client 2: Loss=0.7261, Quality=0.600
+2025-11-07 05:33:43,974 - __main__ - INFO -   Client 41: Loss=0.7525, Quality=0.600
+2025-11-07 05:33:51,658 - __main__ - INFO -   Client 3: Loss=0.8382, Quality=0.600
+2025-11-07 05:33:57,384 - __main__ - INFO -   Client 22: Loss=0.6633, Quality=0.600
+2025-11-07 05:34:03,070 - __main__ - INFO -   Client 28: Loss=0.8410, Quality=0.600
+2025-11-07 05:34:03,083 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1615199413796713, 0.14864440489898462, 0.09494399665026693, 0.09421124254160997, 0.09211765937401863, 0.06312153250287868, 0.0900240762064273, 0.10331832932063226, 0.07620642730032451, 0.0758923898251858], Quality: [np.float64(0.10000009334004789), np.float64(0.10000065648175151), np.float64(0.09999885393908715), np.float64(0.10000063463320713), np.float64(0.10000065116590262), np.float64(0.09999644787091001), np.float64(0.10000066633537569), np.float64(0.10000067344633698), np.float64(0.10000066071351613), np.float64(0.10000066207386483)], Final: [np.float64(0.13691200216382193), np.float64(0.1291869055320914), np.float64(0.09696593956579502), np.float64(0.09652699937824882), np.float64(0.09527085609077222), np.float64(0.07787149865009121), np.float64(0.09401471225800666), np.float64(0.10199126697091415), np.float64(0.08572412066560116), np.float64(0.08553569872465741)]
+2025-11-07 05:34:05,116 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.18, Loss: 0.23, Quality: 3.00, Diversity: 0.44, Comm: -1.00, Total: 2.49
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 10 Statistics ===
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6105, Loss: 1.0486
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [1, 0, 11, 45, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.400, Noisy: 0/50
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=5
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=5
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=5
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=4
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=4
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=5
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=6
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=10
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=10
+2025-11-07 05:34:05,123 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=6
+2025-11-07 05:34:05,124 - __main__ - INFO - 
+ | Global Training Round: 11/30 |
+
+2025-11-07 05:34:05,136 - __main__ - INFO - Selected 10 clients: [1, 0, 45, 11, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:34:05,136 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:34:05,136 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:34:17,112 - __main__ - INFO -   Client 1: Loss=0.9713, Quality=0.600
+2025-11-07 05:34:28,077 - __main__ - INFO -   Client 0: Loss=1.0473, Quality=0.600
+2025-11-07 05:34:35,042 - __main__ - INFO -   Client 45: Loss=0.5884, Quality=0.600
+2025-11-07 05:34:42,188 - __main__ - INFO -   Client 11: Loss=0.6266, Quality=0.600
+2025-11-07 05:34:49,109 - __main__ - INFO -   Client 20: Loss=0.8053, Quality=0.600
+2025-11-07 05:34:53,907 - __main__ - INFO -   Client 2: Loss=0.6937, Quality=0.600
+2025-11-07 05:35:00,529 - __main__ - INFO -   Client 41: Loss=0.7081, Quality=0.600
+2025-11-07 05:35:08,039 - __main__ - INFO -   Client 3: Loss=0.8118, Quality=0.600
+2025-11-07 05:35:13,714 - __main__ - INFO -   Client 22: Loss=0.6364, Quality=0.600
+2025-11-07 05:35:19,453 - __main__ - INFO -   Client 28: Loss=0.8121, Quality=0.600
+2025-11-07 05:35:19,466 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1615199413796713, 0.14864440489898462, 0.09421124254160997, 0.09494399665026693, 0.09211765937401863, 0.06312153250287868, 0.0900240762064273, 0.10331832932063226, 0.07620642730032451, 0.0758923898251858], Quality: [np.float64(0.10000001325186735), np.float64(0.10000001084776204), np.float64(0.09999997676473804), np.float64(0.10000001376399519), np.float64(0.09999999201000222), np.float64(0.09999999263873198), np.float64(0.10000000242073137), np.float64(0.10000001006388971), np.float64(0.09999998921417214), np.float64(0.09999999902411001)], Final: [np.float64(0.13691197012854972), np.float64(0.1291866472784956), np.float64(0.0965267362308612), np.float64(0.09696640349575822), np.float64(0.09527059242841207), np.float64(0.07787291655722), np.float64(0.09401444669214892), np.float64(0.10199100161793524), np.float64(0.08572385206586355), np.float64(0.08553543350475548)]
+2025-11-07 05:35:21,522 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 3.55, Loss: 0.63, Quality: 3.00, Diversity: 0.44, Comm: -1.00, Total: 6.62
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 11 Statistics ===
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6460, Loss: 0.9853
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [1, 0, 45, 11, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.400, Noisy: 0/50
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=6
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=6
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=5
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=6
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=5
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=6
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=7
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=11
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=11
+2025-11-07 05:35:21,526 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=7
+2025-11-07 05:35:21,527 - __main__ - INFO - 
+ | Global Training Round: 12/30 |
+
+2025-11-07 05:35:21,534 - __main__ - INFO - Selected 10 clients: [0, 45, 1, 11, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:35:21,534 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:35:21,534 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:35:32,602 - __main__ - INFO -   Client 0: Loss=1.0120, Quality=0.600
+2025-11-07 05:35:38,859 - __main__ - INFO -   Client 45: Loss=0.5802, Quality=0.600
+2025-11-07 05:35:50,242 - __main__ - INFO -   Client 1: Loss=0.9318, Quality=0.600
+2025-11-07 05:35:57,278 - __main__ - INFO -   Client 11: Loss=0.5974, Quality=0.600
+2025-11-07 05:36:04,094 - __main__ - INFO -   Client 20: Loss=0.7832, Quality=0.600
+2025-11-07 05:36:08,856 - __main__ - INFO -   Client 2: Loss=0.6932, Quality=0.600
+2025-11-07 05:36:15,547 - __main__ - INFO -   Client 41: Loss=0.7023, Quality=0.600
+2025-11-07 05:36:23,110 - __main__ - INFO -   Client 3: Loss=0.7839, Quality=0.600
+2025-11-07 05:36:28,735 - __main__ - INFO -   Client 22: Loss=0.6037, Quality=0.600
+2025-11-07 05:36:34,393 - __main__ - INFO -   Client 28: Loss=0.7939, Quality=0.600
+2025-11-07 05:36:34,405 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.14864440489898462, 0.09421124254160997, 0.1615199413796713, 0.09494399665026693, 0.09211765937401863, 0.06312153250287868, 0.0900240762064273, 0.10331832932063226, 0.07620642730032451, 0.0758923898251858], Quality: [np.float64(0.10000000880018468), np.float64(0.0999999956536241), np.float64(0.1000000100398635), np.float64(0.10000000903523792), np.float64(0.1000000000001129), np.float64(0.09999998244032311), np.float64(0.09999999892114449), np.float64(0.10000000562469624), np.float64(0.09999999172263074), np.float64(0.09999999776218216)], Final: [np.float64(0.12918664645946468), np.float64(0.09652674378641564), np.float64(0.1369119688437482), np.float64(0.09696640160425533), np.float64(0.09527059562445635), np.float64(0.07787291247785647), np.float64(0.09401444529231419), np.float64(0.10199099984225786), np.float64(0.08572385306924701), np.float64(0.08553543299998435)]
+2025-11-07 05:36:36,440 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.12, Loss: 0.04, Quality: 3.00, Diversity: 0.44, Comm: -1.00, Total: 2.60
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 12 Statistics ===
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6472, Loss: 0.9809
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 1, 11, 20, 2, 41, 3, 22, 28]
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.400, Noisy: 0/50
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=7
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=6
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=7
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=7
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=6
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=7
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=8
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=12
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=12
+2025-11-07 05:36:36,447 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=8
+2025-11-07 05:36:36,448 - __main__ - INFO - 
+ | Global Training Round: 13/30 |
+
+2025-11-07 05:36:36,460 - __main__ - INFO - Selected 10 clients: [0, 45, 1, 11, 20, 41, 2, 22, 3, 28]
+2025-11-07 05:36:36,460 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:36:36,460 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:36:47,429 - __main__ - INFO -   Client 0: Loss=0.9769, Quality=0.600
+2025-11-07 05:36:54,222 - __main__ - INFO -   Client 45: Loss=0.5428, Quality=0.600
+2025-11-07 05:37:06,388 - __main__ - INFO -   Client 1: Loss=0.9048, Quality=0.600
+2025-11-07 05:37:13,073 - __main__ - INFO -   Client 11: Loss=0.5706, Quality=0.600
+2025-11-07 05:37:19,425 - __main__ - INFO -   Client 20: Loss=0.7413, Quality=0.600
+2025-11-07 05:37:26,718 - __main__ - INFO -   Client 41: Loss=0.6499, Quality=0.600
+2025-11-07 05:37:31,435 - __main__ - INFO -   Client 2: Loss=0.6558, Quality=0.600
+2025-11-07 05:37:37,113 - __main__ - INFO -   Client 22: Loss=0.5833, Quality=0.600
+2025-11-07 05:37:44,591 - __main__ - INFO -   Client 3: Loss=0.7524, Quality=0.600
+2025-11-07 05:37:50,118 - __main__ - INFO -   Client 28: Loss=0.7579, Quality=0.600
+2025-11-07 05:37:50,132 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.14864440489898462, 0.09421124254160997, 0.1615199413796713, 0.09494399665026693, 0.09211765937401863, 0.0900240762064273, 0.06312153250287868, 0.07620642730032451, 0.10331832932063226, 0.0758923898251858], Quality: [np.float64(0.10000000981319242), np.float64(0.09999999472898834), np.float64(0.10000001145622832), np.float64(0.10000001022123951), np.float64(0.09999999364092736), np.float64(0.10000000076033914), np.float64(0.0999999907143461), np.float64(0.09999999467199368), np.float64(0.10000000725749872), np.float64(0.09999998673524642)], Final: [np.float64(0.12918664686466774), np.float64(0.09652674341656131), np.float64(0.1369119694102941), np.float64(0.09696640207865595), np.float64(0.09527059308078212), np.float64(0.09401444602799204), np.float64(0.07787291578746565), np.float64(0.08572385424899218), np.float64(0.10199100049537885), np.float64(0.08553542858921004)]
+2025-11-07 05:37:52,173 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.02, Loss: 0.07, Quality: 3.00, Diversity: 0.44, Comm: -1.00, Total: 2.53
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 13 Statistics ===
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6474, Loss: 0.9737
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 1, 11, 20, 41, 2, 22, 3, 28]
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.400, Noisy: 0/50
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=8
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=7
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=8
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=8
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=7
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=9
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=8
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=13
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=13
+2025-11-07 05:37:52,179 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=9
+2025-11-07 05:37:52,180 - __main__ - INFO - 
+ | Global Training Round: 14/30 |
+
+2025-11-07 05:37:52,192 - __main__ - INFO - Selected 10 clients: [0, 45, 1, 11, 20, 41, 2, 22, 3, 28]
+2025-11-07 05:37:52,193 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:37:52,193 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:38:02,899 - __main__ - INFO -   Client 0: Loss=0.9365, Quality=0.600
+2025-11-07 05:38:09,899 - __main__ - INFO -   Client 45: Loss=0.5037, Quality=0.600
+2025-11-07 05:38:22,024 - __main__ - INFO -   Client 1: Loss=0.8817, Quality=0.600
+2025-11-07 05:38:29,124 - __main__ - INFO -   Client 11: Loss=0.5406, Quality=0.600
+2025-11-07 05:38:35,910 - __main__ - INFO -   Client 20: Loss=0.7343, Quality=0.600
+2025-11-07 05:38:42,633 - __main__ - INFO -   Client 41: Loss=0.6406, Quality=0.600
+2025-11-07 05:38:47,449 - __main__ - INFO -   Client 2: Loss=0.6343, Quality=0.600
+2025-11-07 05:38:52,701 - __main__ - INFO -   Client 22: Loss=0.5648, Quality=0.600
+2025-11-07 05:38:59,772 - __main__ - INFO -   Client 3: Loss=0.7332, Quality=0.600
+2025-11-07 05:39:05,429 - __main__ - INFO -   Client 28: Loss=0.7432, Quality=0.600
+2025-11-07 05:39:05,442 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.14864440489898462, 0.09421124254160997, 0.1615199413796713, 0.09494399665026693, 0.09211765937401863, 0.0900240762064273, 0.06312153250287868, 0.07620642730032451, 0.10331832932063226, 0.0758923898251858], Quality: [np.float64(0.10000001014825129), np.float64(0.09999999968008397), np.float64(0.10000001172010944), np.float64(0.10000001080203721), np.float64(0.09999999072337819), np.float64(0.09999999873005438), np.float64(0.0999999782459193), np.float64(0.09999999938311188), np.float64(0.10000000993674556), np.float64(0.09999999063030883)], Final: [np.float64(0.1291866469986913), np.float64(0.09652674539699958), np.float64(0.13691196951584658), np.float64(0.09696640231097504), np.float64(0.09527059191376246), np.float64(0.09401444521587815), np.float64(0.07787291080009494), np.float64(0.08572385613343947), np.float64(0.10199100156707759), np.float64(0.08553543014723503)]
+2025-11-07 05:39:07,460 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 2.73, Loss: 0.54, Quality: 3.00, Diversity: 0.44, Comm: -1.00, Total: 5.71
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 14 Statistics ===
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6747, Loss: 0.9192
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 1, 11, 20, 41, 2, 22, 3, 28]
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.400, Noisy: 0/50
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=9
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=8
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=9
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=9
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=8
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=10
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=9
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=14
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=14
+2025-11-07 05:39:07,466 - ppo_server.gradfed_ppo_update - INFO -   Client 28: Quality=0.600, Participations=10
+2025-11-07 05:39:07,467 - __main__ - INFO - 
+ | Global Training Round: 15/30 |
+
+2025-11-07 05:39:07,477 - ppo_server.gradfed_ppo_update - INFO - Exploration mode: 2 low-quality, 8 high-quality
+2025-11-07 05:39:07,477 - __main__ - INFO - Selected 10 clients: [39, 36, 0, 45, 1, 20, 11, 41, 2, 22]
+2025-11-07 05:39:07,477 - __main__ - INFO - Avg quality score: 0.550
+2025-11-07 05:39:07,477 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:39:15,756 - __main__ - INFO -   Client 39: Loss=0.8369, Quality=0.600
+2025-11-07 05:39:23,589 - __main__ - INFO -   Client 36: Loss=0.7522, Quality=0.600
+2025-11-07 05:39:34,430 - __main__ - INFO -   Client 0: Loss=0.9014, Quality=0.600
+2025-11-07 05:39:41,369 - __main__ - INFO -   Client 45: Loss=0.4846, Quality=0.600
+2025-11-07 05:39:53,326 - __main__ - INFO -   Client 1: Loss=0.8198, Quality=0.600
+2025-11-07 05:40:00,080 - __main__ - INFO -   Client 20: Loss=0.6992, Quality=0.600
+2025-11-07 05:40:07,091 - __main__ - INFO -   Client 11: Loss=0.5146, Quality=0.600
+2025-11-07 05:40:13,759 - __main__ - INFO -   Client 41: Loss=0.6146, Quality=0.600
+2025-11-07 05:40:18,456 - __main__ - INFO -   Client 2: Loss=0.6185, Quality=0.600
+2025-11-07 05:40:23,974 - __main__ - INFO -   Client 22: Loss=0.5318, Quality=0.600
+2025-11-07 05:40:23,987 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.10572775604373558, 0.10773397532350286, 0.14244156886347678, 0.09027986758952754, 0.15477981743404554, 0.08827364830976026, 0.09098204433744608, 0.08626742902999297, 0.06048751128498345, 0.07302638178352894], Quality: [np.float64(0.09999998768897417), np.float64(0.09999999666435203), np.float64(0.10000000659629378), np.float64(0.10000000202565895), np.float64(0.10000001315906117), np.float64(0.10000000025099083), np.float64(0.10000000833544571), np.float64(0.10000000171882632), np.float64(0.09999998025734595), np.float64(0.10000000330305098)], Final: [np.float64(0.10343664870183102), np.float64(0.10464038385984253), np.float64(0.12546494395660357), np.float64(0.09416792136398011), np.float64(0.13286789572405178), np.float64(0.09296418908625248), np.float64(0.09458922993664594), np.float64(0.09176045810552631), np.float64(0.07629249887392844), np.float64(0.08381583039133775)]
+2025-11-07 05:40:26,027 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.06, Loss: 0.06, Quality: 3.00, Diversity: 1.42, Comm: -1.00, Total: 3.54
+2025-11-07 05:40:26,033 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 15 Statistics ===
+2025-11-07 05:40:26,033 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6753, Loss: 0.9132
+2025-11-07 05:40:26,033 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [39, 36, 0, 45, 1, 20, 11, 41, 2, 22]
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 39: Quality=0.600, Participations=2
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=2
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=10
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=9
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=10
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=9
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=10
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=11
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=10
+2025-11-07 05:40:26,034 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=15
+2025-11-07 05:40:26,035 - __main__ - INFO - 
+ | Global Training Round: 16/30 |
+
+2025-11-07 05:40:26,043 - __main__ - INFO - Selected 10 clients: [0, 45, 1, 20, 11, 41, 2, 22, 3, 36]
+2025-11-07 05:40:26,043 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:40:26,043 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:40:37,003 - __main__ - INFO -   Client 0: Loss=0.8745, Quality=0.600
+2025-11-07 05:40:44,056 - __main__ - INFO -   Client 45: Loss=0.4731, Quality=0.600
+2025-11-07 05:40:56,110 - __main__ - INFO -   Client 1: Loss=0.7934, Quality=0.600
+2025-11-07 05:41:02,815 - __main__ - INFO -   Client 20: Loss=0.6963, Quality=0.600
+2025-11-07 05:41:09,965 - __main__ - INFO -   Client 11: Loss=0.4916, Quality=0.600
+2025-11-07 05:41:16,280 - __main__ - INFO -   Client 41: Loss=0.5879, Quality=0.600
+2025-11-07 05:41:20,910 - __main__ - INFO -   Client 2: Loss=0.6265, Quality=0.600
+2025-11-07 05:41:26,611 - __main__ - INFO -   Client 22: Loss=0.5155, Quality=0.600
+2025-11-07 05:41:34,275 - __main__ - INFO -   Client 3: Loss=0.7092, Quality=0.600
+2025-11-07 05:41:42,662 - __main__ - INFO -   Client 36: Loss=0.7382, Quality=0.600
+2025-11-07 05:41:42,674 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.1558271056352252, 0.08887093516461321, 0.09159765703898202, 0.08685114118359927, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000557639786), np.float64(0.09999999898573175), np.float64(0.10000001353817817), np.float64(0.09999999402440024), np.float64(0.10000000637797336), np.float64(0.10000000614740436), np.float64(0.09999997572332708), np.float64(0.09999999733169), np.float64(0.10000000808761526), np.float64(0.099999994207282)], Final: [np.float64(0.12604322582175284), np.float64(0.094534437081669), np.float64(0.1334962687964064), np.float64(0.09332255870852801), np.float64(0.09495859677457857), np.float64(0.0921106871691213), np.float64(0.07653806340587295), np.float64(0.08411229947802037), np.float64(0.09980610301286877), np.float64(0.10507775975118185)]
+2025-11-07 05:41:44,706 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 1.42, Loss: 0.28, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 4.78
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 16 Statistics ===
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6895, Loss: 0.8852
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 1, 20, 11, 41, 2, 22, 3, 36]
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=11
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=10
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=11
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=10
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=11
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=12
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=11
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=16
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=15
+2025-11-07 05:41:44,713 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=3
+2025-11-07 05:41:44,714 - __main__ - INFO - 
+ | Global Training Round: 17/30 |
+
+2025-11-07 05:41:44,726 - __main__ - INFO - Selected 10 clients: [0, 45, 1, 20, 11, 41, 2, 22, 3, 36]
+2025-11-07 05:41:44,726 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:41:44,726 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:41:55,955 - __main__ - INFO -   Client 0: Loss=0.8525, Quality=0.600
+2025-11-07 05:42:02,652 - __main__ - INFO -   Client 45: Loss=0.4275, Quality=0.600
+2025-11-07 05:42:14,865 - __main__ - INFO -   Client 1: Loss=0.7776, Quality=0.600
+2025-11-07 05:42:21,453 - __main__ - INFO -   Client 20: Loss=0.6708, Quality=0.600
+2025-11-07 05:42:28,470 - __main__ - INFO -   Client 11: Loss=0.4765, Quality=0.600
+2025-11-07 05:42:35,081 - __main__ - INFO -   Client 41: Loss=0.5626, Quality=0.600
+2025-11-07 05:42:39,930 - __main__ - INFO -   Client 2: Loss=0.5933, Quality=0.600
+2025-11-07 05:42:45,659 - __main__ - INFO -   Client 22: Loss=0.5139, Quality=0.600
+2025-11-07 05:42:53,489 - __main__ - INFO -   Client 3: Loss=0.6678, Quality=0.600
+2025-11-07 05:43:01,929 - __main__ - INFO -   Client 36: Loss=0.7012, Quality=0.600
+2025-11-07 05:43:01,944 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.1558271056352252, 0.08887093516461321, 0.09159765703898202, 0.08685114118359927, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000691969357), np.float64(0.10000000018686321), np.float64(0.10000001323342121), np.float64(0.1000000024664226), np.float64(0.09999999683706476), np.float64(0.10000000839298867), np.float64(0.0999999634485888), np.float64(0.10000000748204094), np.float64(0.10000000711759746), np.float64(0.09999999391531879)], Final: [np.float64(0.12604322635907111), np.float64(0.09453443756212157), np.float64(0.1334962686745036), np.float64(0.09332256208533696), np.float64(0.09495859295821513), np.float64(0.09211068806735503), np.float64(0.07653805849597764), np.float64(0.08411230353816074), np.float64(0.09980610262486164), np.float64(0.10507775963439656)]
+2025-11-07 05:43:04,007 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.13, Loss: -0.03, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 2.92
+2025-11-07 05:43:04,013 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 17 Statistics ===
+2025-11-07 05:43:04,013 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6882, Loss: 0.8883
+2025-11-07 05:43:04,013 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 1, 20, 11, 41, 2, 22, 3, 36]
+2025-11-07 05:43:04,013 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:43:04,013 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=12
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=11
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=12
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=11
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=12
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=13
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=12
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=17
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=16
+2025-11-07 05:43:04,014 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=4
+2025-11-07 05:43:04,015 - __main__ - INFO - 
+ | Global Training Round: 18/30 |
+
+2025-11-07 05:43:04,027 - __main__ - INFO - Selected 10 clients: [0, 45, 1, 20, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:43:04,027 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:43:04,027 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:43:14,764 - __main__ - INFO -   Client 0: Loss=0.8240, Quality=0.600
+2025-11-07 05:43:21,594 - __main__ - INFO -   Client 45: Loss=0.4088, Quality=0.600
+2025-11-07 05:43:33,397 - __main__ - INFO -   Client 1: Loss=0.7457, Quality=0.600
+2025-11-07 05:43:40,121 - __main__ - INFO -   Client 20: Loss=0.6521, Quality=0.600
+2025-11-07 05:43:46,858 - __main__ - INFO -   Client 41: Loss=0.5430, Quality=0.600
+2025-11-07 05:43:53,997 - __main__ - INFO -   Client 11: Loss=0.4503, Quality=0.600
+2025-11-07 05:43:58,502 - __main__ - INFO -   Client 2: Loss=0.5921, Quality=0.600
+2025-11-07 05:44:04,250 - __main__ - INFO -   Client 22: Loss=0.4880, Quality=0.600
+2025-11-07 05:44:11,353 - __main__ - INFO -   Client 3: Loss=0.6490, Quality=0.600
+2025-11-07 05:44:19,668 - __main__ - INFO -   Client 36: Loss=0.6940, Quality=0.600
+2025-11-07 05:44:19,682 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.1558271056352252, 0.08887093516461321, 0.08685114118359927, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.1000000054206157), np.float64(0.10000000736250923), np.float64(0.10000001134688549), np.float64(0.10000000002068604), np.float64(0.10000000760834019), np.float64(0.09999999903615192), np.float64(0.0999999822308208), np.float64(0.09999999403499936), np.float64(0.10000000206409285), np.float64(0.09999999087489851)], Final: [np.float64(0.12604322575943996), np.float64(0.09453444043237996), np.float64(0.1334962679198893), np.float64(0.09332256110704233), np.float64(0.09211068775349562), np.float64(0.09495859383784996), np.float64(0.07653806600887042), np.float64(0.08411229815934411), np.float64(0.09980610060345976), np.float64(0.10507775841822842)]
+2025-11-07 05:44:21,739 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 1.12, Loss: 0.11, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 4.31
+2025-11-07 05:44:21,745 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 18 Statistics ===
+2025-11-07 05:44:21,745 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.6994, Loss: 0.8769
+2025-11-07 05:44:21,745 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 1, 20, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:44:21,745 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:44:21,745 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=13
+2025-11-07 05:44:21,745 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=12
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=13
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=12
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=14
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=13
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=13
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=18
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=17
+2025-11-07 05:44:21,746 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=5
+2025-11-07 05:44:21,747 - __main__ - INFO - 
+ | Global Training Round: 19/30 |
+
+2025-11-07 05:44:21,759 - __main__ - INFO - Selected 10 clients: [0, 45, 1, 20, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:44:21,759 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:44:21,759 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:44:32,744 - __main__ - INFO -   Client 0: Loss=0.8021, Quality=0.600
+2025-11-07 05:44:39,614 - __main__ - INFO -   Client 45: Loss=0.4061, Quality=0.600
+2025-11-07 05:44:51,169 - __main__ - INFO -   Client 1: Loss=0.7377, Quality=0.600
+2025-11-07 05:44:57,588 - __main__ - INFO -   Client 20: Loss=0.6336, Quality=0.600
+2025-11-07 05:45:03,923 - __main__ - INFO -   Client 41: Loss=0.5237, Quality=0.600
+2025-11-07 05:45:10,511 - __main__ - INFO -   Client 11: Loss=0.4473, Quality=0.600
+2025-11-07 05:45:14,911 - __main__ - INFO -   Client 2: Loss=0.5795, Quality=0.600
+2025-11-07 05:45:20,258 - __main__ - INFO -   Client 22: Loss=0.4611, Quality=0.600
+2025-11-07 05:45:27,961 - __main__ - INFO -   Client 3: Loss=0.6160, Quality=0.600
+2025-11-07 05:45:36,298 - __main__ - INFO -   Client 36: Loss=0.6275, Quality=0.600
+2025-11-07 05:45:36,311 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.1558271056352252, 0.08887093516461321, 0.08685114118359927, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000001002034896), np.float64(0.10000000654681893), np.float64(0.10000001141067916), np.float64(0.10000000116160228), np.float64(0.10000000884631796), np.float64(0.10000000251959507), np.float64(0.09999996726586109), np.float64(0.0999999953793965), np.float64(0.100000003956622), np.float64(0.09999999289275815)], Final: [np.float64(0.1260432275993333), np.float64(0.09453444010610389), np.float64(0.1334962679454068), np.float64(0.09332256156340886), np.float64(0.09211068824868676), np.float64(0.09495859523122725), np.float64(0.07653806002288656), np.float64(0.08411229869710297), np.float64(0.09980610136047147), np.float64(0.10507775922537231)]
+2025-11-07 05:45:38,348 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.49, Loss: 0.32, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 3.89
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 19 Statistics ===
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7043, Loss: 0.8448
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 1, 20, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=14
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=13
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=14
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=13
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=15
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=14
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=14
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=19
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=18
+2025-11-07 05:45:38,354 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=6
+2025-11-07 05:45:38,355 - __main__ - INFO - 
+ | Global Training Round: 20/30 |
+
+2025-11-07 05:45:38,367 - __main__ - INFO - Selected 10 clients: [0, 45, 20, 1, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:45:38,367 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:45:38,367 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:45:49,333 - __main__ - INFO -   Client 0: Loss=0.7913, Quality=0.600
+2025-11-07 05:45:56,363 - __main__ - INFO -   Client 45: Loss=0.4122, Quality=0.600
+2025-11-07 05:46:03,234 - __main__ - INFO -   Client 20: Loss=0.6135, Quality=0.600
+2025-11-07 05:46:15,185 - __main__ - INFO -   Client 1: Loss=0.6997, Quality=0.600
+2025-11-07 05:46:21,829 - __main__ - INFO -   Client 41: Loss=0.5142, Quality=0.600
+2025-11-07 05:46:28,816 - __main__ - INFO -   Client 11: Loss=0.4277, Quality=0.600
+2025-11-07 05:46:33,422 - __main__ - INFO -   Client 2: Loss=0.5444, Quality=0.600
+2025-11-07 05:46:39,118 - __main__ - INFO -   Client 22: Loss=0.4622, Quality=0.600
+2025-11-07 05:46:46,637 - __main__ - INFO -   Client 3: Loss=0.6151, Quality=0.600
+2025-11-07 05:46:54,933 - __main__ - INFO -   Client 36: Loss=0.6389, Quality=0.600
+2025-11-07 05:46:54,948 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08887093516461321, 0.1558271056352252, 0.08685114118359927, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000710993973), np.float64(0.10000000362698555), np.float64(0.10000000645595562), np.float64(0.1000000074734417), np.float64(0.1000000043194237), np.float64(0.09999999761677185), np.float64(0.09999996672877182), np.float64(0.099999995214648), np.float64(0.10000000756030858), np.float64(0.10000000389375338)], Final: [np.float64(0.1260432264351696), np.float64(0.09453443893817053), np.float64(0.09332256368115019), np.float64(0.13349626637051185), np.float64(0.09211068643792907), np.float64(0.09495859327009797), np.float64(0.07653805980805085), np.float64(0.08411229863120358), np.float64(0.0998061028019461), np.float64(0.10507776362577041)]
+2025-11-07 05:46:57,063 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.36, Loss: -0.11, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 2.61
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 20 Statistics ===
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7007, Loss: 0.8557
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 20, 1, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=15
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=14
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=14
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=15
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=16
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=15
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=15
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=20
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=19
+2025-11-07 05:46:57,070 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=7
+============================================================================================
+Device set to : NVIDIA RTX 6000 Ada Generation
+============================================================================================
+
+Experimental details:
+    Model     : resnet10
+    dataset   : cifar10
+    Optimizer : sgd
+    Learning  : 0.01
+    Global Rounds   : 30
+
+    Federated parameters:
+    Non-IID
+    Fraction of users  : 0.2
+    Local Batch size   : 10
+    Local Epochs       : 5
+
+client_0_sample_num:1420
+client_1_sample_num:1543
+client_2_sample_num:603
+client_3_sample_num:987
+client_4_sample_num:789
+client_5_sample_num:1560
+client_6_sample_num:1282
+client_7_sample_num:836
+client_8_sample_num:1029
+client_9_sample_num:981
+client_10_sample_num:893
+client_11_sample_num:907
+client_12_sample_num:1230
+client_13_sample_num:707
+client_14_sample_num:1953
+client_15_sample_num:946
+client_16_sample_num:1304
+client_17_sample_num:1003
+client_18_sample_num:1111
+client_19_sample_num:688
+client_20_sample_num:880
+client_21_sample_num:911
+client_22_sample_num:728
+client_23_sample_num:1137
+client_24_sample_num:983
+client_25_sample_num:715
+client_26_sample_num:825
+client_27_sample_num:1049
+client_28_sample_num:725
+client_29_sample_num:1108
+client_30_sample_num:1329
+client_31_sample_num:810
+client_32_sample_num:1248
+client_33_sample_num:664
+client_34_sample_num:501
+client_35_sample_num:708
+client_36_sample_num:1074
+client_37_sample_num:1311
+client_38_sample_num:1320
+client_39_sample_num:1054
+client_40_sample_num:837
+client_41_sample_num:860
+client_42_sample_num:1111
+client_43_sample_num:994
+client_44_sample_num:845
+client_45_sample_num:900
+client_46_sample_num:1063
+client_47_sample_num:746
+client_48_sample_num:1233
+client_49_sample_num:559
+
+======================================================================
+Round 1/30:
+  Avg Training Loss: 1.5091
+  Test Accuracy: 16.78%
+  Test Loss: 2.1801
+  Reward: 8.79
+  Selected: [11, 1, 2, 19, 5, 30, 48, 22, 41, 3]
+  Quality: Avg=0.500, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 2/30:
+  Avg Training Loss: 1.3357
+  Test Accuracy: 33.53%
+  Test Loss: 1.7474
+  Reward: 22.09
+  Selected: [3, 22, 38, 0, 45, 20, 40, 24, 49, 26]
+  Quality: Avg=0.470, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 3/30:
+  Avg Training Loss: 1.2095
+  Test Accuracy: 40.54%
+  Test Loss: 1.5322
+  Reward: 10.23
+  Selected: [3, 22, 14, 34, 29, 13, 36, 25, 27, 4]
+  Quality: Avg=0.520, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 4/30:
+  Avg Training Loss: 1.1683
+  Test Accuracy: 50.04%
+  Test Loss: 1.3481
+  Reward: 12.49
+  Selected: [3, 22, 17, 47, 12, 46, 7, 32, 9, 18]
+  Quality: Avg=0.520, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 5/30:
+  Avg Training Loss: 1.0648
+  Test Accuracy: 44.15%
+  Test Loss: 1.5614
+  Reward: -6.77
+  Selected: [3, 22, 8, 10, 33, 31, 35, 37, 28, 39]
+  Quality: Avg=0.520, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 6/30:
+  Avg Training Loss: 1.0394
+  Test Accuracy: 47.95%
+  Test Loss: 1.3738
+  Reward: 7.30
+  Selected: [28, 41, 3, 22, 43, 15, 21, 23, 42, 16]
+  Quality: Avg=0.490, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 7/30:
+  Avg Training Loss: 0.9728
+  Test Accuracy: 56.25%
+  Test Loss: 1.1516
+  Reward: 12.71
+  Selected: [41, 3, 22, 28, 6, 44, 1, 11, 2, 0]
+  Quality: Avg=0.480, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 8/30:
+  Avg Training Loss: 0.8706
+  Test Accuracy: 61.09%
+  Test Loss: 1.0785
+  Reward: 8.01
+  Selected: [1, 11, 0, 2, 41, 3, 22, 28, 45, 20]
+  Quality: Avg=0.550, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 9/30:
+  Avg Training Loss: 0.8348
+  Test Accuracy: 61.23%
+  Test Loss: 1.0721
+  Reward: 2.64
+  Selected: [1, 11, 0, 45, 20, 2, 41, 3, 22, 28]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 10/30:
+  Avg Training Loss: 0.8016
+  Test Accuracy: 61.05%
+  Test Loss: 1.0486
+  Reward: 2.49
+  Selected: [1, 0, 11, 45, 20, 2, 41, 3, 22, 28]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 11/30:
+  Avg Training Loss: 0.7701
+  Test Accuracy: 64.60%
+  Test Loss: 0.9853
+  Reward: 6.62
+  Selected: [1, 0, 45, 11, 20, 2, 41, 3, 22, 28]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 12/30:
+  Avg Training Loss: 0.7481
+  Test Accuracy: 64.72%
+  Test Loss: 0.9809
+  Reward: 2.60
+  Selected: [0, 45, 1, 11, 20, 2, 41, 3, 22, 28]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 13/30:
+  Avg Training Loss: 0.7136
+  Test Accuracy: 64.74%
+  Test Loss: 0.9737
+  Reward: 2.53
+  Selected: [0, 45, 1, 11, 20, 41, 2, 22, 3, 28]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 14/30:
+  Avg Training Loss: 0.6913
+  Test Accuracy: 67.47%
+  Test Loss: 0.9192
+  Reward: 5.71
+  Selected: [0, 45, 1, 11, 20, 41, 2, 22, 3, 28]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 15/30:
+  Avg Training Loss: 0.6773
+  Test Accuracy: 67.53%
+  Test Loss: 0.9132
+  Reward: 3.54
+  Selected: [39, 36, 0, 45, 1, 20, 11, 41, 2, 22]
+  Quality: Avg=0.550, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 16/30:
+  Avg Training Loss: 0.6506
+  Test Accuracy: 68.95%
+  Test Loss: 0.8852
+  Reward: 4.78
+  Selected: [0, 45, 1, 20, 11, 41, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 17/30:
+  Avg Training Loss: 0.6244
+  Test Accuracy: 68.82%
+  Test Loss: 0.8883
+  Reward: 2.92
+  Selected: [0, 45, 1, 20, 11, 41, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 18/30:
+  Avg Training Loss: 0.6047
+  Test Accuracy: 69.94%
+  Test Loss: 0.8769
+  Reward: 4.31
+  Selected: [0, 45, 1, 20, 41, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 19/30:
+  Avg Training Loss: 0.5835
+  Test Accuracy: 70.43%
+  Test Loss: 0.8448
+  Reward: 3.89
+  Selected: [0, 45, 1, 20, 41, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 20/30:
+  Avg Training Loss: 0.5719
+  Test Accuracy: 70.07%
+  Test Loss: 0.8557
+  Reward: 2.61
+  Selected: [0, 45, 20, 1, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:46:57,071 - __main__ - INFO - 
+ | Global Training Round: 21/30 |
+
+2025-11-07 05:46:57,083 - __main__ - INFO - Selected 10 clients: [0, 45, 20, 1, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:46:57,083 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:46:57,083 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:47:07,961 - __main__ - INFO -   Client 0: Loss=0.7640, Quality=0.600
+2025-11-07 05:47:14,945 - __main__ - INFO -   Client 45: Loss=0.3830, Quality=0.600
+2025-11-07 05:47:21,300 - __main__ - INFO -   Client 20: Loss=0.5953, Quality=0.600
+2025-11-07 05:47:33,020 - __main__ - INFO -   Client 1: Loss=0.6802, Quality=0.600
+2025-11-07 05:47:39,777 - __main__ - INFO -   Client 41: Loss=0.5069, Quality=0.600
+2025-11-07 05:47:46,415 - __main__ - INFO -   Client 11: Loss=0.4147, Quality=0.600
+2025-11-07 05:47:50,645 - __main__ - INFO -   Client 2: Loss=0.5481, Quality=0.600
+2025-11-07 05:47:55,675 - __main__ - INFO -   Client 22: Loss=0.4547, Quality=0.600
+2025-11-07 05:48:02,647 - __main__ - INFO -   Client 3: Loss=0.5892, Quality=0.600
+2025-11-07 05:48:10,193 - __main__ - INFO -   Client 36: Loss=0.5989, Quality=0.600
+2025-11-07 05:48:10,205 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08887093516461321, 0.1558271056352252, 0.08685114118359927, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000616839391), np.float64(0.10000000500239305), np.float64(0.10000000592122826), np.float64(0.100000007206591), np.float64(0.10000000212172785), np.float64(0.09999999916153207), np.float64(0.09999996829067888), np.float64(0.09999999471725787), np.float64(0.10000000659459268), np.float64(0.10000000481560432)], Final: [np.float64(0.12604322605855128), np.float64(0.09453443948833352), np.float64(0.09332256346725924), np.float64(0.13349626626377156), np.float64(0.09211068555885073), np.float64(0.09495859388800205), np.float64(0.07653806043281368), np.float64(0.08411229843224753), np.float64(0.09980610241565975), np.float64(0.10507776399451078)]
+2025-11-07 05:48:12,239 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 1.20, Loss: 0.18, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 4.46
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 21 Statistics ===
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7127, Loss: 0.8377
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 20, 1, 41, 11, 2, 22, 3, 36]
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=16
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=15
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=15
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=16
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=17
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=16
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=16
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=21
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=20
+2025-11-07 05:48:12,246 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=8
+2025-11-07 05:48:12,247 - __main__ - INFO - 
+ | Global Training Round: 22/30 |
+
+2025-11-07 05:48:12,259 - __main__ - INFO - Selected 10 clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:48:12,259 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:48:12,259 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:48:22,394 - __main__ - INFO -   Client 0: Loss=0.7497, Quality=0.600
+2025-11-07 05:48:28,917 - __main__ - INFO -   Client 45: Loss=0.3695, Quality=0.600
+2025-11-07 05:48:35,646 - __main__ - INFO -   Client 20: Loss=0.5887, Quality=0.600
+2025-11-07 05:48:42,128 - __main__ - INFO -   Client 41: Loss=0.4874, Quality=0.600
+2025-11-07 05:48:54,435 - __main__ - INFO -   Client 1: Loss=0.6798, Quality=0.600
+2025-11-07 05:49:01,561 - __main__ - INFO -   Client 11: Loss=0.4128, Quality=0.600
+2025-11-07 05:49:06,377 - __main__ - INFO -   Client 2: Loss=0.5106, Quality=0.600
+2025-11-07 05:49:12,068 - __main__ - INFO -   Client 22: Loss=0.4278, Quality=0.600
+2025-11-07 05:49:19,462 - __main__ - INFO -   Client 3: Loss=0.5769, Quality=0.600
+2025-11-07 05:49:27,697 - __main__ - INFO -   Client 36: Loss=0.5966, Quality=0.600
+2025-11-07 05:49:27,710 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08887093516461321, 0.08685114118359927, 0.1558271056352252, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000873454228), np.float64(0.10000000267295142), np.float64(0.10000000221288015), np.float64(0.10000000436935666), np.float64(0.10000000656597989), np.float64(0.09999999956688967), np.float64(0.09999996670613327), np.float64(0.09999999816215636), np.float64(0.10000000633281435), np.float64(0.10000000467629594)], Final: [np.float64(0.1260432270850106), np.float64(0.09453443855655685), np.float64(0.09332256198391999), np.float64(0.09211068645790223), np.float64(0.13349626600752706), np.float64(0.09495859405014509), np.float64(0.07653805979899542), np.float64(0.08411229981020692), np.float64(0.0998061023109484), np.float64(0.10507776393878743)]
+2025-11-07 05:49:29,763 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.40, Loss: 0.11, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 3.59
+2025-11-07 05:49:29,769 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 22 Statistics ===
+2025-11-07 05:49:29,769 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7167, Loss: 0.8270
+2025-11-07 05:49:29,769 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:49:29,769 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:49:29,769 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=17
+2025-11-07 05:49:29,769 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=16
+2025-11-07 05:49:29,769 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=16
+2025-11-07 05:49:29,770 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=18
+2025-11-07 05:49:29,770 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=17
+2025-11-07 05:49:29,770 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=17
+2025-11-07 05:49:29,770 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=17
+2025-11-07 05:49:29,770 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=22
+2025-11-07 05:49:29,770 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=21
+2025-11-07 05:49:29,770 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=9
+2025-11-07 05:49:29,771 - __main__ - INFO - 
+ | Global Training Round: 23/30 |
+
+2025-11-07 05:49:29,783 - __main__ - INFO - Selected 10 clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:49:29,783 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:49:29,783 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:49:40,929 - __main__ - INFO -   Client 0: Loss=0.7367, Quality=0.600
+2025-11-07 05:49:48,015 - __main__ - INFO -   Client 45: Loss=0.3638, Quality=0.600
+2025-11-07 05:49:54,796 - __main__ - INFO -   Client 20: Loss=0.5822, Quality=0.600
+2025-11-07 05:50:01,588 - __main__ - INFO -   Client 41: Loss=0.4826, Quality=0.600
+2025-11-07 05:50:13,769 - __main__ - INFO -   Client 1: Loss=0.6514, Quality=0.600
+2025-11-07 05:50:20,822 - __main__ - INFO -   Client 11: Loss=0.3946, Quality=0.600
+2025-11-07 05:50:25,621 - __main__ - INFO -   Client 2: Loss=0.5152, Quality=0.600
+2025-11-07 05:50:31,051 - __main__ - INFO -   Client 22: Loss=0.4180, Quality=0.600
+2025-11-07 05:50:38,741 - __main__ - INFO -   Client 3: Loss=0.5588, Quality=0.600
+2025-11-07 05:50:46,961 - __main__ - INFO -   Client 36: Loss=0.5663, Quality=0.600
+2025-11-07 05:50:46,975 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08887093516461321, 0.08685114118359927, 0.1558271056352252, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000939358807), np.float64(0.10000000184410145), np.float64(0.09999999889818728), np.float64(0.10000000368527087), np.float64(0.10000000642558003), np.float64(0.09999999925546633), np.float64(0.09999997151954629), np.float64(0.09999999701494905), np.float64(0.10000000597240839), np.float64(0.10000000599090199)], Final: [np.float64(0.12604322734862897), np.float64(0.09453443822501688), np.float64(0.09332256065804286), np.float64(0.09211068618426792), np.float64(0.13349626595136715), np.float64(0.09495859392557578), np.float64(0.07653806172436065), np.float64(0.08411229935132401), np.float64(0.09980610216678602), np.float64(0.10507776446462985)]
+2025-11-07 05:50:49,010 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.19, Loss: -0.06, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 2.83
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 23 Statistics ===
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7148, Loss: 0.8333
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=18
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=17
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=17
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=19
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=18
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=18
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=18
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=23
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=22
+2025-11-07 05:50:49,014 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=10
+2025-11-07 05:50:49,015 - __main__ - INFO - 
+ | Global Training Round: 24/30 |
+
+2025-11-07 05:50:49,027 - __main__ - INFO - Selected 10 clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:50:49,027 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:50:49,028 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:50:59,985 - __main__ - INFO -   Client 0: Loss=0.7253, Quality=0.600
+2025-11-07 05:51:06,733 - __main__ - INFO -   Client 45: Loss=0.3550, Quality=0.600
+2025-11-07 05:51:12,554 - __main__ - INFO -   Client 20: Loss=0.5766, Quality=0.600
+2025-11-07 05:51:18,874 - __main__ - INFO -   Client 41: Loss=0.4480, Quality=0.600
+2025-11-07 05:51:30,291 - __main__ - INFO -   Client 1: Loss=0.6342, Quality=0.600
+2025-11-07 05:51:37,321 - __main__ - INFO -   Client 11: Loss=0.3821, Quality=0.600
+2025-11-07 05:51:42,003 - __main__ - INFO -   Client 2: Loss=0.4810, Quality=0.600
+2025-11-07 05:51:47,680 - __main__ - INFO -   Client 22: Loss=0.4157, Quality=0.600
+2025-11-07 05:51:55,393 - __main__ - INFO -   Client 3: Loss=0.5324, Quality=0.600
+2025-11-07 05:52:03,501 - __main__ - INFO -   Client 36: Loss=0.5568, Quality=0.600
+2025-11-07 05:52:03,513 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08887093516461321, 0.08685114118359927, 0.1558271056352252, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000943564206), np.float64(0.100000001134765), np.float64(0.09999999997595606), np.float64(0.10000000633026647), np.float64(0.1000000082881089), np.float64(0.10000000390564825), np.float64(0.09999996948571097), np.float64(0.09999998661230527), np.float64(0.10000000679078626), np.float64(0.10000000804081075)], Final: [np.float64(0.12604322736545054), np.float64(0.0945344379412823), np.float64(0.09332256108915035), np.float64(0.09211068724226615), np.float64(0.13349626669637868), np.float64(0.09495859578564853), np.float64(0.0765380609108265), np.float64(0.08411229519026647), np.float64(0.09980610249413716), np.float64(0.10507776528459334)]
+2025-11-07 05:52:05,562 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.84, Loss: 0.25, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 4.17
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 24 Statistics ===
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7232, Loss: 0.8079
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=19
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=18
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=18
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=20
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=19
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=19
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=19
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=24
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=23
+2025-11-07 05:52:05,568 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=11
+2025-11-07 05:52:05,569 - __main__ - INFO - 
+ | Global Training Round: 25/30 |
+
+2025-11-07 05:52:05,579 - __main__ - INFO - Selected 10 clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:52:05,579 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:52:05,579 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:52:16,405 - __main__ - INFO -   Client 0: Loss=0.6960, Quality=0.600
+2025-11-07 05:52:23,204 - __main__ - INFO -   Client 45: Loss=0.3338, Quality=0.600
+2025-11-07 05:52:30,117 - __main__ - INFO -   Client 20: Loss=0.5530, Quality=0.600
+2025-11-07 05:52:36,875 - __main__ - INFO -   Client 41: Loss=0.4359, Quality=0.600
+2025-11-07 05:52:48,895 - __main__ - INFO -   Client 1: Loss=0.6228, Quality=0.600
+2025-11-07 05:52:55,919 - __main__ - INFO -   Client 11: Loss=0.3768, Quality=0.600
+2025-11-07 05:53:00,648 - __main__ - INFO -   Client 2: Loss=0.4995, Quality=0.600
+2025-11-07 05:53:06,330 - __main__ - INFO -   Client 22: Loss=0.4147, Quality=0.600
+2025-11-07 05:53:13,996 - __main__ - INFO -   Client 3: Loss=0.5274, Quality=0.600
+2025-11-07 05:53:22,445 - __main__ - INFO -   Client 36: Loss=0.5371, Quality=0.600
+2025-11-07 05:53:22,460 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08887093516461321, 0.08685114118359927, 0.1558271056352252, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.1000000096700274), np.float64(0.10000000598879077), np.float64(0.10000000558894165), np.float64(0.10000000513815566), np.float64(0.10000000872250611), np.float64(0.1000000025868014), np.float64(0.0999999571834108), np.float64(0.09999998613103567), np.float64(0.1000000078782067), np.float64(0.10000001111212391)], Final: [np.float64(0.12604322745920465), np.float64(0.0945344398828926), np.float64(0.09332256333434458), np.float64(0.09211068676542183), np.float64(0.13349626687013758), np.float64(0.09495859525810979), np.float64(0.07653805598990643), np.float64(0.08411229499775863), np.float64(0.09980610292910534), np.float64(0.1050777665131186)]
+2025-11-07 05:53:24,267 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 0.28, Loss: -0.08, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 3.28
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 25 Statistics ===
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7260, Loss: 0.8162
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=20
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=19
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=19
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=21
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=20
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=20
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=20
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=25
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=24
+2025-11-07 05:53:24,271 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=12
+2025-11-07 05:53:24,272 - __main__ - INFO - 
+ | Global Training Round: 26/30 |
+
+2025-11-07 05:53:24,279 - __main__ - INFO - Selected 10 clients: [0, 45, 41, 20, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:53:24,279 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:53:24,279 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:53:34,324 - __main__ - INFO -   Client 0: Loss=0.6740, Quality=0.600
+2025-11-07 05:53:41,075 - __main__ - INFO -   Client 45: Loss=0.3386, Quality=0.600
+2025-11-07 05:53:47,698 - __main__ - INFO -   Client 41: Loss=0.4390, Quality=0.600
+2025-11-07 05:53:53,876 - __main__ - INFO -   Client 20: Loss=0.5527, Quality=0.600
+2025-11-07 05:54:05,731 - __main__ - INFO -   Client 1: Loss=0.6035, Quality=0.600
+2025-11-07 05:54:12,294 - __main__ - INFO -   Client 11: Loss=0.3722, Quality=0.600
+2025-11-07 05:54:16,717 - __main__ - INFO -   Client 2: Loss=0.4955, Quality=0.600
+2025-11-07 05:54:22,296 - __main__ - INFO -   Client 22: Loss=0.4047, Quality=0.600
+2025-11-07 05:54:29,768 - __main__ - INFO -   Client 3: Loss=0.5235, Quality=0.600
+2025-11-07 05:54:38,121 - __main__ - INFO -   Client 36: Loss=0.5412, Quality=0.600
+2025-11-07 05:54:38,136 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08685114118359927, 0.08887093516461321, 0.1558271056352252, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.1000000083716745), np.float64(0.10000000440968636), np.float64(0.09999999861498708), np.float64(0.10000000234317565), np.float64(0.1000000083020347), np.float64(0.10000000316175185), np.float64(0.09999996971998112), np.float64(0.09999999164724431), np.float64(0.10000000673262223), np.float64(0.10000000669684234)], Final: [np.float64(0.1260432269398635), np.float64(0.09453443925125084), np.float64(0.0921106841561544), np.float64(0.09332256203603818), np.float64(0.133496266701949), np.float64(0.09495859548808996), np.float64(0.07653806100453456), np.float64(0.0841122972042421), np.float64(0.09980610247087154), np.float64(0.10507776474700598)]
+2025-11-07 05:54:40,178 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.67, Loss: -0.25, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 2.16
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 26 Statistics ===
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7193, Loss: 0.8409
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 41, 20, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=21
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=20
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=22
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=20
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=21
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=21
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=21
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=26
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=25
+2025-11-07 05:54:40,185 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=13
+2025-11-07 05:54:40,186 - __main__ - INFO - 
+ | Global Training Round: 27/30 |
+
+2025-11-07 05:54:40,198 - __main__ - INFO - Selected 10 clients: [0, 45, 41, 20, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:54:40,198 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:54:40,198 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:54:51,190 - __main__ - INFO -   Client 0: Loss=0.6625, Quality=0.600
+2025-11-07 05:54:58,274 - __main__ - INFO -   Client 45: Loss=0.3146, Quality=0.600
+2025-11-07 05:55:04,570 - __main__ - INFO -   Client 41: Loss=0.4238, Quality=0.600
+2025-11-07 05:55:11,180 - __main__ - INFO -   Client 20: Loss=0.5204, Quality=0.600
+2025-11-07 05:55:22,534 - __main__ - INFO -   Client 1: Loss=0.5790, Quality=0.600
+2025-11-07 05:55:29,150 - __main__ - INFO -   Client 11: Loss=0.3571, Quality=0.600
+2025-11-07 05:55:33,779 - __main__ - INFO -   Client 2: Loss=0.4875, Quality=0.600
+2025-11-07 05:55:39,033 - __main__ - INFO -   Client 22: Loss=0.3793, Quality=0.600
+2025-11-07 05:55:46,481 - __main__ - INFO -   Client 3: Loss=0.5137, Quality=0.600
+2025-11-07 05:55:54,160 - __main__ - INFO -   Client 36: Loss=0.5090, Quality=0.600
+2025-11-07 05:55:54,174 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08685114118359927, 0.08887093516461321, 0.1558271056352252, 0.09159765703898202, 0.06089678852757019, 0.07352050090890729, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000965192787), np.float64(0.10000000420741578), np.float64(0.10000000064453671), np.float64(0.10000000134125724), np.float64(0.10000001023309632), np.float64(0.10000000322724807), np.float64(0.09999997075588825), np.float64(0.09999999465125453), np.float64(0.09999999654149712), np.float64(0.10000000874587806)], Final: [np.float64(0.12604322745196486), np.float64(0.09453443917034261), np.float64(0.09211068496797427), np.float64(0.09332256163527083), np.float64(0.13349626747437368), np.float64(0.09495859551428847), np.float64(0.07653806141889742), np.float64(0.0841122984058462), np.float64(0.09980609839442152), np.float64(0.10507776556662028)]
+2025-11-07 05:55:56,216 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: 2.49, Loss: 0.93, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 6.50
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 27 Statistics ===
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7442, Loss: 0.7475
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 41, 20, 1, 11, 2, 22, 3, 36]
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=22
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=21
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=23
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=21
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=22
+2025-11-07 05:55:56,222 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=22
+2025-11-07 05:55:56,223 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=22
+2025-11-07 05:55:56,223 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=27
+2025-11-07 05:55:56,223 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=26
+2025-11-07 05:55:56,223 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=14
+2025-11-07 05:55:56,224 - __main__ - INFO - 
+ | Global Training Round: 28/30 |
+
+2025-11-07 05:55:56,235 - __main__ - INFO - Selected 10 clients: [0, 45, 20, 41, 1, 22, 11, 2, 3, 36]
+2025-11-07 05:55:56,235 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:55:56,235 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:56:06,207 - __main__ - INFO -   Client 0: Loss=0.6533, Quality=0.600
+2025-11-07 05:56:13,183 - __main__ - INFO -   Client 45: Loss=0.3284, Quality=0.600
+2025-11-07 05:56:20,098 - __main__ - INFO -   Client 20: Loss=0.5214, Quality=0.600
+2025-11-07 05:56:26,802 - __main__ - INFO -   Client 41: Loss=0.4250, Quality=0.600
+2025-11-07 05:56:38,835 - __main__ - INFO -   Client 1: Loss=0.5652, Quality=0.600
+2025-11-07 05:56:44,419 - __main__ - INFO -   Client 22: Loss=0.3612, Quality=0.600
+2025-11-07 05:56:51,204 - __main__ - INFO -   Client 11: Loss=0.3550, Quality=0.600
+2025-11-07 05:56:56,010 - __main__ - INFO -   Client 2: Loss=0.4672, Quality=0.600
+2025-11-07 05:57:03,707 - __main__ - INFO -   Client 3: Loss=0.4917, Quality=0.600
+2025-11-07 05:57:12,242 - __main__ - INFO -   Client 36: Loss=0.4942, Quality=0.600
+2025-11-07 05:57:12,257 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08887093516461321, 0.08685114118359927, 0.1558271056352252, 0.07352050090890729, 0.09159765703898202, 0.06089678852757019, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000000921677907), np.float64(0.09999999950467184), np.float64(0.10000000081728183), np.float64(0.09999999919037633), np.float64(0.10000000877458606), np.float64(0.10000000258063228), np.float64(0.10000000001527216), np.float64(0.09999997755881397), np.float64(0.0999999963407082), np.float64(0.10000000600087841)], Final: [np.float64(0.12604322727790532), np.float64(0.09453443728924503), np.float64(0.09332256142568066), np.float64(0.0921106843863101), np.float64(0.13349626689096955), np.float64(0.08411230157759728), np.float64(0.0949585942294981), np.float64(0.0765380641400677), np.float64(0.09980609831410595), np.float64(0.10507776446862041)]
+2025-11-07 05:57:14,337 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.64, Loss: -0.30, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 2.14
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 28 Statistics ===
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7378, Loss: 0.7778
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 20, 41, 1, 22, 11, 2, 3, 36]
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=23
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=22
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=22
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=24
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=23
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=28
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=23
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=23
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=27
+2025-11-07 05:57:14,344 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=15
+2025-11-07 05:57:14,345 - __main__ - INFO - 
+ | Global Training Round: 29/30 |
+
+2025-11-07 05:57:14,357 - __main__ - INFO - Selected 10 clients: [0, 45, 41, 20, 1, 22, 11, 2, 3, 36]
+2025-11-07 05:57:14,357 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:57:14,357 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:57:25,270 - __main__ - INFO -   Client 0: Loss=0.6346, Quality=0.600
+2025-11-07 05:57:32,307 - __main__ - INFO -   Client 45: Loss=0.3046, Quality=0.600
+2025-11-07 05:57:38,944 - __main__ - INFO -   Client 41: Loss=0.4061, Quality=0.600
+2025-11-07 05:57:45,768 - __main__ - INFO -   Client 20: Loss=0.4941, Quality=0.600
+2025-11-07 05:57:56,746 - __main__ - INFO -   Client 1: Loss=0.5616, Quality=0.600
+2025-11-07 05:58:01,776 - __main__ - INFO -   Client 22: Loss=0.3676, Quality=0.600
+2025-11-07 05:58:07,971 - __main__ - INFO -   Client 11: Loss=0.3451, Quality=0.600
+2025-11-07 05:58:12,508 - __main__ - INFO -   Client 2: Loss=0.4816, Quality=0.600
+2025-11-07 05:58:20,153 - __main__ - INFO -   Client 3: Loss=0.4796, Quality=0.600
+2025-11-07 05:58:28,568 - __main__ - INFO -   Client 36: Loss=0.4851, Quality=0.600
+2025-11-07 05:58:28,580 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08685114118359927, 0.08887093516461321, 0.1558271056352252, 0.07352050090890729, 0.09159765703898202, 0.06089678852757019, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000001246620184), np.float64(0.09999998830873945), np.float64(0.10000000370187391), np.float64(0.1000000041085145), np.float64(0.10000001104664481), np.float64(0.09999999231064008), np.float64(0.09999999578812857), np.float64(0.09999998000926995), np.float64(0.1000000011771173), np.float64(0.1000000110828695)], Final: [np.float64(0.12604322857767444), np.float64(0.09453443281087208), np.float64(0.09211068619090913), np.float64(0.09332256274217375), np.float64(0.13349626779979307), np.float64(0.08411229746960042), np.float64(0.09495859253864065), np.float64(0.07653806512025012), np.float64(0.0998061002486696), np.float64(0.10507776650141686)]
+2025-11-07 05:58:30,633 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.38, Loss: -0.19, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 2.51
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 29 Statistics ===
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7340, Loss: 0.7967
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 41, 20, 1, 22, 11, 2, 3, 36]
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=24
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=23
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=25
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=23
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=24
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=29
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=24
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=24
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=28
+2025-11-07 05:58:30,637 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=16
+2025-11-07 05:58:30,638 - __main__ - INFO - 
+ | Global Training Round: 30/30 |
+
+2025-11-07 05:58:30,645 - __main__ - INFO - Selected 10 clients: [0, 45, 41, 20, 1, 22, 11, 2, 3, 36]
+2025-11-07 05:58:30,645 - __main__ - INFO - Avg quality score: 0.600
+2025-11-07 05:58:30,645 - __main__ - INFO - Noisy clients: 0/10
+2025-11-07 05:58:41,362 - __main__ - INFO -   Client 0: Loss=0.6224, Quality=0.600
+2025-11-07 05:58:47,698 - __main__ - INFO -   Client 45: Loss=0.3017, Quality=0.600
+2025-11-07 05:58:53,651 - __main__ - INFO -   Client 41: Loss=0.4011, Quality=0.600
+2025-11-07 05:59:00,054 - __main__ - INFO -   Client 20: Loss=0.5045, Quality=0.600
+2025-11-07 05:59:11,956 - __main__ - INFO -   Client 1: Loss=0.5268, Quality=0.600
+2025-11-07 05:59:17,165 - __main__ - INFO -   Client 22: Loss=0.3499, Quality=0.600
+2025-11-07 05:59:24,132 - __main__ - INFO -   Client 11: Loss=0.3130, Quality=0.600
+2025-11-07 05:59:28,784 - __main__ - INFO -   Client 2: Loss=0.4515, Quality=0.600
+2025-11-07 05:59:36,066 - __main__ - INFO -   Client 3: Loss=0.4811, Quality=0.600
+2025-11-07 05:59:44,042 - __main__ - INFO -   Client 36: Loss=0.4995, Quality=0.600
+2025-11-07 05:59:44,054 - ppo_server.gradfed_ppo_update - INFO - Aggregation weights - Data: [0.1434053726519895, 0.09089072914562715, 0.08685114118359927, 0.08887093516461321, 0.1558271056352252, 0.07352050090890729, 0.09159765703898202, 0.06089678852757019, 0.09967683296303777, 0.1084629367804484], Quality: [np.float64(0.10000001342491306), np.float64(0.09999998905980118), np.float64(0.10000000782200823), np.float64(0.1000000005274647), np.float64(0.10000001246722952), np.float64(0.09999999026366889), np.float64(0.09999999430782121), np.float64(0.0999999825913535), np.float64(0.1000000008289367), np.float64(0.10000000870680287)], Final: [np.float64(0.12604322896115897), np.float64(0.09453443311129679), np.float64(0.09211068783896287), np.float64(0.09332256130975382), np.float64(0.13349626836802694), np.float64(0.08411229665081195), np.float64(0.09495859194651773), np.float64(0.07653806615308352), np.float64(0.09980610010939736), np.float64(0.10507776555099022)]
+2025-11-07 05:59:46,099 - ppo_server.gradfed_ppo_update - INFO - Reward components - Acc: -0.22, Loss: -0.16, Quality: 3.00, Diversity: 1.08, Comm: -1.00, Total: 2.70
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO - 
+=== Round 30 Statistics ===
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO - Accuracy: 0.7318, Loss: 0.8123
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO - Selected clients: [0, 45, 41, 20, 1, 22, 11, 2, 3, 36]
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO - Gradient Quality - Avg: 0.410, Noisy: 0/50
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 0: Quality=0.600, Participations=25
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 45: Quality=0.600, Participations=24
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 41: Quality=0.600, Participations=26
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 20: Quality=0.600, Participations=24
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 1: Quality=0.600, Participations=25
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 22: Quality=0.600, Participations=30
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 11: Quality=0.600, Participations=25
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 2: Quality=0.600, Participations=25
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 3: Quality=0.600, Participations=29
+2025-11-07 05:59:46,105 - ppo_server.gradfed_ppo_update - INFO -   Client 36: Quality=0.600, Participations=17
+2025-11-07 05:59:48,150 - ppo_server.gradfed_ppo_update - INFO - Statistics saved to ./fedppo_acc_record_cifar10/gradfed_cifar10_resnet10_users50_frac0.2_ep30_iid0.npz
+2025-11-07 05:59:48,156 - __main__ - INFO - Model saved to ./save/gradfed_cifar10_resnet10.pth
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 21/30:
+  Avg Training Loss: 0.5535
+  Test Accuracy: 71.27%
+  Test Loss: 0.8377
+  Reward: 4.46
+  Selected: [0, 45, 20, 1, 41, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 22/30:
+  Avg Training Loss: 0.5400
+  Test Accuracy: 71.67%
+  Test Loss: 0.8270
+  Reward: 3.59
+  Selected: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 23/30:
+  Avg Training Loss: 0.5270
+  Test Accuracy: 71.48%
+  Test Loss: 0.8333
+  Reward: 2.83
+  Selected: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 24/30:
+  Avg Training Loss: 0.5107
+  Test Accuracy: 72.32%
+  Test Loss: 0.8079
+  Reward: 4.17
+  Selected: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 25/30:
+  Avg Training Loss: 0.4997
+  Test Accuracy: 72.60%
+  Test Loss: 0.8162
+  Reward: 3.28
+  Selected: [0, 45, 20, 41, 1, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 26/30:
+  Avg Training Loss: 0.4945
+  Test Accuracy: 71.93%
+  Test Loss: 0.8409
+  Reward: 2.16
+  Selected: [0, 45, 41, 20, 1, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 27/30:
+  Avg Training Loss: 0.4747
+  Test Accuracy: 74.42%
+  Test Loss: 0.7475
+  Reward: 6.50
+  Selected: [0, 45, 41, 20, 1, 11, 2, 22, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 28/30:
+  Avg Training Loss: 0.4662
+  Test Accuracy: 73.78%
+  Test Loss: 0.7778
+  Reward: 2.14
+  Selected: [0, 45, 20, 41, 1, 22, 11, 2, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 29/30:
+  Avg Training Loss: 0.4560
+  Test Accuracy: 73.40%
+  Test Loss: 0.7967
+  Reward: 2.51
+  Selected: [0, 45, 41, 20, 1, 22, 11, 2, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Round 30/30:
+  Avg Training Loss: 0.4451
+  Test Accuracy: 73.18%
+  Test Loss: 0.8123
+  Reward: 2.70
+  Selected: [0, 45, 41, 20, 1, 22, 11, 2, 3, 36]
+  Quality: Avg=0.600, Noisy=0/10
+======================================================================
+
+
+======================================================================
+Training Complete!
+======================================================================
+Final Test Accuracy: 73.18%
+Final Test Loss: 0.8123
+Training Time: 2317.23s
+======================================================================
+
+======================================================================
+Gradient Quality Statistics
+======================================================================
+Average Quality: 0.410
+Quality Std Dev: 0.107
+Noisy Clients: 0/50
+======================================================================
+
+======================================================================
+Client Participation
+======================================================================
+Most active clients: [(22, 30), (3, 29), (41, 26), (0, 25), (1, 25), (2, 25), (11, 25), (20, 24), (45, 24), (36, 17)]
+Least active clients: [(37, 1), (38, 1), (40, 1), (42, 1), (43, 1), (44, 1), (46, 1), (47, 1), (48, 1), (49, 1)]
+======================================================================
+
+
+Results saved to ./fedppo_acc_record_cifar10/
+Model saved to ./save/gradfed_cifar10_resnet10.pth
+

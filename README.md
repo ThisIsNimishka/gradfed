@@ -9,7 +9,7 @@ conda env create -f fedppo_env.yaml
 | iid & non-iid                     | `--iid`                 | `0` (0 for non-iid)        | `0`, `1`                                         |
 | dataset                           | `--dataset`             | `cifar10`                  | `cifar10`, `cifar100`, `emnist`, `imdb`          |
 | traing epoch                      | `--epoch`               | `100`                      |                                                  |
-| cluser method                     | `--cluster_method`      | `hier`                     | `hier`, `gmm`, `dbscan`, `kmeans`, `no`          |
+| cluster method                     | `--cluster_method`      | `hier`                     | `hier`, `gmm`, `dbscan`, `kmeans`, `no`          |
 | device                            | `--gpu_id`              | `0`                        |  none for cpu device                             |
 | user number                       | `--num_users`           | `50`                       | `25`, `50`, `100`, `200`                         |
 |participation rate of users        | `--frac`                | `0.2`                      | `0.4`, `0.2`, `0.1`, `0.05`                      |
