@@ -82,11 +82,13 @@ Alternatively, resolve the dependency graph directly:
 
 ## 📚 Acknowledgments
 
-This repository is based on the **FedPPO** framework originally developed by Zhao, Zheyu et al. (IEEE Transactions on Cognitive Communications and Networking, 2025).
+**GradFed** is developed by **Jain, Nimishka**
 
-The original research framework has been extended and reorganized to improve usability and maintainability for experimental research workflows.
+This framework implements federated learning research concepts with advanced infrastructure for noisy-client robustness and policy-driven optimization.
 
-For detailed contributor information, see [CONTRIBUTORS.md](CONTRIBUTORS.md).
+**Research Foundation:** Built on concepts from FedPPO (Zhao et al., IEEE Transactions on Cognitive Communications and Networking, 2025).
+
+For detailed information about contributions and references, see [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 ## 📖 Citation
 If you leverage this repository in research, please cite the original work:

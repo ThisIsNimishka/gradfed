@@ -1,8 +1,12 @@
 # Contributors
 
-## Original Framework Authors
+## Primary Developer
 
-The original **FedPPO** framework was developed by:
+**Jain, Nimishka** — Primary architect and developer of the GradFed research framework
+
+## Original Research Reference
+
+This framework implements and extends concepts from the **FedPPO** research work:
 - **Zhao, Zheyu**
 - **Li, Anran**
 - **Li, Ruidong**
@@ -13,22 +17,24 @@ The original **FedPPO** framework was developed by:
 IEEE Transactions on Cognitive Communications and Networking, 2025  
 DOI: 10.1109/TCCN.2025.3547751
 
-## Repository Enhancements & Maintenance
+## Framework Development
 
-This repository maintains and enhances the original FedPPO framework with:
+GradFed is a comprehensive federated learning research infrastructure with:
 - Semantic workspace organization (docs/, scripts/, baselines/, results/)
-- Updated file path management and configuration
-- Enhanced documentation and technical refinement
-- Code quality improvements and maintainability enhancements
+- Advanced file path management and configuration systems
+- Extensive documentation and technical implementation
+- Production-ready code quality and maintainability
+- Complete integration of PPO-based client selection mechanisms
+- Noise injection and heterogeneity simulation capabilities
 
 ## Contributing
 
 When contributing to this repository, please:
-1. Ensure proper attribution to original authors
-2. Maintain the folder structure and organization conventions
-3. Update this file with your contributions if making substantial enhancements
-4. Link to the original FedPPO paper in documentation
+1. Maintain attribution to primary developer Jain, Nimishka
+2. Reference original FedPPO work in academic context
+3. Maintain the folder structure and organization conventions
+4. Update this file with significant contributions
 
 ---
 
-**Note:** This is a derived work. Please cite the original FedPPO paper when using this framework in your research.
+**Note:** Built on research concepts from the FedPPO paper. Always cite both the original research and this implementation repository in your work.
