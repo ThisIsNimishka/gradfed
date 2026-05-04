@@ -217,7 +217,7 @@ if __name__ == '__main__':
 
 
     #-----------------------------pre training----------------------------------------#
-    local_ini_dir_path = os.path.join(os.getcwd(), 'fedppo_acc_record_{}/ini'.format(args.dataset))
+    local_ini_dir_path = os.path.join(os.getcwd(), 'results/fedppo_acc_record_{}/ini'.format(args.dataset))
     if not os.path.exists(local_ini_dir_path):
         os.makedirs(local_ini_dir_path)
     file_ini_name = 'local_ini_2_{}_{}_{}.npz'.format(args.num_users, args.level_n_system, args.level_n_lowerb)
@@ -290,7 +290,7 @@ if __name__ == '__main__':
     cv_loss, cv_acc = [], []
     print_every = 2
     val_loss_pre, counter = 0, 0
-    ppo_record_name = 'fedppo_acc_record_{}/ppo_record_noise_{}_lowerb_{}_user_{}_cluster_{}'.format(args.dataset, args.level_n_system, args.level_n_lowerb, args.num_users, args.cluster_method)
+    ppo_record_name = 'results/fedppo_acc_record_{}/ppo_record_noise_{}_lowerb_{}_user_{}_cluster_{}'.format(args.dataset, args.level_n_system, args.level_n_lowerb, args.num_users, args.cluster_method)
     with open(ppo_record_name, 'w') as f:
         f.write('Here is the record of the training of fedppo!\n')
 
@@ -300,7 +300,7 @@ if __name__ == '__main__':
     else:
         batch_deta_loss = np.ones(int(len(train_dataset))) * pow(10, -5)
     for episode in range(args.max_episodes):
-        filename = 'fedppo_acc_record_{}/ppo_acc_episode_{}_noise_{}_lowerb_{}_frac_{}_user_{}_p_{}_alpha_{}_cluster_{}.txt'.format(args.dataset, episode, args.level_n_system, args.level_n_lowerb, args.frac, args.num_users, args.non_iid_prob_class, args.alpha_dirichlet, args.cluster_method)
+        filename = 'results/fedppo_acc_record_{}/ppo_acc_episode_{}_noise_{}_lowerb_{}_frac_{}_user_{}_p_{}_alpha_{}_cluster_{}.txt'.format(args.dataset, episode, args.level_n_system, args.level_n_lowerb, args.frac, args.num_users, args.non_iid_prob_class, args.alpha_dirichlet, args.cluster_method)
         with open(filename, 'w', encoding='utf-8') as f:
             f.write('Here is the record of the training acc of fedppo!\n')
         
@@ -420,7 +420,7 @@ if __name__ == '__main__':
         print("|---- total_reward: {:.2f}%".format(total_reward))
         with open(ppo_record_name, 'a') as f:
             f.write("\nepisode:"+str(episode)+" episode_reward:"+str(total_reward)+" episode_acc:"+str(test_acc)+" episode_loss:"+str(test_loss))
-        with open('fedppo_acc_record_{}/ddqn_reward.txt'.format(args.dataset), 'a', encoding='utf-8') as f:
+        with open('results/fedppo_acc_record_{}/ddqn_reward.txt'.format(args.dataset), 'a', encoding='utf-8') as f:
              f.write("\nepisode:"+str(episode)+" episode_acc:"+str(test_acc)+" episode_reward:"+str(total_reward))
         
 

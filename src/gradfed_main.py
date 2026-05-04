@@ -405,7 +405,7 @@ def gradfed_train():
     print(f'{"="*70}\n')
     
     # Save results
-    save_dir = f'./fedppo_acc_record_{args.dataset}'
+    save_dir = f'./results/fedppo_acc_record_{args.dataset}'
     os.makedirs(save_dir, exist_ok=True)
     
     # Save training history

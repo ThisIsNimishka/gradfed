@@ -193,7 +193,7 @@ tail -f gradfed_training.log
 # View saved statistics
 python -c "
 import numpy as np
-data = np.load('./fedppo_acc_record_cifar10/gradfed_cifar10_resnet10_users100_frac0.1_ep100_iid0.npz')
+data = np.load('./results/fedppo_acc_record_cifar10/gradfed_cifar10_resnet10_users100_frac0.1_ep100_iid0.npz')
 print('Keys:', list(data.keys()))
 print('Final accuracy:', data['round_accuracies'][-1])
 print('Quality scores:', data['quality_scores'])
@@ -206,7 +206,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load accuracy
-acc = np.load('./fedppo_acc_record_cifar10/gradfed_accuracy_cifar10.npy')
+acc = np.load('./results/fedppo_acc_record_cifar10/gradfed_accuracy_cifar10.npy')
 
 plt.figure(figsize=(10, 6))
 plt.plot(acc, linewidth=2)

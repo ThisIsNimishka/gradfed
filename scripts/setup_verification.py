@@ -68,7 +68,7 @@ def check_original_files():
         ("src/models.py", 100),
         ("src/sampling.py", 50),
         ("src/ppo_server/ppo.py", 100),
-        ("baseline/fedavg_main.py", 50),
+        ("baselines/fedavg_main.py", 50),
     ]
     
     all_good = True

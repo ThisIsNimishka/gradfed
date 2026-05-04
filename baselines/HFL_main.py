@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Python version: 3.6
-
+# 此文件用来复现hfl (cvpr 2022) 这里主要实现 对称交叉熵+client重加权
 
 import os
 import copy
@@ -13,8 +13,8 @@ from tqdm import tqdm
 import torch
 
 from options import args_parser
-from ppo_server.ppo_nlp_update import nlpLocalUpdate, nlp_test_inference
-from update import LocalUpdate, test_inference
+from HFL_server.HFL_update import LocalUpdate, test_inference
+from HFL_server.HFL_nlp_update import nlpLocalUpdate, nlp_test_inference
 from models import ResNet10Cifar, ResNet50Cifar, ResNet18Cifar, CNNEmnist, ResNet10Emnist, LSTM, TextClassificationModel
 from utils import get_dataset, average_weights, exp_details
 from sampling import add_noise
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     # define paths
     path_project = os.path.abspath('..')
-   
+
 
     args = args_parser()
     exp_details(args)
@@ -100,11 +100,15 @@ if __name__ == '__main__':
     cv_loss, cv_acc = [], []
     print_every = 2
     val_loss_pre, counter = 0, 0
-    if not os.path.exists("fedavg_acc_record_{}".format(args.dataset)):
-        os.mkdir("fedavg_acc_record_{}".format(args.dataset))
-    filename = 'fedavg_acc_record_{}/fedavg_noise_{}_lowerb_{}_frac_{}_user_{}.txt'.format(args.dataset, args.level_n_system, args.level_n_lowerb, args.frac, args.num_users)
+    if not os.path.exists("HFL_acc_record_{}".format(args.dataset)):
+        os.mkdir("HFL_acc_record_{}".format(args.dataset))   
+    filename = 'HFL_acc_record_{}/HFL_noise_{}_lowerb_{}_frac_{}_user_{}_p_{}_alpha_{}.txt'.format(args.dataset, args.level_n_system, args.level_n_lowerb, args.frac, args.num_users, args.non_iid_prob_class, args.alpha_dirichlet)
     with open(filename,'w') as f:
-        f.write('Here is the record of the training of fedavg!\n')
+        f.write('Here is the record of the training of HFL!\n')
+    
+    client_mean_loss_list = [0 for _ in range(args.num_users)] #存放所有client对应的损失
+    amount_with_quality = [0 for _ in range(args.num_users)]
+
 
     for epoch in tqdm(range(args.epochs)):
         local_weights, local_losses, local_dataset_len = [], [], []
@@ -115,8 +119,10 @@ if __name__ == '__main__':
         idxs_users = np.random.choice(range(args.num_users), m, replace=False)
         # print("选出的client id:", idxs_users) # [96 10 57 97 89 66 72 62 49  5]  [89 99 45 96 72  9 74 88  1 38]
         print("选出来的client集合是:",idxs_users)
-
+        #保存一下当前轮未修改的last_mean_loss_list
+        last_mean_loss_list = copy.deepcopy(client_mean_loss_list)
         for idx in idxs_users:
+            #用全局模型和client i的本地数据集进行更新 传client i的样本user_groups[idx]
             if args.dataset == 'imdb':
                 local_model = nlpLocalUpdate(args=args, x_train=x_train, y_train=y_train, idxs=user_groups[idx])
                 l_model, w, loss, batch_loss_update = local_model.update_weights(model=copy.deepcopy(global_model),global_round=epoch)
@@ -124,13 +130,36 @@ if __name__ == '__main__':
                 local_model = LocalUpdate(args=args, dataset=train_dataset, idxs=user_groups[idx])
                 l_model, w, loss = local_model.update_weights(model=copy.deepcopy(global_model), global_round=epoch)
                 
+           
             local_weights.append(copy.deepcopy(w))
             local_losses.append(copy.deepcopy(loss)) #loss是所有样本的一个平均loss
+            client_mean_loss_list[idx] = copy.deepcopy(loss)
             local_dataset_len.append(local_model.dataset_len)
+        
+        #计算每一个client的权重
+        flag_loss_weight = True
+        quality_list = np.zeros(args.num_users)
+        quality_sum = 0
+        for participant_index in idxs_users:
+            deta_loss = last_mean_loss_list[participant_index] - client_mean_loss_list[participant_index]
+            if(deta_loss <= 0): #之前没有选择过这个client,此时不通过client的loss进行重加权
+                flag_loss_weight = False
+                break
+            else:
+                quality_list[participant_index] = deta_loss/client_mean_loss_list[participant_index]
+                quality_sum += quality_list[participant_index]
 
-
-        # update global weights
-        global_weights = average_weights(local_weights, local_dataset_len)
+        # aggregate global weights
+        if(flag_loss_weight == True):
+            weight_participant = []
+            for participant_index in idxs_users:
+                amount_with_quality[participant_index] += 0.5 * quality_list[participant_index]/quality_sum
+                weight_participant.append(np.exp(amount_with_quality[participant_index]))
+            print("!!!!!!!weight_participant:",weight_participant)
+            global_weights = average_weights(local_weights, weight_participant) #这里权重不是看local_dataset_len而是看weight_participant
+        else:
+            global_weights = average_weights(local_weights, local_dataset_len)
+       
 
         # update global weights
         global_model.load_state_dict(global_weights)
@@ -141,12 +170,14 @@ if __name__ == '__main__':
         # Calculate avg training accuracy over all users at every epoch
         list_acc, list_loss = [], []
         global_model.eval()
-       
+        
+
+        # print global training loss after every 'i' rounds
         if args.dataset == 'imdb':
             test_acc, test_loss = nlp_test_inference(args, global_model, x_test=x_test, y_test=y_test)
         else:
             test_acc, test_loss = test_inference(args, global_model, test_dataset)
-        
+       
         # print(f' \n Results after {args.epochs} global rounds of training:')
         # print("|---- Avg Train Accuracy: {:.2f}%".format(100*train_accuracy[-1]))
         # print("|---- Test Accuracy: {:.2f}%".format(100*test_acc))
@@ -155,10 +186,8 @@ if __name__ == '__main__':
         if(test_acc>=args.target_acc):
             break
 
-        
-
     # Saving the objects train_loss and train_accuracy:
-    file_name = '../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
+    file_name = '../results/save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
         format(args.dataset, args.model, args.epochs, args.frac, args.iid,
                args.local_ep, args.local_bs)
 
@@ -166,5 +195,3 @@ if __name__ == '__main__':
         pickle.dump([train_loss, train_accuracy], f)
 
     print('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
-
-   

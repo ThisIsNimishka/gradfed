@@ -21,7 +21,7 @@ plt.rcParams['font.size'] = 11
 
 def load_results(dataset, method):
     """Load training results for a method"""
-    base_dir = f'./fedppo_acc_record_{dataset}'
+    base_dir = f'./results/fedppo_acc_record_{dataset}'
     
     results = {}
     

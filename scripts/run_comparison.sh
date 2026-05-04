@@ -65,19 +65,19 @@ run_experiment() {
 echo "==================================================================="
 echo "1. Running FedAvg (Baseline)"
 echo "==================================================================="
-run_experiment "FedAvg" "baseline/fedavg_main.py"
+run_experiment "FedAvg" "baselines/fedavg_main.py"
 
 # 2. Run FedProx baseline
 echo "==================================================================="
 echo "2. Running FedProx (Baseline)"
 echo "==================================================================="
-run_experiment "FedProx" "baseline/fedprox_main.py"
+run_experiment "FedProx" "baselines/fedprox_main.py"
 
 # 3. Run FAVOR baseline
 echo "==================================================================="
 echo "3. Running FAVOR (RL Baseline)"
 echo "==================================================================="
-run_experiment "FAVOR" "baseline/favor_main.py"
+run_experiment "FAVOR" "baselines/favor_main.py"
 
 # 4. Run original FedPPO
 echo "==================================================================="
@@ -114,7 +114,7 @@ plt.figure(figsize=(12, 5))
 plt.subplot(1, 2, 1)
 for method, color in zip(methods, colors):
     try:
-        acc_file = f'./fedppo_acc_record_{dataset}/{method.lower()}_accuracy_{dataset}.npy'
+        acc_file = f'./results/fedppo_acc_record_{dataset}/{method.lower()}_accuracy_{dataset}.npy'
         if os.path.exists(acc_file):
             accuracy = np.load(acc_file)
             plt.plot(accuracy, label=method, color=color, linewidth=2)
@@ -131,7 +131,7 @@ plt.grid(True, alpha=0.3)
 plt.subplot(1, 2, 2)
 for method, color in zip(methods, colors):
     try:
-        loss_file = f'./fedppo_acc_record_{dataset}/{method.lower()}_loss_{dataset}.npy'
+        loss_file = f'./results/fedppo_acc_record_{dataset}/{method.lower()}_loss_{dataset}.npy'
         if os.path.exists(loss_file):
             loss = np.load(loss_file)
             plt.plot(loss, label=method, color=color, linewidth=2)
@@ -154,7 +154,7 @@ print("Summary Statistics")
 print("=================================================================")
 for method in methods:
     try:
-        acc_file = f'./fedppo_acc_record_{dataset}/{method.lower()}_accuracy_{dataset}.npy'
+        acc_file = f'./results/fedppo_acc_record_{dataset}/{method.lower()}_accuracy_{dataset}.npy'
         if os.path.exists(acc_file):
             accuracy = np.load(acc_file)
             print(f"\\n{method}:")
