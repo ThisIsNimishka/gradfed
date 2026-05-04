@@ -80,8 +80,16 @@ Alternatively, resolve the dependency graph directly:
 - `imdb` ingestion leverages `keras.datasets.imdb` with fixed-length sequence padding.
 - `clothing1m` requires pre-provisioned local dataset artifacts and is not bootstrapped automatically.
 
-## 📚 Citation
-If you leverage this repository in research, please cite:
+## 📚 Acknowledgments
+
+This repository is based on the **FedPPO** framework originally developed by Zhao, Zheyu et al. (IEEE Transactions on Cognitive Communications and Networking, 2025).
+
+The original research framework has been extended and reorganized to improve usability and maintainability for experimental research workflows.
+
+For detailed contributor information, see [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
+## 📖 Citation
+If you leverage this repository in research, please cite the original work:
 
     @ARTICLE{10909702,
       author={Zheyu Zhao and Anran Li and Ruidong Li and Lei Yang and Xiaohua Xu},
