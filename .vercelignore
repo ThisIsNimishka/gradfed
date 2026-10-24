@@ -1,0 +1,17 @@
+# Ignore Python ML files, environments, and data on Vercel
+requirements.txt
+requirements_gradfed.txt
+environment.yml
+src/
+baseline/
+data/
+save/
+fedppo_acc_record_cifar10/
+*.py
+*.sh
+*.log
+*.pid
+*.pth
+*.npz
+*.pkl
+*.env*
