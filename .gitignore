@@ -48,6 +48,28 @@ venv.bak/
 *.log
 *.tmp
 
+# Credentials, tokens, keys & secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+*.pub
+*secret*
+*token*
+*credential*
+credentials.json
+client_secret*.json
+.netrc
+.gitcredentials
+
+# Vercel deployment cache and artifacts
+.vercel/
+
 # Checkpoints, large data and caches
 save/*.pth
 save/objects/
@@ -58,3 +80,4 @@ comparison_results/
 # OS generated files
 .DS_Store
 Thumbs.db
+
