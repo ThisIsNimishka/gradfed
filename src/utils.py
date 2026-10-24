@@ -15,6 +15,22 @@ from keras.preprocessing.sequence import pad_sequences
 from torch.utils.data import TensorDataset, RandomSampler, DataLoader, SequentialSampler
 
 
+def get_data_dir(dataset_name):
+    """Resolve data directory relative to repository root or local fallback"""
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    candidates = [
+        os.path.join(repo_root, 'data', dataset_name),
+        os.path.join('.', 'data', dataset_name),
+        os.path.join('..', 'data', dataset_name)
+    ]
+    for c in candidates:
+        if os.path.isdir(c):
+            return c
+    target = os.path.join(repo_root, 'data', dataset_name)
+    os.makedirs(target, exist_ok=True)
+    return target
+
+
 def get_dataset(args):
     """ Returns train and test datasets and a user group which is a dict where
     the keys are the user index and the values are the corresponding data for
@@ -22,7 +38,7 @@ def get_dataset(args):
     """
     
     if args.dataset == 'cifar10':
-        data_dir = '../data/cifar10' #在父附录中(..)找到data/cifar
+        data_dir = get_data_dir('cifar10')
         args.num_classes = 10
         trans_train = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
@@ -48,7 +64,7 @@ def get_dataset(args):
             user_groups = non_iid_dirichlet_sampling(y_train, args.num_classes, args.non_iid_prob_class, args.num_users, args.seed, args.alpha_dirichlet)
         
     elif args.dataset == 'cifar100':
-        data_dir = '../data/cifar100'
+        data_dir = get_data_dir('cifar100')
         # print("data_dir:",data_dir)
         args.num_classes = 100
         trans_train = transforms.Compose([
@@ -76,11 +92,10 @@ def get_dataset(args):
 
 
     elif args.dataset == 'clothing1m':
-        # data_dir = '../data/clothing1m/'
-        data_dir = '../data/clothing1m/'
+        data_dir = get_data_dir('clothing1m')
         args.num_classes = 14
         args.model = 'resnet50'
-        #对图像进行标准化处理
+        # Normalize images
         trans_train = transforms.Compose([
                     transforms.Resize((256, 256)),
                     transforms.RandomCrop(224),
@@ -91,9 +106,8 @@ def get_dataset(args):
         trans_val = transforms.Compose([
                     transforms.Resize((224, 224)),
                     transforms.ToTensor(),
-                    transforms.Normalize(mean=[0.485, 0.456, 9.406], std=[0.229, 0.224, 0.225])
+                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
-        #这里下午是否可以做修改，直接噪声率直接混合数据集
         train_dataset = Clothing(data_dir, trans_train, "train", args.level_n_system)
         test_dataset = Clothing(data_dir, trans_val, "test", args.level_n_system)
         n_train = len(train_dataset)
@@ -104,9 +118,9 @@ def get_dataset(args):
         else:
             user_groups = non_iid_dirichlet_sampling(y_train, args.num_classes, args.non_iid_prob_class, args.num_users, args.seed, args.alpha_dirichlet)
     
-    #尝试导入emnist数据集
+    # EMNIST dataset
     elif args.dataset == 'emnist':
-        data_dir = '../data/emnist'
+        data_dir = get_data_dir('emnist')
         apply_transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.1307,), (0.3081,))])
@@ -118,7 +132,6 @@ def get_dataset(args):
         y_train = np.array(train_dataset.targets)
      # sample training data amongst users
         if args.iid:
-            #sample IID user data from cifar
             user_groups = iid_sampling(n_train, args.num_users, args.seed)
         else:
             user_groups = non_iid_dirichlet_sampling(y_train, args.num_classes, args.non_iid_prob_class, args.num_users, args.seed, args.alpha_dirichlet)
@@ -126,9 +139,9 @@ def get_dataset(args):
 
     elif args.dataset == 'mnist' or args.dataset ==  'fmnist':
         if args.dataset == 'mnist':
-            data_dir = '../data/mnist/'
+            data_dir = get_data_dir('mnist')
         else:
-            data_dir = '../data/fmnist/'
+            data_dir = get_data_dir('fmnist')
 
         apply_transform = transforms.Compose([
             transforms.ToTensor(),

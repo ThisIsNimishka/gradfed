@@ -4,12 +4,13 @@
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.12+-ee4c2c.svg)](https://pytorch.org/)
+[![CI](https://github.com/ThisIsNimishka/gradfed/actions/workflows/ci.yml/badge.svg)](https://github.com/ThisIsNimishka/gradfed/actions)
 [![Live Demo](https://img.shields.io/badge/Live%20Showcase-Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://gradfed.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Thesis](https://img.shields.io/badge/Academic-Master's%20Thesis-purple.svg)](file:///c:/Users/Nimis/Downloads/1_PROJECTS/gradfed/CITATION.cff)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ThisIsNimishka/gradfed/pulls)
 
-**A Reinforcement Learning & Gradient-Aware Client Profiling Framework for Robust Federated Learning under Extreme Non-IID and Noisy Data Distributions.**
+**A Reinforcement Learning &amp; Gradient-Aware Client Profiling Framework for Robust Federated Learning under Extreme Non-IID and Noisy Data Distributions.**
 
 [Live Showcase](https://gradfed.vercel.app) •
 [Key Highlights](#-key-highlights) •
@@ -19,6 +20,9 @@
 [Quickstart](#-quickstart--installation) •
 [Citation](#-citation)
 
+<br/>
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FThisIsNimishka%2Fgradfed)
 
 ---
 
