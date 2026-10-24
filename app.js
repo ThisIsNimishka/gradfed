@@ -100,6 +100,7 @@ let currentMatrixFilter = 'all';
 
 // Initialize application on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+  setupStudioTabs();
   initClientGrid();
   updateRoundView(0);
   setupEventListeners();
@@ -652,3 +653,47 @@ function showToast(msg) {
     toast.classList.remove('show');
   }, 2500);
 }
+
+// Studio Tabs Controller
+function setupStudioTabs() {
+  const tabs = document.querySelectorAll('.studio-tab-btn');
+  const panels = {
+    simulator: document.getElementById('studioPanelSimulator'),
+    calculator: document.getElementById('studioPanelCalculator'),
+    cli: document.getElementById('studioPanelCli')
+  };
+
+  function switchTab(targetStudio) {
+    tabs.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.studio === targetStudio);
+    });
+
+    Object.keys(panels).forEach(key => {
+      if (panels[key]) {
+        panels[key].classList.toggle('active', key === targetStudio);
+      }
+    });
+
+    if (targetStudio === 'simulator') {
+      setTimeout(() => renderSimChart(currentRoundIdx), 50);
+    }
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchTab(btn.dataset.studio);
+    });
+  });
+
+  // Handle URL hashes or links to specific sub-tools
+  const handleHash = () => {
+    const hash = window.location.hash;
+    if (hash === '#simulator') switchTab('simulator');
+    else if (hash === '#calculator') switchTab('calculator');
+    else if (hash === '#cli-generator' || hash === '#cli') switchTab('cli');
+  };
+
+  window.addEventListener('hashchange', handleHash);
+  handleHash();
+}
+

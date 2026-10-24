@@ -269,8 +269,7 @@ If you use **GradFed** or find this work helpful in your research, please cite t
   author={Jain, Nimishka},
   year={2025},
   school={National Institute of Technology Goa},
-  address={Goa, India},
-  supervisor={Swain, Pravati}
+  address={Goa, India}
 }
 ```
 

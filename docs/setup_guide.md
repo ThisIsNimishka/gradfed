@@ -266,8 +266,7 @@ If you use this work in your research, please cite:
   author={Jain, Nimishka},
   year={2025},
   school={National Institute of Technology Goa},
-  address={Goa, India},
-  supervisor={Swain, Pravati}
+  address={Goa, India}
 }
 ```
 

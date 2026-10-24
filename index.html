@@ -15,7 +15,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="index.css">
 </head>
@@ -28,16 +28,14 @@
         <div class="brand-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
-        GradFed
+        <span>GradFed</span>
         <span class="brand-badge">Research Showcase</span>
       </a>
 
       <ul class="nav-links">
-        <li><a href="#simulator" class="nav-link">Live Simulator</a></li>
-        <li><a href="#calculator" class="nav-link">Quality Calculator</a></li>
+        <li><a href="#studio" class="nav-link">Interactive Studio</a></li>
         <li><a href="#architecture" class="nav-link">Architecture</a></li>
         <li><a href="#benchmarks" class="nav-link">Benchmarks</a></li>
-        <li><a href="#cli-generator" class="nav-link">CLI Generator</a></li>
         <li><a href="#citation" class="nav-link">Citation</a></li>
       </ul>
 
@@ -45,7 +43,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
         </svg>
-        GitHub
+        <span>GitHub</span>
       </a>
     </div>
   </nav>
@@ -63,254 +61,360 @@
       </h1>
 
       <p class="hero-sub">
-        An intelligent client selection and robust aggregation framework designed for non-IID and noisy edge environments. Automatically identifies unstable updates, isolates corrupted clients, and achieves state-of-the-art convergence stability.
+        An intelligent client selection and robust aggregation framework designed for non-IID and noisy edge environments. Automatically detects unstable updates, isolates corrupted clients, and achieves state-of-the-art convergence stability.
       </p>
 
       <div class="author-pill">
         <span class="author-name">Nimishka Jain</span>
-        <span class="author-inst">• Supervised by Dr. Pravati Swain (NIT Goa)</span>
+        <span class="author-inst">• National Institute of Technology Goa, India</span>
       </div>
 
       <div class="hero-ctas">
-        <a href="#simulator" class="btn-primary">
+        <a href="#studio" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Launch Live Simulator
+          Open Interactive Studio
         </a>
         <a href="#architecture" class="btn-secondary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
           Explore Architecture
         </a>
+        <a href="#benchmarks" class="btn-ghost">
+          <span>View Benchmarks &rarr;</span>
+        </a>
       </div>
 
-      <!-- Live KPI Metrics -->
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-val cyan">74.42%</div>
-          <div class="metric-lbl">Peak Accuracy</div>
-          <div class="metric-sub">Non-IID CIFAR-10 (30 Rounds)</div>
+      <!-- Refined Minimalist Stats Strip -->
+      <div class="hero-stats-strip">
+        <div class="stat-item">
+          <div class="stat-num cyan">74.42%</div>
+          <div class="stat-label">Peak Accuracy</div>
+          <div class="stat-sub">Non-IID CIFAR-10</div>
         </div>
-
-        <div class="metric-card">
-          <div class="metric-val emerald">8 Rounds</div>
-          <div class="metric-lbl">Fast Convergence</div>
-          <div class="metric-sub">Rounds to reach >60% accuracy</div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num emerald">8 Rounds</div>
+          <div class="stat-label">Fast Convergence</div>
+          <div class="stat-sub">Rounds to &gt;60% accuracy</div>
         </div>
-
-        <div class="metric-card">
-          <div class="metric-val amber">50 Clients</div>
-          <div class="metric-lbl">Heterogeneous Pool</div>
-          <div class="metric-sub">Dirichlet class partition (α = 10)</div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num amber">50 Clients</div>
+          <div class="stat-label">Heterogeneous Pool</div>
+          <div class="stat-sub">Dirichlet skew (&alpha; = 10)</div>
         </div>
-
-        <div class="metric-card">
-          <div class="metric-val purple">100%</div>
-          <div class="metric-lbl">Noise Isolation</div>
-          <div class="metric-sub">Corrupted updates filtered out</div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num purple">100%</div>
+          <div class="stat-label">Noise Isolation</div>
+          <div class="stat-sub">Corrupted updates filtered</div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ================= SECTION: LIVE SIMULATOR ================= -->
-  <section id="simulator" class="section">
+  <!-- ================= SECTION: UNIFIED INTERACTIVE STUDIO ================= -->
+  <section id="studio" class="section">
     <div class="container">
       <div class="section-head">
-        <span class="section-tag">Interactive Demonstration</span>
-        <h2 class="section-title">Federated Learning Round Simulator</h2>
+        <span class="section-tag">Interactive Research Studio</span>
+        <h2 class="section-title">Federated Learning Laboratory</h2>
         <p class="section-desc">
-          Step through the actual 30-round experimental run on CIFAR-10 with ResNet-10. Watch how GradFed profiles client gradient quality in real-time and adaptively selects high-performing clients.
+          Test GradFed interactively: replay the 30-round CIFAR-10 training run, evaluate the gradient quality math engine, or generate reproducible CLI commands.
         </p>
       </div>
 
-      <div class="simulator-panel">
-        <!-- Controls -->
-        <div class="sim-controls">
-          <div class="sim-btn-group">
-            <button id="btnPrev" class="sim-btn" title="Previous Round">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/></svg>
-              Step Prev
-            </button>
-            <button id="btnPlay" class="sim-btn active" title="Play / Pause">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Auto Play
-            </button>
-            <button id="btnNext" class="sim-btn" title="Next Round">
-              Step Next
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
-            </button>
-            <button id="btnReset" class="sim-btn" title="Reset Simulation">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-              Reset
-            </button>
-          </div>
+      <!-- Studio Mode Switcher Tabs -->
+      <div class="studio-nav-bar">
+        <button class="studio-tab-btn active" data-studio="simulator" id="tabBtnSimulator">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>FL Round Simulator</span>
+        </button>
+        <button class="studio-tab-btn" data-studio="calculator" id="tabBtnCalculator">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          <span>Gradient Quality Engine</span>
+        </button>
+        <button class="studio-tab-btn" data-studio="cli" id="tabBtnCli">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          <span>Experiment Command Builder</span>
+        </button>
+      </div>
 
-          <div class="sim-status">
-            <div class="status-pill">Round: <span id="simCurrentRound">1</span> / 30</div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 0.8rem; color: var(--text-muted);">Speed:</span>
-              <input type="range" id="speedSlider" min="400" max="1400" value="800" style="cursor: pointer; width: 100px;">
+      <!-- TAB 1: FL ROUND SIMULATOR -->
+      <div id="studioPanelSimulator" class="studio-panel active">
+        <div class="simulator-panel">
+          <!-- Controls -->
+          <div class="sim-controls">
+            <div class="sim-btn-group">
+              <button id="btnPrev" class="sim-btn" title="Previous Round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"/></svg>
+                <span>Prev</span>
+              </button>
+              <button id="btnPlay" class="sim-btn active" title="Play / Pause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Auto Play</span>
+              </button>
+              <button id="btnNext" class="sim-btn" title="Next Round">
+                <span>Next</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+              </button>
+              <button id="btnReset" class="sim-btn" title="Reset Simulation">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                <span>Reset</span>
+              </button>
             </div>
-          </div>
-        </div>
 
-        <!-- Progress Bar -->
-        <div style="height: 6px; background: rgba(255,255,255,0.06); border-radius: 9999px; margin-bottom: 24px; overflow: hidden;">
-          <div id="simProgressBar" style="width: 3.3%; height: 100%; background: var(--grad-primary); transition: width 0.3s ease;"></div>
-        </div>
-
-        <!-- Dashboard Counters -->
-        <div class="sim-stats-grid">
-          <div class="sim-stat-box">
-            <div id="simAccuracy" class="sim-stat-num cyan">16.78%</div>
-            <div class="sim-stat-title">Test Accuracy</div>
-          </div>
-
-          <div class="sim-stat-box">
-            <div id="simLoss" class="sim-stat-num purple">2.1801</div>
-            <div class="sim-stat-title">Evaluation Loss</div>
-          </div>
-
-          <div class="sim-stat-box">
-            <div id="simSelectedCount" class="sim-stat-num emerald">10 / 50</div>
-            <div class="sim-stat-title">Selected Clients</div>
-          </div>
-
-          <div class="sim-stat-box">
-            <div id="simAvgQuality" class="sim-stat-num amber">0.350</div>
-            <div class="sim-stat-title">Avg Gradient Quality (Q)</div>
-          </div>
-        </div>
-
-        <!-- Live Round Trajectory Chart -->
-        <div class="sim-chart-wrapper">
-          <div class="sim-chart-header">
-            <span class="sim-chart-title">Real-Time Trajectory Convergence</span>
-            <div class="sim-chart-legend">
-              <span class="legend-item"><span class="legend-color-dot cyan-dot"></span> Test Accuracy (%)</span>
-              <span class="legend-item"><span class="legend-color-dot amber-dot"></span> Cross-Entropy Loss</span>
-            </div>
-          </div>
-          <canvas id="simChart" width="1050" height="240"></canvas>
-        </div>
-
-        <!-- Keyboard Controls Hint -->
-        <div class="keyboard-hints">
-          <span>Shortcuts:</span>
-          <kbd>Space</kbd> Play / Pause
-          <kbd>&rarr;</kbd> Next
-          <kbd>&larr;</kbd> Prev
-          <kbd>R</kbd> Reset
-        </div>
-
-        <!-- Client Matrix Grid -->
-        <div class="matrix-container">
-          <div class="matrix-header">
-            <span class="matrix-title">Distributed Edge Clients (Click any client node for telemetry)</span>
-            <div class="matrix-legend">
-              <span><span class="leg-dot leg-high"></span>Optimal (&ge;0.8)</span>
-              <span><span class="leg-dot leg-med"></span>Stable (0.5-0.7)</span>
-              <span><span class="leg-dot leg-explore"></span>Exploration (&lt;0.4)</span>
-              <span><span class="leg-dot leg-noisy"></span>Noisy (&lt;0.3)</span>
+            <div class="sim-status">
+              <div class="status-pill">Round <span id="simCurrentRound">1</span> / 30</div>
+              <div class="speed-control">
+                <span class="speed-label">Speed:</span>
+                <input type="range" id="speedSlider" min="400" max="1400" value="800" class="speed-slider">
+              </div>
             </div>
           </div>
 
-          <!-- Quick Filter Pills -->
-          <div class="filter-pills" id="matrixFilterPills">
-            <button class="filter-pill active" data-filter="all">All Clients (50)</button>
-            <button class="filter-pill" data-filter="selected">Selected in Round t (10)</button>
-            <button class="filter-pill" data-filter="optimal">Optimal Q &ge; 0.8 (12)</button>
-            <button class="filter-pill" data-filter="stable">Stable 0.5–0.7 (18)</button>
-            <button class="filter-pill" data-filter="explore">Exploration Pool (12)</button>
-            <button class="filter-pill" data-filter="noisy">Flagged Noisy &lt; 0.3 (8)</button>
+          <!-- Progress Bar -->
+          <div class="sim-progress-track">
+            <div id="simProgressBar" class="sim-progress-fill"></div>
           </div>
 
-          <div id="clientGrid" class="client-grid">
-            <!-- 50 client nodes dynamically rendered via JavaScript -->
+          <!-- Dashboard Counters -->
+          <div class="sim-stats-grid">
+            <div class="sim-stat-box">
+              <div id="simAccuracy" class="sim-stat-num cyan">16.78%</div>
+              <div class="sim-stat-title">Test Accuracy</div>
+            </div>
+            <div class="sim-stat-box">
+              <div id="simLoss" class="sim-stat-num purple">2.1801</div>
+              <div class="sim-stat-title">Evaluation Loss</div>
+            </div>
+            <div class="sim-stat-box">
+              <div id="simSelectedCount" class="sim-stat-num emerald">10 / 50</div>
+              <div class="sim-stat-title">Selected Clients</div>
+            </div>
+            <div class="sim-stat-box">
+              <div id="simAvgQuality" class="sim-stat-num amber">0.350</div>
+              <div class="sim-stat-title">Avg Gradient Quality (Q)</div>
+            </div>
+          </div>
+
+          <!-- Live Round Trajectory Chart -->
+          <div class="sim-chart-wrapper">
+            <div class="sim-chart-header">
+              <span class="sim-chart-title">Real-Time Trajectory Convergence</span>
+              <div class="sim-chart-legend">
+                <span class="legend-item"><span class="legend-color-dot cyan-dot"></span> Test Accuracy (%)</span>
+                <span class="legend-item"><span class="legend-color-dot amber-dot"></span> Cross-Entropy Loss</span>
+              </div>
+            </div>
+            <canvas id="simChart" width="1050" height="230"></canvas>
+          </div>
+
+          <!-- Keyboard Controls Hint -->
+          <div class="keyboard-hints">
+            <span class="hint-title">Shortcuts:</span>
+            <span><kbd>Space</kbd> Play / Pause</span>
+            <span><kbd>&rarr;</kbd> Next</span>
+            <span><kbd>&larr;</kbd> Prev</span>
+            <span><kbd>R</kbd> Reset</span>
+          </div>
+
+          <!-- Client Matrix Grid -->
+          <div class="matrix-container">
+            <div class="matrix-header">
+              <span class="matrix-title">Distributed Edge Clients (Click any client node for telemetry)</span>
+              <div class="matrix-legend">
+                <span><span class="leg-dot leg-high"></span>Optimal (&ge;0.8)</span>
+                <span><span class="leg-dot leg-med"></span>Stable (0.5-0.7)</span>
+                <span><span class="leg-dot leg-explore"></span>Exploration (&lt;0.4)</span>
+                <span><span class="leg-dot leg-noisy"></span>Noisy (&lt;0.3)</span>
+              </div>
+            </div>
+
+            <!-- Quick Filter Pills -->
+            <div class="filter-pills" id="matrixFilterPills">
+              <button class="filter-pill active" data-filter="all">All Clients (50)</button>
+              <button class="filter-pill" data-filter="selected">Selected in Round t (10)</button>
+              <button class="filter-pill" data-filter="optimal">Optimal Q &ge; 0.8 (12)</button>
+              <button class="filter-pill" data-filter="stable">Stable 0.5–0.7 (18)</button>
+              <button class="filter-pill" data-filter="explore">Exploration Pool (12)</button>
+              <button class="filter-pill" data-filter="noisy">Flagged Noisy &lt; 0.3 (8)</button>
+            </div>
+
+            <div id="clientGrid" class="client-grid">
+              <!-- 50 client nodes dynamically rendered via JavaScript -->
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ================= SECTION: QUALITY CALCULATOR ================= -->
-  <section id="calculator" class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-tag">Interactive Methodology Playground</span>
-        <h2 class="section-title">Gradient Quality Metric Calculator</h2>
-        <p class="section-desc">
-          Test the exact mathematical formulation of GradFed's GradientMonitor. Adjust the 3 normalized metrics to see how a client is classified and weighted in the dual-balanced aggregation.
-        </p>
+      <!-- TAB 2: GRADIENT QUALITY ENGINE -->
+      <div id="studioPanelCalculator" class="studio-panel">
+        <div class="calculator-panel">
+          <div class="calc-grid">
+            <!-- Sliders Column -->
+            <div class="calc-controls">
+              <!-- Metric 1: Norm Stability -->
+              <div class="calc-control-group">
+                <div class="calc-control-label">
+                  <span>1. Norm Stability (S_k = 1 / (1 + CV_k))</span>
+                  <span id="valStability" class="calc-val-badge">0.85</span>
+                </div>
+                <input type="range" id="sliderStability" class="calc-slider" min="0" max="100" value="85">
+                <p class="calc-sub">Measures L2 gradient norm consistency over sliding window W=5 rounds. High stability = low variation.</p>
+              </div>
+
+              <!-- Metric 2: Magnitude Bound -->
+              <div class="calc-control-group">
+                <div class="calc-control-label">
+                  <span>2. Magnitude Bound (M_k = 2 / (1 + e^(||Δw||/10)))</span>
+                  <span id="valMagnitude" class="calc-val-badge">0.80</span>
+                </div>
+                <input type="range" id="sliderMagnitude" class="calc-slider" min="0" max="100" value="80">
+                <p class="calc-sub">Penalizes exploding pseudo-gradients and zero-gradient stragglers via sigmoidal thresholding.</p>
+              </div>
+
+              <!-- Metric 3: Direction Alignment -->
+              <div class="calc-control-group">
+                <div class="calc-control-label">
+                  <span>3. Directional Alignment (C_k = (cos(Δw, Δw_prev) + 1) / 2)</span>
+                  <span id="valCosine" class="calc-val-badge">0.75</span>
+                </div>
+                <input type="range" id="sliderCosine" class="calc-slider" min="0" max="100" value="75">
+                <p class="calc-sub">Measures trajectory alignment across rounds to prevent erratic random gradient drift.</p>
+              </div>
+            </div>
+
+            <!-- Result Card Column -->
+            <div class="calc-result-card">
+              <span class="calc-result-tag">Composite Evaluation</span>
+              <div class="calc-score-display">
+                <span id="calcCompositeQ" class="calc-big-num">0.815</span>
+                <span class="calc-score-max">/ 1.00</span>
+              </div>
+
+              <div id="calcStatusBadge" class="calc-status-badge badge-optimal">
+                Optimal Participant (Prioritized in Aggregation)
+              </div>
+
+              <div class="calc-breakdown">
+                <div class="breakdown-row">
+                  <span>Norm Stability (50% weight):</span>
+                  <span id="calcPartS" class="breakdown-val">0.425</span>
+                </div>
+                <div class="breakdown-row">
+                  <span>Magnitude Bound (30% weight):</span>
+                  <span id="calcPartM" class="breakdown-val">0.240</span>
+                </div>
+                <div class="breakdown-row">
+                  <span>Direction Alignment (20% weight):</span>
+                  <span id="calcPartC" class="breakdown-val">0.150</span>
+                </div>
+              </div>
+
+              <div class="calc-action-box">
+                <span class="calc-action-lbl">Server Action:</span>
+                <p id="calcActionDesc" class="calc-action-text">
+                  Client gradients exhibit stable norm progression and consistent trajectory alignment. Full aggregation contribution (40% quality weight + data volume) granted.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="calculator-panel">
-        <div class="calc-grid">
-          <!-- Sliders Column -->
-          <div class="calc-controls">
-            <!-- Metric 1: Norm Stability -->
-            <div class="calc-control-group">
-              <div class="calc-control-label">
-                <span>1. Norm Stability (S_k = 1 / (1 + CV_k))</span>
-                <span id="valStability" class="calc-val-badge">0.85</span>
-              </div>
-              <input type="range" id="sliderStability" class="calc-slider" min="0" max="100" value="85">
-              <p class="calc-sub">Measures L2 gradient norm consistency over sliding window W=5 rounds. High stability = low variation.</p>
+      <!-- TAB 3: CLI COMMAND BUILDER -->
+      <div id="studioPanelCli" class="studio-panel">
+        <div class="cli-generator-card">
+          <div class="cli-config-grid">
+            <div class="cli-config-item">
+              <label class="cli-label">Dataset</label>
+              <select id="cliDataset" class="cli-select">
+                <option value="cifar10" selected>CIFAR-10 (10 classes)</option>
+                <option value="cifar100">CIFAR-100 (100 classes)</option>
+                <option value="emnist">EMNIST (byclass)</option>
+                <option value="mnist">MNIST (digits)</option>
+              </select>
             </div>
 
-            <!-- Metric 2: Magnitude Bound -->
-            <div class="calc-control-group">
-              <div class="calc-control-label">
-                <span>2. Magnitude Bound (M_k = 2 / (1 + e^(||Δw||/10)))</span>
-                <span id="valMagnitude" class="calc-val-badge">0.80</span>
-              </div>
-              <input type="range" id="sliderMagnitude" class="calc-slider" min="0" max="100" value="80">
-              <p class="calc-sub">Penalizes exploding pseudo-gradients and zero-gradient stragglers via sigmoidal thresholding.</p>
+            <div class="cli-config-item">
+              <label class="cli-label">Model Backbone</label>
+              <select id="cliModel" class="cli-select">
+                <option value="resnet10" selected>ResNet-10</option>
+                <option value="cnn">Standard CNN</option>
+                <option value="mlp">Multi-Layer Perceptron</option>
+              </select>
             </div>
 
-            <!-- Metric 3: Direction Alignment -->
-            <div class="calc-control-group">
-              <div class="calc-control-label">
-                <span>3. Directional Alignment (C_k = (cos(Δw, Δw_prev) + 1) / 2)</span>
-                <span id="valCosine" class="calc-val-badge">0.75</span>
-              </div>
-              <input type="range" id="sliderCosine" class="calc-slider" min="0" max="100" value="75">
-              <p class="calc-sub">Measures trajectory alignment across rounds to prevent erratic random gradient drift.</p>
+            <div class="cli-config-item">
+              <label class="cli-label">Total Clients (K)</label>
+              <select id="cliNumUsers" class="cli-select">
+                <option value="20">20 Clients</option>
+                <option value="50" selected>50 Clients</option>
+                <option value="100">100 Clients</option>
+              </select>
+            </div>
+
+            <div class="cli-config-item">
+              <label class="cli-label">Selection Fraction (C)</label>
+              <select id="cliFrac" class="cli-select">
+                <option value="0.1">0.1 (10% per round)</option>
+                <option value="0.2" selected>0.2 (20% per round)</option>
+                <option value="0.4">0.4 (40% per round)</option>
+              </select>
+            </div>
+
+            <div class="cli-config-item">
+              <label class="cli-label">Dirichlet Alpha (Non-IID)</label>
+              <select id="cliAlpha" class="cli-select">
+                <option value="0.5">α = 0.5 (Extreme Skew)</option>
+                <option value="1.0">α = 1.0 (High Skew)</option>
+                <option value="10.0" selected>α = 10.0 (Moderate Skew)</option>
+              </select>
+            </div>
+
+            <div class="cli-config-item">
+              <label class="cli-label">Global Rounds (T)</label>
+              <select id="cliEpochs" class="cli-select">
+                <option value="10">10 Rounds (Smoke Test)</option>
+                <option value="30" selected>30 Rounds (Standard)</option>
+                <option value="100">100 Rounds (Full Benchmark)</option>
+              </select>
+            </div>
+
+            <div class="cli-config-item">
+              <label class="cli-label">Local Epochs (E)</label>
+              <select id="cliLocalEp" class="cli-select">
+                <option value="5">5 Local Epochs</option>
+                <option value="10" selected>10 Local Epochs</option>
+              </select>
+            </div>
+
+            <div class="cli-config-item">
+              <label class="cli-label">Hardware Device</label>
+              <select id="cliGpu" class="cli-select">
+                <option value="0" selected>CUDA GPU 0</option>
+                <option value="-1">CPU Only (-1)</option>
+              </select>
             </div>
           </div>
 
-          <!-- Result Card Column -->
-          <div class="calc-result-card">
-            <span class="calc-result-tag">Composite Evaluation</span>
-            <div class="calc-score-display">
-              <span id="calcCompositeQ" class="calc-big-num">0.815</span>
-              <span class="calc-score-max">/ 1.00</span>
+          <!-- Generated Command Box -->
+          <div class="cli-output-box">
+            <div class="cli-output-header">
+              <span>Terminal Command</span>
+              <button id="btnCopyCli" class="copy-btn" onclick="copyCliCommand()">Copy Command</button>
             </div>
-
-            <div id="calcStatusBadge" class="calc-status-badge badge-optimal">
-              Optimal Participant (Prioritized in Aggregation)
-            </div>
-
-            <div class="calc-breakdown">
-              <div class="breakdown-row">
-                <span>Norm Stability (50% weight):</span>
-                <span id="calcPartS" class="breakdown-val">0.425</span>
-              </div>
-              <div class="breakdown-row">
-                <span>Magnitude Bound (30% weight):</span>
-                <span id="calcPartM" class="breakdown-val">0.240</span>
-              </div>
-              <div class="breakdown-row">
-                <span>Direction Alignment (20% weight):</span>
-                <span id="calcPartC" class="breakdown-val">0.150</span>
-              </div>
-            </div>
-
-            <div class="calc-action-box">
-              <span class="calc-action-lbl">Server Action:</span>
-              <p id="calcActionDesc" class="calc-action-text">
-                Client gradients exhibit stable norm progression and consistent trajectory alignment. Full aggregation contribution (40% quality weight + data volume) granted.
-              </p>
-            </div>
+            <pre id="cliCommandText" class="cli-pre">python src/gradfed_main.py \
+    --dataset cifar10 \
+    --model resnet10 \
+    --num_users 50 \
+    --frac 0.2 \
+    --local_ep 10 \
+    --local_bs 10 \
+    --epochs 30 \
+    --alpha_dirichlet 10.0 \
+    --gpu 0 \
+    --iid 0</pre>
           </div>
         </div>
       </div>
@@ -362,7 +466,7 @@ Stability S_k = 1 / (1 + CV_k)</div>
         <span class="section-tag">Empirical Results</span>
         <h2 class="section-title">Experimental Benchmarks on CIFAR-10</h2>
         <p class="section-desc">
-          Evaluated against state-of-the-art FL algorithms under extreme non-IID conditions with ResNet-10 (Dirichlet α=10.0, 50 clients, 20% participation).
+          Evaluated against state-of-the-art FL algorithms under extreme non-IID conditions with ResNet-10 (Dirichlet &alpha;=10.0, 50 clients, 20% participation).
         </p>
       </div>
 
@@ -420,7 +524,7 @@ Stability S_k = 1 / (1 + CV_k)</div>
       <div class="plots-grid">
         <div class="plot-card">
           <img src="docs/assets/accuracy_comparison.svg" alt="Accuracy Comparison Plot" loading="lazy">
-          <p class="plot-desc"><strong>Test Accuracy Trajectory:</strong> GradFed climbs to >60% in round 8 and achieves a peak of 74.42% under severe non-IID class skew.</p>
+          <p class="plot-desc"><strong>Test Accuracy Trajectory:</strong> GradFed climbs to &gt;60% in round 8 and achieves a peak of 74.42% under severe non-IID class skew.</p>
         </div>
 
         <div class="plot-card">
@@ -441,113 +545,6 @@ Stability S_k = 1 / (1 + CV_k)</div>
     </div>
   </section>
 
-  <!-- ================= SECTION: CLI GENERATOR ================= -->
-  <section id="cli-generator" class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-tag">Reproducible Science</span>
-        <h2 class="section-title">Interactive Experiment CLI Generator</h2>
-        <p class="section-desc">
-          Configure your experimental hyperparameters and copy the executable Python training command with 1 click.
-        </p>
-      </div>
-
-      <div class="cli-generator-card">
-        <div class="cli-config-grid">
-          <div class="cli-config-item">
-            <label class="cli-label">Dataset</label>
-            <select id="cliDataset" class="cli-select">
-              <option value="cifar10" selected>CIFAR-10 (10 classes)</option>
-              <option value="cifar100">CIFAR-100 (100 classes)</option>
-              <option value="emnist">EMNIST (byclass)</option>
-              <option value="mnist">MNIST (digits)</option>
-            </select>
-          </div>
-
-          <div class="cli-config-item">
-            <label class="cli-label">Model Backbone</label>
-            <select id="cliModel" class="cli-select">
-              <option value="resnet10" selected>ResNet-10</option>
-              <option value="cnn">Standard CNN</option>
-              <option value="mlp">Multi-Layer Perceptron</option>
-            </select>
-          </div>
-
-          <div class="cli-config-item">
-            <label class="cli-label">Total Clients (K)</label>
-            <select id="cliNumUsers" class="cli-select">
-              <option value="20">20 Clients</option>
-              <option value="50" selected>50 Clients</option>
-              <option value="100">100 Clients</option>
-            </select>
-          </div>
-
-          <div class="cli-config-item">
-            <label class="cli-label">Selection Fraction (C)</label>
-            <select id="cliFrac" class="cli-select">
-              <option value="0.1">0.1 (10% per round)</option>
-              <option value="0.2" selected>0.2 (20% per round)</option>
-              <option value="0.4">0.4 (40% per round)</option>
-            </select>
-          </div>
-
-          <div class="cli-config-item">
-            <label class="cli-label">Dirichlet Alpha (Non-IID)</label>
-            <select id="cliAlpha" class="cli-select">
-              <option value="0.5">α = 0.5 (Extreme Skew)</option>
-              <option value="1.0">α = 1.0 (High Skew)</option>
-              <option value="10.0" selected>α = 10.0 (Moderate Skew)</option>
-            </select>
-          </div>
-
-          <div class="cli-config-item">
-            <label class="cli-label">Global Rounds (T)</label>
-            <select id="cliEpochs" class="cli-select">
-              <option value="10">10 Rounds (Smoke Test)</option>
-              <option value="30" selected>30 Rounds (Standard)</option>
-              <option value="100">100 Rounds (Full Benchmark)</option>
-            </select>
-          </div>
-
-          <div class="cli-config-item">
-            <label class="cli-label">Local Epochs (E)</label>
-            <select id="cliLocalEp" class="cli-select">
-              <option value="5">5 Local Epochs</option>
-              <option value="10" selected>10 Local Epochs</option>
-            </select>
-          </div>
-
-          <div class="cli-config-item">
-            <label class="cli-label">Hardware Device</label>
-            <select id="cliGpu" class="cli-select">
-              <option value="0" selected>CUDA GPU 0</option>
-              <option value="-1">CPU Only (-1)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Generated Command Box -->
-        <div class="cli-output-box">
-          <div class="cli-output-header">
-            <span>Terminal Command</span>
-            <button id="btnCopyCli" class="copy-btn" onclick="copyCliCommand()">Copy Command</button>
-          </div>
-          <pre id="cliCommandText" class="cli-pre">python src/gradfed_main.py \
-    --dataset cifar10 \
-    --model resnet10 \
-    --num_users 50 \
-    --frac 0.2 \
-    --local_ep 10 \
-    --local_bs 10 \
-    --epochs 30 \
-    --alpha_dirichlet 10.0 \
-    --gpu 0 \
-    --iid 0</pre>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= SECTION: THESIS & CITATION ================= -->
   <section id="citation" class="section">
     <div class="container">
@@ -560,8 +557,14 @@ Stability S_k = 1 / (1 + CV_k)</div>
       </div>
 
       <div class="thesis-card">
-        <h3 style="font-size: 1.4rem; margin-bottom: 8px;">GradFed: Gradient-Aware Client Selection in Federated Learning</h3>
-        <p style="margin-bottom: 14px;"><strong>Author:</strong> Nimishka Jain &nbsp;•&nbsp; <strong>Supervisor:</strong> Dr. Pravati Swain &nbsp;•&nbsp; <strong>Institution:</strong> National Institute of Technology Goa, India</p>
+        <h3 class="thesis-title">GradFed: Gradient-Aware Client Selection in Federated Learning</h3>
+        <p class="thesis-meta">
+          <span><strong>Author:</strong> Nimishka Jain</span>
+          <span class="meta-sep">•</span>
+          <span><strong>Institution:</strong> National Institute of Technology Goa, India</span>
+          <span class="meta-sep">•</span>
+          <span><strong>Degree:</strong> Master of Technology</span>
+        </p>
         
         <div class="bibtex-box">
           <button class="copy-btn" onclick="copyBibtex()">Copy BibTeX</button>
@@ -570,8 +573,7 @@ Stability S_k = 1 / (1 + CV_k)</div>
   author={Jain, Nimishka},
   year={2025},
   school={National Institute of Technology Goa},
-  address={Goa, India},
-  supervisor={Swain, Pravati}
+  address={Goa, India}
 }</code>
         </div>
       </div>
@@ -579,29 +581,29 @@ Stability S_k = 1 / (1 + CV_k)</div>
   </section>
 
   <!-- Client Telemetry Modal -->
-  <div id="clientModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); z-index:2000; align-items:center; justify-content:center;">
-    <div style="background:var(--bg-secondary); border:1px solid var(--border-medium); border-radius:var(--radius-lg); padding:32px; max-width:440px; width:90%; position:relative; box-shadow:var(--shadow-md);">
-      <button onclick="closeClientModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
-      <h3 style="font-size:1.3rem; margin-bottom:16px;">Client Telemetry <span id="modalClientId" style="color:var(--accent-cyan);">#00</span></h3>
+  <div id="clientModal" class="modal-overlay">
+    <div class="modal-card">
+      <button onclick="closeClientModal()" class="modal-close-btn">&times;</button>
+      <h3 class="modal-title">Client Telemetry <span id="modalClientId" class="cyan">#00</span></h3>
       
-      <div style="margin-bottom:12px; font-size:0.9rem;">
-        <span style="color:var(--text-muted);">Status Classification:</span>
-        <strong id="modalClientType" style="color:#ffffff; margin-left:6px;">Core High Quality</strong>
+      <div class="modal-row">
+        <span class="modal-lbl">Status Classification:</span>
+        <strong id="modalClientType" class="modal-val">Core High Quality</strong>
       </div>
 
-      <div style="margin-bottom:12px; font-size:0.9rem;">
-        <span style="color:var(--text-muted);">Current Quality Score (Q):</span>
-        <strong id="modalClientQuality" style="color:var(--accent-emerald); margin-left:6px;">0.880</strong>
+      <div class="modal-row">
+        <span class="modal-lbl">Current Quality Score (Q):</span>
+        <strong id="modalClientQuality" class="modal-val emerald">0.880</strong>
       </div>
 
-      <div style="margin-bottom:12px; font-size:0.9rem;">
-        <span style="color:var(--text-muted);">Total Participation:</span>
-        <strong id="modalClientRounds" style="color:#ffffff; margin-left:6px;">25 / 30 rounds</strong>
+      <div class="modal-row">
+        <span class="modal-lbl">Total Participation:</span>
+        <strong id="modalClientRounds" class="modal-val">25 / 30 rounds</strong>
       </div>
 
-      <div style="margin-top:16px; padding:12px; background:rgba(0,0,0,0.3); border-radius:var(--radius-sm); font-size:0.85rem;">
-        <span style="color:var(--text-muted);">Server Recommendation:</span><br>
-        <strong id="modalClientAction" style="color:var(--accent-cyan);">Included in primary aggregation</strong>
+      <div class="modal-action-box">
+        <span class="modal-lbl">Server Recommendation:</span>
+        <strong id="modalClientAction" class="modal-action-val">Included in primary aggregation</strong>
       </div>
     </div>
   </div>
@@ -614,7 +616,7 @@ Stability S_k = 1 / (1 + CV_k)</div>
     <div class="container">
       <div class="footer-links">
         <a href="https://github.com/ThisIsNimishka/gradfed" target="_blank" rel="noopener">GitHub</a>
-        <a href="CITATION.cff">Citation</a>
+        <a href="#citation">Citation</a>
         <a href="docs/setup_guide.md">Setup Guide</a>
         <a href="LICENSE">MIT License</a>
       </div>
