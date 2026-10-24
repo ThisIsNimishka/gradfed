@@ -1,11 +1,14 @@
 #!/bin/bash
 
 # Comparison script to evaluate GradFed against baseline methods
-# Place this file in the root directory: run_comparison.sh
-# Make executable: chmod +x run_comparison.sh
+# Usage: ./scripts/run_comparison.sh (from repo root or scripts directory)
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 echo "==================================================================="
-echo "GradFed vs Baselines Comparison"
+echo "GradFed vs Baselines Benchmark Suite"
+echo "Repository Root: $REPO_ROOT"
 echo "==================================================================="
 
 # Configuration
@@ -19,9 +22,10 @@ EPOCHS=100
 GPU=0
 IID=0  # 0 for non-IID, 1 for IID
 
-# Create results directory
-RESULTS_DIR="./comparison_results"
-mkdir -p $RESULTS_DIR
+# Semantic results and logs directory
+RESULTS_DIR="$REPO_ROOT/results/comparison"
+LOGS_DIR="$REPO_ROOT/logs"
+mkdir -p "$RESULTS_DIR" "$LOGS_DIR"
 
 echo "Configuration:"
 echo "  Dataset: $DATASET"
@@ -31,20 +35,21 @@ echo "  Fraction: $FRAC"
 echo "  Local Epochs: $LOCAL_EP"
 echo "  Global Rounds: $EPOCHS"
 echo "  Non-IID: $(if [ $IID -eq 0 ]; then echo 'Yes'; else echo 'No'; fi)"
+echo "  Results Directory: $RESULTS_DIR"
 echo ""
 
 # Function to run experiment
 run_experiment() {
     local method=$1
-    local script=$2
-    local logfile="${RESULTS_DIR}/${method}_${DATASET}.log"
+    local script_rel=$2
+    local logfile="${LOGS_DIR}/${method}_${DATASET}.log"
     
     echo "-------------------------------------------------------------------"
-    echo "Running: $method"
+    echo "Running: $method ($script_rel)"
     echo "Log file: $logfile"
     echo "-------------------------------------------------------------------"
     
-    python $script \
+    python "$REPO_ROOT/$script_rel" \
         --dataset $DATASET \
         --model $MODEL \
         --num_users $NUM_USERS \
@@ -54,7 +59,7 @@ run_experiment() {
         --epochs $EPOCHS \
         --gpu $GPU \
         --iid $IID \
-        2>&1 | tee $logfile
+        2>&1 | tee "$logfile"
     
     echo ""
     echo "$method completed!"
@@ -74,13 +79,13 @@ echo "==================================================================="
 run_experiment "FedProx" "baseline/fedprox_main.py"
 
 # 3. Run FAVOR baseline (if ddqn dependencies present)
-if [ -d "ddqn_server" ] || [ -f "baseline/ddqn_server/DDQN.py" ]; then
+if [ -d "$REPO_ROOT/baseline/ddqn_server" ] || [ -f "$REPO_ROOT/baseline/ddqn_server/DDQN.py" ]; then
     echo "==================================================================="
     echo "3. Running FAVOR (RL Baseline)"
     echo "==================================================================="
     run_experiment "FAVOR" "baseline/favor_main.py"
 else
-    echo "Skipping FAVOR baseline (ddqn_server submodule not present)."
+    echo "Skipping FAVOR baseline (baseline/ddqn_server submodule not present)."
 fi
 
 # 4. Run original FedPPO
@@ -89,7 +94,7 @@ echo "4. Running FedPPO (Original)"
 echo "==================================================================="
 run_experiment "FedPPO" "src/ppo_remove_main.py"
 
-# 5. Run GradFed (Your method)
+# 5. Run GradFed (Proposed Method)
 echo "==================================================================="
 echo "5. Running GradFed (Proposed Method)"
 echo "==================================================================="
@@ -105,11 +110,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+repo_root = "$REPO_ROOT"
 results_dir = "$RESULTS_DIR"
 dataset = "$DATASET"
 
 methods = ['FedAvg', 'FedProx', 'FAVOR', 'FedPPO', 'GradFed']
 colors = ['blue', 'green', 'orange', 'red', 'purple']
+
+# Helper to find file in results/ or fedppo_acc_record_
+def find_metric_file(method_name, metric_type):
+    candidates = [
+        os.path.join(repo_root, 'results', dataset, f'{method_name.lower()}_{metric_type}_{dataset}.npy'),
+        os.path.join(repo_root, f'fedppo_acc_record_{dataset}', f'{method_name.lower()}_{metric_type}_{dataset}.npy')
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return c
+    return None
 
 # Load accuracy results
 plt.figure(figsize=(12, 5))
@@ -118,8 +135,8 @@ plt.figure(figsize=(12, 5))
 plt.subplot(1, 2, 1)
 for method, color in zip(methods, colors):
     try:
-        acc_file = f'./fedppo_acc_record_{dataset}/{method.lower()}_accuracy_{dataset}.npy'
-        if os.path.exists(acc_file):
+        acc_file = find_metric_file(method, 'accuracy')
+        if acc_file:
             accuracy = np.load(acc_file)
             plt.plot(accuracy, label=method, color=color, linewidth=2)
     except Exception as e:
@@ -135,8 +152,8 @@ plt.grid(True, alpha=0.3)
 plt.subplot(1, 2, 2)
 for method, color in zip(methods, colors):
     try:
-        loss_file = f'./fedppo_acc_record_{dataset}/{method.lower()}_loss_{dataset}.npy'
-        if os.path.exists(loss_file):
+        loss_file = find_metric_file(method, 'loss')
+        if loss_file:
             loss = np.load(loss_file)
             plt.plot(loss, label=method, color=color, linewidth=2)
     except Exception as e:
@@ -149,28 +166,31 @@ plt.legend()
 plt.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig(f'{results_dir}/comparison_plot_{dataset}.png', dpi=300)
-print(f"\\nComparison plot saved to: {results_dir}/comparison_plot_{dataset}.png")
+save_plot = os.path.join(results_dir, f'comparison_plot_{dataset}.png')
+plt.savefig(save_plot, dpi=300)
+print(f"\nComparison plot saved to: {save_plot}")
 
 # Print summary statistics
-print("\\n=================================================================")
+print("\n=================================================================")
 print("Summary Statistics")
 print("=================================================================")
 for method in methods:
-    try:
-        acc_file = f'./fedppo_acc_record_{dataset}/{method.lower()}_accuracy_{dataset}.npy'
-        if os.path.exists(acc_file):
+    acc_file = find_metric_file(method, 'accuracy')
+    if acc_file:
+        try:
             accuracy = np.load(acc_file)
-            print(f"\\n{method}:")
+            print(f"\n{method}:")
             print(f"  Final Accuracy: {accuracy[-1]:.4f}")
             print(f"  Best Accuracy: {np.max(accuracy):.4f}")
             print(f"  Average (last 10 rounds): {np.mean(accuracy[-10:]):.4f}")
-    except:
-        print(f"\\n{method}: Results not found")
+        except Exception:
+            print(f"\n{method}: Error loading accuracy file")
+    else:
+        print(f"\n{method}: Results not found")
 
-print("\\n=================================================================")
+print("\n=================================================================")
 EOF
 
 echo ""
 echo "Comparison report generated!"
-echo "Check $RESULTS_DIR/ for logs and plots"
+echo "Check $RESULTS_DIR/ for summary plots and $LOGS_DIR/ for logs."

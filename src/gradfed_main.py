@@ -35,11 +35,15 @@ from ppo_server.ppo import PPO
 import logging
 
 # Setup logging
+log_dir = os.path.join(parent_dir, 'logs')
+os.makedirs(log_dir, exist_ok=True)
+log_file = os.path.join(log_dir, 'gradfed_training.log')
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('gradfed_training.log'),
+        logging.FileHandler(log_file),
         logging.StreamHandler()
     ]
 )
@@ -413,7 +417,12 @@ def gradfed_train():
     print(f'{"="*70}\n')
     
     # Save results
-    save_dir = f'./fedppo_acc_record_{args.dataset}'
+    primary_results_dir = os.path.join(parent_dir, 'results', args.dataset)
+    legacy_results_dir = os.path.join(parent_dir, f'fedppo_acc_record_{args.dataset}')
+    if os.path.exists(legacy_results_dir) and not os.path.exists(primary_results_dir):
+        save_dir = legacy_results_dir
+    else:
+        save_dir = primary_results_dir
     os.makedirs(save_dir, exist_ok=True)
     
     # Save training history
@@ -431,9 +440,14 @@ def gradfed_train():
             train_loss)
     
     # Save model
-    model_dir = './save'
+    primary_model_dir = os.path.join(parent_dir, 'results', 'checkpoints')
+    legacy_model_dir = os.path.join(parent_dir, 'save')
+    if os.path.exists(legacy_model_dir) and not os.path.exists(primary_model_dir):
+        model_dir = legacy_model_dir
+    else:
+        model_dir = primary_model_dir
     os.makedirs(model_dir, exist_ok=True)
-    model_save_path = f'{model_dir}/gradfed_{args.dataset}_{args.model}.pth'
+    model_save_path = os.path.join(model_dir, f'gradfed_{args.dataset}_{args.model}.pth')
     torch.save(global_model.state_dict(), model_save_path)
     logger.info(f'Model saved to {model_save_path}')
     

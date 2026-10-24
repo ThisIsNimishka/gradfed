@@ -187,9 +187,12 @@ if __name__ == '__main__':
             break
 
     # Saving the objects train_loss and train_accuracy:
-    file_name = '../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    save_obj_dir = os.path.join(repo_root, 'results', 'checkpoints', 'objects')
+    os.makedirs(save_obj_dir, exist_ok=True)
+    file_name = os.path.join(save_obj_dir, '{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.
         format(args.dataset, args.model, args.epochs, args.frac, args.iid,
-               args.local_ep, args.local_bs)
+               args.local_ep, args.local_bs))
 
     with open(file_name, 'wb') as f:
         pickle.dump([train_loss, train_accuracy], f)

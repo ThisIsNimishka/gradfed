@@ -71,11 +71,15 @@ client_secret*.json
 .vercel/
 
 # Checkpoints, large data and caches
-save/*.pth
-save/objects/
+results/checkpoints/**/*.pth
+!results/checkpoints/gradfed_cifar10_resnet10.pth
+results/comparison/
+results/visualization/
+comparison_results/
+visualization_results/
+save/
 data/
 !data/README.md
-comparison_results/
 
 # OS generated files
 .DS_Store

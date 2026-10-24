@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 """
-Setup Verification Script for fedppov2
-This script checks if GradFed is properly integrated into your fedppov2 folder
+Setup Verification Script for GradFed
+This script verifies that GradFed and its components are properly configured.
 
 Usage:
-    cd /path/to/fedppov2
-    python setup_verification.py
+    python scripts/setup_verification.py
 """
 
 import os
 import sys
 import importlib.util
+
+# Determine repository root
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if os.path.isdir(os.path.join(SCRIPT_DIR, '..', 'src')):
+    REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, '..'))
+elif os.path.isdir(os.path.join(os.getcwd(), 'src')):
+    REPO_ROOT = os.getcwd()
+else:
+    REPO_ROOT = os.getcwd()
 
 def print_header(text):
     """Print formatted header"""
@@ -18,8 +26,9 @@ def print_header(text):
     print(f"  {text}")
     print("="*70)
 
-def check_file_exists(filepath, min_lines=50):
+def check_file_exists(rel_path, min_lines=50):
     """Check if file exists and has sufficient content"""
+    filepath = os.path.join(REPO_ROOT, rel_path)
     if not os.path.exists(filepath):
         return False, "❌ File not found", 0
     
@@ -37,7 +46,7 @@ def check_file_exists(filepath, min_lines=50):
         return False, f"❌ Error reading: {e}", 0
 
 def check_directory_structure():
-    """Verify directory structure"""
+    """Verify semantic directory structure"""
     print_header("1. Checking Directory Structure")
     
     required_dirs = [
@@ -45,14 +54,18 @@ def check_directory_structure():
         "src/ppo_server",
         "baseline",
         "data",
-        "save",
+        "docs",
+        "scripts",
+        "results",
+        "logs",
     ]
     
     all_good = True
-    for dir_path in required_dirs:
+    for dir_rel in required_dirs:
+        dir_path = os.path.join(REPO_ROOT, dir_rel)
         exists = os.path.isdir(dir_path)
         status = "✅" if exists else "❌"
-        print(f"{status} {dir_path}/")
+        print(f"{status} {dir_rel}/")
         if not exists:
             all_good = False
     
@@ -60,7 +73,7 @@ def check_directory_structure():
 
 def check_original_files():
     """Check original FedPPO files"""
-    print_header("2. Checking Original FedPPO Files")
+    print_header("2. Checking Original FedPPO Foundation Files")
     
     original_files = [
         ("src/options.py", 50),
@@ -72,35 +85,36 @@ def check_original_files():
     ]
     
     all_good = True
-    for filepath, min_lines in original_files:
-        exists, msg, lines = check_file_exists(filepath, min_lines)
-        print(f"{msg:60s} {filepath}")
+    for rel_path, min_lines in original_files:
+        exists, msg, lines = check_file_exists(rel_path, min_lines)
+        print(f"{msg:60s} {rel_path}")
         if not exists:
             all_good = False
     
     return all_good
 
 def check_gradfed_files():
-    """Check new GradFed files"""
-    print_header("3. Checking GradFed Files")
+    """Check GradFed files"""
+    print_header("3. Checking GradFed Core Files")
     
     gradfed_files = [
         ("src/gradient_monitor.py", 200),
         ("src/ppo_server/gradfed_ppo_update.py", 230),
         ("src/gradfed_main.py", 350),
         ("src/visualize_results.py", 350),
-        ("run_comparison.sh", 100),
+        ("scripts/run_comparison.sh", 80),
+        ("docs/setup_guide.md", 80),
     ]
     
     all_good = True
     missing_files = []
     
-    for filepath, min_lines in gradfed_files:
-        exists, msg, lines = check_file_exists(filepath, min_lines)
-        print(f"{msg:60s} {filepath}")
+    for rel_path, min_lines in gradfed_files:
+        exists, msg, lines = check_file_exists(rel_path, min_lines)
+        print(f"{msg:60s} {rel_path}")
         if not exists:
             all_good = False
-            missing_files.append(filepath)
+            missing_files.append(rel_path)
     
     return all_good, missing_files
 
@@ -108,8 +122,12 @@ def test_imports():
     """Test if Python can import the modules"""
     print_header("4. Testing Python Imports")
     
-    # Add current directory to path
-    sys.path.insert(0, os.getcwd())
+    # Add root and src to path
+    if REPO_ROOT not in sys.path:
+        sys.path.insert(0, REPO_ROOT)
+    src_dir = os.path.join(REPO_ROOT, 'src')
+    if src_dir not in sys.path:
+        sys.path.insert(0, src_dir)
     
     imports_to_test = [
         ("src.options", "args_parser"),
@@ -139,19 +157,23 @@ def check_permissions():
     """Check file permissions"""
     print_header("5. Checking File Permissions")
     
-    # Check if run_comparison.sh is executable
-    comparison_script = "run_comparison.sh"
+    comparison_script = os.path.join(REPO_ROOT, "scripts", "run_comparison.sh")
     if os.path.exists(comparison_script):
-        is_executable = os.access(comparison_script, os.X_OK)
-        if is_executable:
-            print(f"✅ {comparison_script} is executable")
+        # On POSIX check executable bit; on Windows check read/write
+        if os.name == 'nt':
+            print(f"✅ scripts/run_comparison.sh exists (Windows host)")
             return True
         else:
-            print(f"⚠️ {comparison_script} exists but not executable")
-            print(f"   Fix with: chmod +x {comparison_script}")
-            return False
+            is_executable = os.access(comparison_script, os.X_OK)
+            if is_executable:
+                print(f"✅ scripts/run_comparison.sh is executable")
+                return True
+            else:
+                print(f"⚠️ scripts/run_comparison.sh exists but not executable")
+                print(f"   Fix with: chmod +x scripts/run_comparison.sh")
+                return False
     else:
-        print(f"❌ {comparison_script} not found")
+        print(f"❌ scripts/run_comparison.sh not found")
         return False
 
 def check_disk_space():
@@ -160,18 +182,17 @@ def check_disk_space():
     
     try:
         import shutil
-        total, used, free = shutil.disk_usage(".")
+        total, used, free = shutil.disk_usage(REPO_ROOT)
         
         print(f"Total Space: {total // (2**30)} GB")
         print(f"Used Space:  {used // (2**30)} GB")
         print(f"Free Space:  {free // (2**30)} GB")
         
-        # Check if we have at least 10GB free
-        if free > 10 * (2**30):
+        if free > 5 * (2**30):
             print(f"✅ Sufficient disk space available")
             return True
         else:
-            print(f"⚠️ Low disk space (< 10GB free)")
+            print(f"⚠️ Low disk space (< 5GB free)")
             return False
     except Exception as e:
         print(f"⚠️ Could not check disk space: {e}")
@@ -183,34 +204,32 @@ def print_quick_start_guide(missing_files):
     
     if missing_files:
         print("\n⚠️ Missing Files Detected!")
-        print("\nPlease add the following files:")
+        print("\nPlease check that the following files exist:")
         for filepath in missing_files:
             print(f"  - {filepath}")
         print("\nPlease check that all repository files are present according to README.md.")
     else:
-        print("\n✅ All files are present!")
+        print("\n✅ All files and semantic directories are present!")
         print("\nYou can now:")
-        print("\n1. Run a quick test:")
+        print("\n1. Run a quick test (10 rounds):")
         print("   python src/gradfed_main.py --dataset cifar10 --model resnet10 \\")
-        print("       --num_users 10 --frac 0.3 --local_ep 2 --epochs 3 --gpu 0")
-        print("\n2. Check if it's working:")
-        print("   tail -f gradfed_training.log")
-        print("\n3. Run full experiment:")
+        print("       --num_users 20 --frac 0.2 --local_ep 5 --epochs 10 --gpu 0")
+        print("\n2. Monitor live training:")
+        print("   tail -f logs/gradfed_training.log")
+        print("\n3. Run full benchmark experiment (30 rounds):")
         print("   python src/gradfed_main.py --dataset cifar10 --model resnet10 \\")
-        print("       --num_users 100 --frac 0.1 --local_ep 10 --epochs 100 --gpu 0")
-        print("\n4. Compare with baselines:")
-        print("   ./run_comparison.sh")
+        print("       --num_users 50 --frac 0.2 --local_ep 10 --epochs 30 --gpu 0")
+        print("\n4. Compare with all baselines:")
+        print("   chmod +x scripts/run_comparison.sh && ./scripts/run_comparison.sh")
 
 def main():
     """Main verification function"""
     print("\n" + "="*70)
-    print("  GradFed Setup Verification for fedppov2")
+    print("  GradFed System & Semantic Setup Verification")
     print("="*70)
-    print(f"\nCurrent Directory: {os.getcwd()}")
+    print(f"\nRepository Root: {REPO_ROOT}")
     
-    # Run all checks
     results = {}
-    
     results['structure'] = check_directory_structure()
     results['original'] = check_original_files()
     results['gradfed'], missing_files = check_gradfed_files()
@@ -218,7 +237,6 @@ def main():
     results['permissions'] = check_permissions()
     results['disk'] = check_disk_space()
     
-    # Summary
     print_header("Summary")
     
     checks = [
@@ -238,11 +256,11 @@ def main():
     
     print("\n" + "="*70)
     if all_passed:
-        print("  🎉 ALL CHECKS PASSED! Setup is complete.")
+        print("  🎉 ALL CHECKS PASSED! GradFed setup is complete and healthy.")
         print("="*70)
         print_quick_start_guide([])
     else:
-        print("  ⚠️ SOME CHECKS FAILED! Please fix the issues above.")
+        print("  ⚠️ SOME CHECKS FAILED! Please inspect the diagnostics above.")
         print("="*70)
         print_quick_start_guide(missing_files if not results['gradfed'] else [])
     

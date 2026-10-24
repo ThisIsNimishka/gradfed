@@ -2,10 +2,16 @@
 requirements.txt
 requirements_gradfed.txt
 environment.yml
+environments/
 src/
 baseline/
 data/
 save/
+results/
+logs/
+scripts/
+comparison_results/
+visualization_results/
 fedppo_acc_record_cifar10/
 *.py
 *.sh

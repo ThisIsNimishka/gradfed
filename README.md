@@ -119,7 +119,7 @@ Experiments were evaluated on **CIFAR-10** using a **ResNet-10** backbone across
 
 ```
 gradfed/
-├── src/
+├── src/                              # Core GradFed & FedPPO source code
 │   ├── gradient_monitor.py           # Core GradientMonitor: Norm CV, cosine sim, magnitude bounds
 │   ├── gradfed_main.py               # Main GradFed training and evaluation pipeline
 │   ├── models.py                     # Model architectures (ResNet10Cifar, CNNCifar, MLP, etc.)
@@ -132,17 +132,35 @@ gradfed/
 │       ├── gradfed_ppo_update.py     # Quality-aware selection logic & dual-balanced aggregator
 │       ├── ppo.py                    # Actor-Critic network and RolloutBuffer implementation
 │       └── ppo_remove_update.py      # Upstream FedPPO hierarchical clustering baseline
-├── baseline/
+├── baseline/                         # Classical FL baselines
 │   ├── fedavg_main.py                # Standalone Federated Averaging baseline
 │   ├── fedprox_main.py               # Standalone FedProx baseline with proximal term (mu)
 │   ├── favor_main.py                 # FAVOR baseline runner
 │   └── kmeans_main.py                # K-Means clustering FL baseline
-├── docs/assets/                      # High-resolution architectural diagrams and SVG charts
+├── data/                             # Dataset cache folder
+│   └── README.md
+├── docs/                             # Documentation, guides, and visual assets
+│   ├── setup_guide.md                # Comprehensive end-to-end setup and debugging guide
+│   └── assets/                       # High-resolution architectural diagrams and SVG charts
+├── environments/                     # Environment manifests and legacy locks
+│   ├── legacy_fedppo_env.yaml        # Original FedPPO conda lock file
+│   └── requirements_gradfed.txt      # Module requirements reference
+├── logs/                             # Training run logs and benchmark traces
+│   ├── gradfed_training.log          # Primary GradFed execution log
+│   └── experiment_30rounds.log       # 30-round Non-IID verification log
+├── results/                          # Metric arrays, checkpoints, and evaluation results
+│   ├── cifar10/                      # Saved accuracy/loss .npy arrays and .npz run stats
+│   └── checkpoints/                  # Saved model weights (.pth) and baseline object pickles
+├── scripts/                          # Automated execution and validation utilities
+│   ├── run_comparison.sh             # Shell script to execute full baseline benchmark suite
+│   └── setup_verification.py         # Diagnostic tool verifying components and environment
+├── app.js                            # Interactive web simulator state machine & chart logic
+├── index.css                         # Dark glassmorphism design system for live simulator
+├── index.html                        # Vercel-ready interactive simulator web app
+├── vercel.json                       # Vercel static deployment manifest
 ├── CITATION.cff                      # GitHub native citation metadata
 ├── environment.yml                   # Cross-platform Conda environment file
-├── requirements.txt                  # Python PyPI dependency manifest
-├── run_comparison.sh                 # Shell script to execute full baseline benchmark suite
-└── setup_verification.py             # Diagnostic tool verifying components and environment
+└── requirements.txt                  # Python PyPI dependency manifest
 ```
 
 ---
@@ -172,8 +190,9 @@ pip install -r requirements.txt
 ### 2. Verify System Setup
 Run the diagnostics script to verify file integrity and package dependencies:
 ```bash
-python setup_verification.py
+python scripts/setup_verification.py
 ```
+> For detailed troubleshooting and hyperparameter guidance, see the [Setup Guide](docs/setup_guide.md).
 
 ### 3. Quick Test Run (10 Rounds)
 Run a fast smoke-test on CIFAR-10 with ResNet-10:
@@ -209,8 +228,8 @@ python src/gradfed_main.py \
 ### 5. Automated Baseline Comparison
 To run GradFed alongside FedAvg, FedProx, and FedPPO baselines:
 ```bash
-chmod +x run_comparison.sh
-./run_comparison.sh
+chmod +x scripts/run_comparison.sh
+./scripts/run_comparison.sh
 ```
 
 ---

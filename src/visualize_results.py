@@ -20,23 +20,36 @@ plt.rcParams['font.size'] = 11
 
 
 def load_results(dataset, method):
-    """Load training results for a method"""
-    base_dir = f'./fedppo_acc_record_{dataset}'
+    """Load training results for a method (checks results/ then fedppo_acc_record_)"""
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    candidates = [
+        os.path.join(repo_root, 'results', dataset),
+        os.path.join('.', 'results', dataset),
+        os.path.join(repo_root, f'fedppo_acc_record_{dataset}'),
+        os.path.join('.', f'fedppo_acc_record_{dataset}'),
+    ]
+    base_dir = None
+    for candidate in candidates:
+        if os.path.exists(candidate):
+            base_dir = candidate
+            break
+    if base_dir is None:
+        base_dir = os.path.join(repo_root, 'results', dataset)
     
     results = {}
     
     # Load accuracy
-    acc_file = f'{base_dir}/{method}_accuracy_{dataset}.npy'
+    acc_file = os.path.join(base_dir, f'{method}_accuracy_{dataset}.npy')
     if os.path.exists(acc_file):
         results['accuracy'] = np.load(acc_file)
     
     # Load loss
-    loss_file = f'{base_dir}/{method}_loss_{dataset}.npy'
+    loss_file = os.path.join(base_dir, f'{method}_loss_{dataset}.npy')
     if os.path.exists(loss_file):
         results['loss'] = np.load(loss_file)
     
     # Load detailed stats (for GradFed)
-    stats_pattern = f'{base_dir}/{method}_{dataset}_*.npz'
+    stats_pattern = os.path.join(base_dir, f'{method}_{dataset}_*.npz')
     import glob
     stats_files = glob.glob(stats_pattern)
     
@@ -332,7 +345,7 @@ def main():
     parser.add_argument('--methods', nargs='+', 
                        default=['gradfed', 'fedppo', 'favor', 'fedavg'],
                        help='Methods to compare')
-    parser.add_argument('--save_dir', type=str, default='./visualization_results',
+    parser.add_argument('--save_dir', type=str, default='./results/visualization',
                        help='Directory to save plots')
     parser.add_argument('--target_acc', type=float, default=0.6,
                        help='Target accuracy for convergence speed')
