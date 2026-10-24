@@ -96,13 +96,19 @@ let currentRoundIdx = 0;
 let isPlaying = false;
 let playInterval = null;
 let playSpeed = 800; // ms
+let currentMatrixFilter = 'all';
 
-// DOM Elements
+// Initialize application on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initClientGrid();
   updateRoundView(0);
   setupEventListeners();
   setupArchTabs();
+  setupQualityCalculator();
+  setupCliGenerator();
+  setupMatrixFilters();
+  setupKeyboardShortcuts();
+  window.addEventListener('resize', () => renderSimChart(currentRoundIdx));
 });
 
 // Render 50-client matrix
@@ -116,8 +122,9 @@ function initClientGrid() {
     node.className = 'client-node';
     node.id = `client-node-${client.id}`;
     node.dataset.id = client.id;
+    node.dataset.quality = client.quality;
+    node.dataset.type = client.type;
 
-    // Quality color class
     let colorClass = '#34d399';
     if (client.quality >= 0.8) colorClass = '#047857';
     else if (client.quality >= 0.6) colorClass = '#059669';
@@ -164,13 +171,187 @@ function updateRoundView(idx) {
     }
   });
 
+  // Re-apply filter dimming
+  applyMatrixFilter(currentMatrixFilter);
+
   // Update progress bar
   const progressPercent = ((data.round) / ROUNDS_DATA.length) * 100;
   const bar = document.getElementById('simProgressBar');
   if (bar) bar.style.width = `${progressPercent}%`;
+
+  // Redraw dynamic canvas chart
+  renderSimChart(currentRoundIdx);
 }
 
-// Controls
+// Live Dynamic Canvas Chart
+function renderSimChart(activeIdx) {
+  const canvas = document.getElementById('simChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // Handle high-DPI displays
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+
+  const w = rect.width;
+  const h = rect.height;
+  const pad = { top: 25, right: 45, bottom: 35, left: 45 };
+  const plotW = w - pad.left - pad.right;
+  const plotH = h - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Draw background grid lines
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (plotH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(w - pad.right, y);
+    ctx.stroke();
+
+    // Accuracy labels (Left Y-axis)
+    const accVal = Math.round(80 - i * 20);
+    ctx.fillStyle = '#64748b';
+    ctx.font = '10px Inter, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${accVal}%`, pad.left - 8, y + 3);
+
+    // Loss labels (Right Y-axis)
+    const lossVal = (2.5 - i * 0.625).toFixed(2);
+    ctx.textAlign = 'left';
+    ctx.fillText(lossVal, w - pad.right + 8, y + 3);
+  }
+
+  // Draw X-axis round ticks
+  for (let r = 5; r <= 30; r += 5) {
+    const x = pad.left + ((r - 1) / 29) * plotW;
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.moveTo(x, pad.top);
+    ctx.lineTo(x, pad.top + plotH);
+    ctx.stroke();
+
+    ctx.fillStyle = '#64748b';
+    ctx.textAlign = 'center';
+    ctx.fillText(`R${r}`, x, h - 12);
+  }
+
+  // Mapping functions
+  const getX = (i) => pad.left + (i / 29) * plotW;
+  const getYAcc = (acc) => pad.top + plotH - (acc / 80) * plotH;
+  const getYLoss = (loss) => pad.top + plotH - (loss / 2.5) * plotH;
+
+  const pointsCount = activeIdx + 1;
+
+  // 1. Draw Accuracy Area Fill & Curve (Cyan)
+  if (pointsCount > 0) {
+    const gradAcc = ctx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
+    gradAcc.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
+    gradAcc.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
+
+    ctx.beginPath();
+    ctx.moveTo(getX(0), getYAcc(ROUNDS_DATA[0].acc));
+    for (let i = 1; i < pointsCount; i++) {
+      ctx.lineTo(getX(i), getYAcc(ROUNDS_DATA[i].acc));
+    }
+    ctx.lineTo(getX(pointsCount - 1), pad.top + plotH);
+    ctx.lineTo(getX(0), pad.top + plotH);
+    ctx.closePath();
+    ctx.fillStyle = gradAcc;
+    ctx.fill();
+
+    // Accuracy Stroke
+    ctx.beginPath();
+    ctx.moveTo(getX(0), getYAcc(ROUNDS_DATA[0].acc));
+    for (let i = 1; i < pointsCount; i++) {
+      ctx.lineTo(getX(i), getYAcc(ROUNDS_DATA[i].acc));
+    }
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // 2. Draw Loss Curve (Amber)
+    ctx.beginPath();
+    ctx.moveTo(getX(0), getYLoss(ROUNDS_DATA[0].loss));
+    for (let i = 1; i < pointsCount; i++) {
+      ctx.lineTo(getX(i), getYLoss(ROUNDS_DATA[i].loss));
+    }
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // 3. Highlight Current Head Points
+    const headX = getX(activeIdx);
+    const headYAcc = getYAcc(ROUNDS_DATA[activeIdx].acc);
+    const headYLoss = getYLoss(ROUNDS_DATA[activeIdx].loss);
+
+    // Glowing head for Accuracy
+    ctx.beginPath();
+    ctx.arc(headX, headYAcc, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(headX, headYAcc, 10, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Head for Loss
+    ctx.beginPath();
+    ctx.arc(headX, headYLoss, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+  }
+}
+
+// Matrix Filter Pills
+function setupMatrixFilters() {
+  const container = document.getElementById('matrixFilterPills');
+  if (!container) return;
+
+  const pills = container.querySelectorAll('.filter-pill');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentMatrixFilter = pill.dataset.filter;
+      applyMatrixFilter(currentMatrixFilter);
+    });
+  });
+}
+
+function applyMatrixFilter(filter) {
+  const nodes = document.querySelectorAll('.client-node');
+  const activeSelected = ROUNDS_DATA[currentRoundIdx].selected;
+
+  nodes.forEach(node => {
+    const id = parseInt(node.dataset.id);
+    const q = parseFloat(node.dataset.quality);
+    const type = node.dataset.type || '';
+    let match = true;
+
+    if (filter === 'selected') match = activeSelected.includes(id);
+    else if (filter === 'optimal') match = q >= 0.8;
+    else if (filter === 'stable') match = q >= 0.5 && q < 0.8;
+    else if (filter === 'explore') match = type.includes('Exploration');
+    else if (filter === 'noisy') match = q < 0.3;
+
+    if (match) {
+      node.classList.remove('dimmed');
+    } else {
+      node.classList.add('dimmed');
+    }
+  });
+}
+
+// Simulator Controls
 function setupEventListeners() {
   const btnPlay = document.getElementById('btnPlay');
   const btnNext = document.getElementById('btnNext');
@@ -260,6 +441,131 @@ function pauseSimulation() {
       Auto Play
     `;
   }
+}
+
+// Global Keyboard Controls
+function setupKeyboardShortcuts() {
+  window.addEventListener('keydown', (e) => {
+    // Avoid triggering when focused on inputs or textareas
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (isPlaying) pauseSimulation();
+      else startSimulation();
+    } else if (e.code === 'ArrowRight') {
+      e.preventDefault();
+      pauseSimulation();
+      if (currentRoundIdx < ROUNDS_DATA.length - 1) updateRoundView(currentRoundIdx + 1);
+    } else if (e.code === 'ArrowLeft') {
+      e.preventDefault();
+      pauseSimulation();
+      if (currentRoundIdx > 0) updateRoundView(currentRoundIdx - 1);
+    } else if (e.key === 'r' || e.key === 'R') {
+      e.preventDefault();
+      pauseSimulation();
+      updateRoundView(0);
+    }
+  });
+}
+
+// Interactive Quality Calculator
+function setupQualityCalculator() {
+  const sSlider = document.getElementById('sliderStability');
+  const mSlider = document.getElementById('sliderMagnitude');
+  const cSlider = document.getElementById('sliderCosine');
+
+  if (!sSlider || !mSlider || !cSlider) return;
+
+  const updateCalc = () => {
+    const s = parseInt(sSlider.value) / 100;
+    const m = parseInt(mSlider.value) / 100;
+    const c = parseInt(cSlider.value) / 100;
+
+    document.getElementById('valStability').textContent = s.toFixed(2);
+    document.getElementById('valMagnitude').textContent = m.toFixed(2);
+    document.getElementById('valCosine').textContent = c.toFixed(2);
+
+    const partS = 0.5 * s;
+    const partM = 0.3 * m;
+    const partC = 0.2 * c;
+    const q = partS + partM + partC;
+
+    document.getElementById('calcCompositeQ').textContent = q.toFixed(3);
+    document.getElementById('calcPartS').textContent = partS.toFixed(3);
+    document.getElementById('calcPartM').textContent = partM.toFixed(3);
+    document.getElementById('calcPartC').textContent = partC.toFixed(3);
+
+    const badge = document.getElementById('calcStatusBadge');
+    const desc = document.getElementById('calcActionDesc');
+    badge.className = 'calc-status-badge';
+
+    if (q >= 0.75) {
+      badge.classList.add('badge-optimal');
+      badge.textContent = 'Optimal Participant (Prioritized in Aggregation)';
+      desc.textContent = 'Client gradients exhibit stable norm progression and consistent trajectory alignment. Full aggregation contribution (40% quality weight + data volume) granted.';
+    } else if (q >= 0.45) {
+      badge.classList.add('badge-standard');
+      badge.textContent = 'Standard Contributor (Acceptable Stability)';
+      desc.textContent = 'Client displays moderate class variance or acceptable drift. Admitted into aggregation with standard quality-proportional weighting.';
+    } else if (q >= 0.30) {
+      badge.classList.add('badge-explore');
+      badge.textContent = 'Candidate for ε-Greedy Probe (Recovering Pool)';
+      desc.textContent = 'Client stability is sub-threshold. Excluded from primary round selection but eligible for periodic ε-greedy probing to detect gradient recovery.';
+    } else {
+      badge.classList.add('badge-noisy');
+      badge.textContent = 'Flagged as Noisy Outlier (Filtered / Downweighted)';
+      desc.textContent = 'Severe gradient norm oscillation or sign conflict detected. Client updates are aggressively attenuated by up to 85% to protect global model convergence.';
+    }
+  };
+
+  [sSlider, mSlider, cSlider].forEach(slider => slider.addEventListener('input', updateCalc));
+  updateCalc();
+}
+
+// Interactive CLI Generator
+function setupCliGenerator() {
+  const fields = ['cliDataset', 'cliModel', 'cliNumUsers', 'cliFrac', 'cliAlpha', 'cliEpochs', 'cliLocalEp', 'cliGpu'];
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', updateCliOutput);
+  });
+  updateCliOutput();
+}
+
+function updateCliOutput() {
+  const dataset = document.getElementById('cliDataset')?.value || 'cifar10';
+  const model = document.getElementById('cliModel')?.value || 'resnet10';
+  const users = document.getElementById('cliNumUsers')?.value || '50';
+  const frac = document.getElementById('cliFrac')?.value || '0.2';
+  const alpha = document.getElementById('cliAlpha')?.value || '10.0';
+  const epochs = document.getElementById('cliEpochs')?.value || '30';
+  const localEp = document.getElementById('cliLocalEp')?.value || '10';
+  const gpu = document.getElementById('cliGpu')?.value || '0';
+
+  const cmd = `python src/gradfed_main.py \\
+    --dataset ${dataset} \\
+    --model ${model} \\
+    --num_users ${users} \\
+    --frac ${frac} \\
+    --local_ep ${localEp} \\
+    --local_bs 10 \\
+    --epochs ${epochs} \\
+    --alpha_dirichlet ${alpha} \\
+    --gpu ${gpu} \\
+    --iid 0`;
+
+  const pre = document.getElementById('cliCommandText');
+  if (pre) pre.textContent = cmd;
+}
+
+function copyCliCommand() {
+  const cmd = document.getElementById('cliCommandText')?.textContent || '';
+  navigator.clipboard.writeText(cmd).then(() => {
+    showToast("Terminal command copied to clipboard!");
+  }).catch(() => {
+    showToast("Failed to copy command.");
+  });
 }
 
 // Architecture Tabs logic

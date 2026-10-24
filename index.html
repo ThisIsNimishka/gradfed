@@ -4,48 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GradFed | Gradient-Aware Client Selection in Federated Learning</title>
-  <meta name="description" content="A Reinforcement Learning & Gradient-Aware Client Profiling Framework for Robust Federated Learning under Non-IID and Noisy Data. Master's Thesis by Nimishka Jain, NIT Goa.">
-  <meta name="keywords" content="Federated Learning, Reinforcement Learning, PPO, Gradient Monitor, Client Selection, Non-IID, Machine Learning, NIT Goa">
-  <meta name="author" content="Nimishka Jain">
-
-  <!-- Open Graph -->
+  
+  <meta name="description" content="Official research showcase for GradFed: Reinforcement Learning & Gradient-Aware Client Profiling for Robust Federated Learning under non-IID conditions.">
+  <meta name="author" content="Nimishka Jain (National Institute of Technology Goa)">
   <meta property="og:title" content="GradFed: Gradient-Aware Client Selection in Federated Learning">
-  <meta property="og:description" content="Interactive showcase of GradFed: 74.42% accuracy on Non-IID CIFAR-10 with real-time gradient quality profiling.">
-  <meta property="og:type" content="website">
+  <meta property="og:description" content="Interactive Federated Learning Simulator, System Architecture Explorer, and Benchmark Showcase.">
   <meta property="og:image" content="docs/assets/gradfed_architecture.svg">
+  <meta property="og:type" content="website">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Top Navigation -->
   <nav class="navbar">
-    <div class="container nav-inner">
+    <div class="nav-container">
       <a href="#" class="brand">
         <div class="brand-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
         GradFed
-        <span class="brand-badge">Research v1.0</span>
+        <span class="brand-badge">Research Showcase</span>
       </a>
 
       <ul class="nav-links">
         <li><a href="#simulator" class="nav-link">Live Simulator</a></li>
+        <li><a href="#calculator" class="nav-link">Quality Calculator</a></li>
         <li><a href="#architecture" class="nav-link">Architecture</a></li>
         <li><a href="#benchmarks" class="nav-link">Benchmarks</a></li>
-        <li><a href="#citation" class="nav-link">Thesis &amp; Citation</a></li>
+        <li><a href="#cli-generator" class="nav-link">CLI Generator</a></li>
+        <li><a href="#citation" class="nav-link">Citation</a></li>
       </ul>
 
       <a href="https://github.com/ThisIsNimishka/gradfed" target="_blank" rel="noopener" class="nav-btn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
         </svg>
-        GitHub Repo
+        GitHub
       </a>
     </div>
   </nav>
@@ -181,10 +181,31 @@
           </div>
         </div>
 
+        <!-- Live Round Trajectory Chart -->
+        <div class="sim-chart-wrapper">
+          <div class="sim-chart-header">
+            <span class="sim-chart-title">Real-Time Trajectory Convergence</span>
+            <div class="sim-chart-legend">
+              <span class="legend-item"><span class="legend-color-dot cyan-dot"></span> Test Accuracy (%)</span>
+              <span class="legend-item"><span class="legend-color-dot amber-dot"></span> Cross-Entropy Loss</span>
+            </div>
+          </div>
+          <canvas id="simChart" width="1050" height="240"></canvas>
+        </div>
+
+        <!-- Keyboard Controls Hint -->
+        <div class="keyboard-hints">
+          <span>Shortcuts:</span>
+          <kbd>Space</kbd> Play / Pause
+          <kbd>&rarr;</kbd> Next
+          <kbd>&larr;</kbd> Prev
+          <kbd>R</kbd> Reset
+        </div>
+
         <!-- Client Matrix Grid -->
         <div class="matrix-container">
           <div class="matrix-header">
-            <span class="matrix-title">Distributed Edge Clients (Click any client to inspect details)</span>
+            <span class="matrix-title">Distributed Edge Clients (Click any client node for telemetry)</span>
             <div class="matrix-legend">
               <span><span class="leg-dot leg-high"></span>Optimal (&ge;0.8)</span>
               <span><span class="leg-dot leg-med"></span>Stable (0.5-0.7)</span>
@@ -193,8 +214,103 @@
             </div>
           </div>
 
+          <!-- Quick Filter Pills -->
+          <div class="filter-pills" id="matrixFilterPills">
+            <button class="filter-pill active" data-filter="all">All Clients (50)</button>
+            <button class="filter-pill" data-filter="selected">Selected in Round t (10)</button>
+            <button class="filter-pill" data-filter="optimal">Optimal Q &ge; 0.8 (12)</button>
+            <button class="filter-pill" data-filter="stable">Stable 0.5–0.7 (18)</button>
+            <button class="filter-pill" data-filter="explore">Exploration Pool (12)</button>
+            <button class="filter-pill" data-filter="noisy">Flagged Noisy &lt; 0.3 (8)</button>
+          </div>
+
           <div id="clientGrid" class="client-grid">
-            <!-- 50 client nodes generated via JavaScript -->
+            <!-- 50 client nodes dynamically rendered via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION: QUALITY CALCULATOR ================= -->
+  <section id="calculator" class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Interactive Methodology Playground</span>
+        <h2 class="section-title">Gradient Quality Metric Calculator</h2>
+        <p class="section-desc">
+          Test the exact mathematical formulation of GradFed's GradientMonitor. Adjust the 3 normalized metrics to see how a client is classified and weighted in the dual-balanced aggregation.
+        </p>
+      </div>
+
+      <div class="calculator-panel">
+        <div class="calc-grid">
+          <!-- Sliders Column -->
+          <div class="calc-controls">
+            <!-- Metric 1: Norm Stability -->
+            <div class="calc-control-group">
+              <div class="calc-control-label">
+                <span>1. Norm Stability (S_k = 1 / (1 + CV_k))</span>
+                <span id="valStability" class="calc-val-badge">0.85</span>
+              </div>
+              <input type="range" id="sliderStability" class="calc-slider" min="0" max="100" value="85">
+              <p class="calc-sub">Measures L2 gradient norm consistency over sliding window W=5 rounds. High stability = low variation.</p>
+            </div>
+
+            <!-- Metric 2: Magnitude Bound -->
+            <div class="calc-control-group">
+              <div class="calc-control-label">
+                <span>2. Magnitude Bound (M_k = 2 / (1 + e^(||Δw||/10)))</span>
+                <span id="valMagnitude" class="calc-val-badge">0.80</span>
+              </div>
+              <input type="range" id="sliderMagnitude" class="calc-slider" min="0" max="100" value="80">
+              <p class="calc-sub">Penalizes exploding pseudo-gradients and zero-gradient stragglers via sigmoidal thresholding.</p>
+            </div>
+
+            <!-- Metric 3: Direction Alignment -->
+            <div class="calc-control-group">
+              <div class="calc-control-label">
+                <span>3. Directional Alignment (C_k = (cos(Δw, Δw_prev) + 1) / 2)</span>
+                <span id="valCosine" class="calc-val-badge">0.75</span>
+              </div>
+              <input type="range" id="sliderCosine" class="calc-slider" min="0" max="100" value="75">
+              <p class="calc-sub">Measures trajectory alignment across rounds to prevent erratic random gradient drift.</p>
+            </div>
+          </div>
+
+          <!-- Result Card Column -->
+          <div class="calc-result-card">
+            <span class="calc-result-tag">Composite Evaluation</span>
+            <div class="calc-score-display">
+              <span id="calcCompositeQ" class="calc-big-num">0.815</span>
+              <span class="calc-score-max">/ 1.00</span>
+            </div>
+
+            <div id="calcStatusBadge" class="calc-status-badge badge-optimal">
+              Optimal Participant (Prioritized in Aggregation)
+            </div>
+
+            <div class="calc-breakdown">
+              <div class="breakdown-row">
+                <span>Norm Stability (50% weight):</span>
+                <span id="calcPartS" class="breakdown-val">0.425</span>
+              </div>
+              <div class="breakdown-row">
+                <span>Magnitude Bound (30% weight):</span>
+                <span id="calcPartM" class="breakdown-val">0.240</span>
+              </div>
+              <div class="breakdown-row">
+                <span>Direction Alignment (20% weight):</span>
+                <span id="calcPartC" class="breakdown-val">0.150</span>
+              </div>
+            </div>
+
+            <div class="calc-action-box">
+              <span class="calc-action-lbl">Server Action:</span>
+              <p id="calcActionDesc" class="calc-action-text">
+                Client gradients exhibit stable norm progression and consistent trajectory alignment. Full aggregation contribution (40% quality weight + data volume) granted.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -325,6 +441,113 @@ Stability S_k = 1 / (1 + CV_k)</div>
     </div>
   </section>
 
+  <!-- ================= SECTION: CLI GENERATOR ================= -->
+  <section id="cli-generator" class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Reproducible Science</span>
+        <h2 class="section-title">Interactive Experiment CLI Generator</h2>
+        <p class="section-desc">
+          Configure your experimental hyperparameters and copy the executable Python training command with 1 click.
+        </p>
+      </div>
+
+      <div class="cli-generator-card">
+        <div class="cli-config-grid">
+          <div class="cli-config-item">
+            <label class="cli-label">Dataset</label>
+            <select id="cliDataset" class="cli-select">
+              <option value="cifar10" selected>CIFAR-10 (10 classes)</option>
+              <option value="cifar100">CIFAR-100 (100 classes)</option>
+              <option value="emnist">EMNIST (byclass)</option>
+              <option value="mnist">MNIST (digits)</option>
+            </select>
+          </div>
+
+          <div class="cli-config-item">
+            <label class="cli-label">Model Backbone</label>
+            <select id="cliModel" class="cli-select">
+              <option value="resnet10" selected>ResNet-10</option>
+              <option value="cnn">Standard CNN</option>
+              <option value="mlp">Multi-Layer Perceptron</option>
+            </select>
+          </div>
+
+          <div class="cli-config-item">
+            <label class="cli-label">Total Clients (K)</label>
+            <select id="cliNumUsers" class="cli-select">
+              <option value="20">20 Clients</option>
+              <option value="50" selected>50 Clients</option>
+              <option value="100">100 Clients</option>
+            </select>
+          </div>
+
+          <div class="cli-config-item">
+            <label class="cli-label">Selection Fraction (C)</label>
+            <select id="cliFrac" class="cli-select">
+              <option value="0.1">0.1 (10% per round)</option>
+              <option value="0.2" selected>0.2 (20% per round)</option>
+              <option value="0.4">0.4 (40% per round)</option>
+            </select>
+          </div>
+
+          <div class="cli-config-item">
+            <label class="cli-label">Dirichlet Alpha (Non-IID)</label>
+            <select id="cliAlpha" class="cli-select">
+              <option value="0.5">α = 0.5 (Extreme Skew)</option>
+              <option value="1.0">α = 1.0 (High Skew)</option>
+              <option value="10.0" selected>α = 10.0 (Moderate Skew)</option>
+            </select>
+          </div>
+
+          <div class="cli-config-item">
+            <label class="cli-label">Global Rounds (T)</label>
+            <select id="cliEpochs" class="cli-select">
+              <option value="10">10 Rounds (Smoke Test)</option>
+              <option value="30" selected>30 Rounds (Standard)</option>
+              <option value="100">100 Rounds (Full Benchmark)</option>
+            </select>
+          </div>
+
+          <div class="cli-config-item">
+            <label class="cli-label">Local Epochs (E)</label>
+            <select id="cliLocalEp" class="cli-select">
+              <option value="5">5 Local Epochs</option>
+              <option value="10" selected>10 Local Epochs</option>
+            </select>
+          </div>
+
+          <div class="cli-config-item">
+            <label class="cli-label">Hardware Device</label>
+            <select id="cliGpu" class="cli-select">
+              <option value="0" selected>CUDA GPU 0</option>
+              <option value="-1">CPU Only (-1)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Generated Command Box -->
+        <div class="cli-output-box">
+          <div class="cli-output-header">
+            <span>Terminal Command</span>
+            <button id="btnCopyCli" class="copy-btn" onclick="copyCliCommand()">Copy Command</button>
+          </div>
+          <pre id="cliCommandText" class="cli-pre">python src/gradfed_main.py \
+    --dataset cifar10 \
+    --model resnet10 \
+    --num_users 50 \
+    --frac 0.2 \
+    --local_ep 10 \
+    --local_bs 10 \
+    --epochs 30 \
+    --alpha_dirichlet 10.0 \
+    --gpu 0 \
+    --iid 0</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= SECTION: THESIS & CITATION ================= -->
   <section id="citation" class="section">
     <div class="container">
@@ -355,11 +578,11 @@ Stability S_k = 1 / (1 + CV_k)</div>
     </div>
   </section>
 
-  <!-- Client Inspection Modal -->
+  <!-- Client Telemetry Modal -->
   <div id="clientModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); z-index:2000; align-items:center; justify-content:center;">
     <div style="background:var(--bg-secondary); border:1px solid var(--border-medium); border-radius:var(--radius-lg); padding:32px; max-width:440px; width:90%; position:relative; box-shadow:var(--shadow-md);">
       <button onclick="closeClientModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
-      <h3 style="font-size:1.3rem; margin-bottom:16px;">Client Profile <span id="modalClientId" style="color:var(--accent-cyan);">#00</span></h3>
+      <h3 style="font-size:1.3rem; margin-bottom:16px;">Client Telemetry <span id="modalClientId" style="color:var(--accent-cyan);">#00</span></h3>
       
       <div style="margin-bottom:12px; font-size:0.9rem;">
         <span style="color:var(--text-muted);">Status Classification:</span>
