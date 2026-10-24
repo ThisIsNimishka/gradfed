@@ -1,6 +1,2 @@
-torch
-numpy
-torchvision
-options
-samplings
-keras
+# GradFed Core Dependencies
+-r requirements.txt

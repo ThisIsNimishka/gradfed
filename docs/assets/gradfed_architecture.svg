@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="card-server" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <linearGradient id="emerald-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="amber-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="rose-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+    <linearGradient id="purple-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+
+    <!-- Filter for Shadows -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Marker Arrowheads -->
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a78bfa" />
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fb7185" />
+    </marker>
+  </defs>
+
+  <style>
+    .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 24px; font-weight: 800; fill: #f8fafc; }
+    .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 500; fill: #94a3b8; }
+    .box-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; font-weight: 700; fill: #f1f5f9; }
+    .box-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11.5px; fill: #cbd5e1; }
+    .code-text { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 11px; fill: #38bdf8; }
+    .badge { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10px; font-weight: 700; text-anchor: middle; }
+    .label-tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #94a3b8; }
+  </style>
+
+  <!-- Canvas Background -->
+  <rect width="1100" height="620" rx="16" fill="url(#bg-grad)" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Header Section -->
+  <g transform="translate(45, 40)">
+    <rect x="0" y="0" width="38" height="38" rx="8" fill="url(#primary-grad)" />
+    <path d="M 12 26 L 19 12 L 26 26 Z" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" />
+    <circle cx="19" cy="18" r="2.5" fill="#ffffff" />
+    <text x="50" y="22" class="title">GradFed System Architecture</text>
+    <text x="50" y="38" class="subtitle">Reinforcement Learning Client Selection with Gradient-Aware Quality Profiling &amp; Robust Aggregation</text>
+  </g>
+
+  <!-- ================= SERVER CONTAINER ================= -->
+  <rect x="40" y="95" width="670" height="495" rx="14" fill="url(#card-server)" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.4" filter="url(#card-shadow)" />
+  <rect x="55" y="108" width="160" height="26" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1" />
+  <text x="135" y="125" class="badge" fill="#38bdf8">FEDERATED SERVER</text>
+
+  <!-- Server Component 1: Global Model -->
+  <g transform="translate(65, 148)">
+    <rect width="280" height="100" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.2" />
+    <rect x="15" y="15" width="10" height="10" rx="2" fill="#3b82f6" />
+    <text x="32" y="24" class="box-title">Global Model State</text>
+    <text x="15" y="48" class="box-sub">Current weights: <tspan class="code-text">w_t</tspan> (ResNet-10 / CNN)</text>
+    <text x="15" y="68" class="box-sub">Dispatched to selected clients each round</text>
+    <text x="15" y="86" class="box-sub" fill="#64748b">Updated via quality-weighted aggregation</text>
+  </g>
+
+  <!-- Server Component 2: GradientMonitor -->
+  <g transform="translate(375, 148)">
+    <rect width="315" height="195" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="1.5" />
+    <rect x="15" y="15" width="10" height="10" rx="2" fill="#10b981" />
+    <text x="32" y="24" class="box-title">GradientMonitor Engine</text>
+    <text x="15" y="46" class="box-sub">Tracks pseudo-gradient: <tspan class="code-text">Δw_k = w_t - w_k,t</tspan></text>
+    
+    <!-- Quality Metrics List -->
+    <rect x="15" y="58" width="285" height="34" rx="6" fill="#0f172a" stroke="#1e293b" />
+    <text x="25" y="73" class="box-sub" font-weight="600">1. Norm Stability (CV):</text>
+    <text x="155" y="73" class="code-text">S = 1 / (1 + σ/μ)</text>
+    <text x="25" y="86" class="subtitle" font-size="10">Rolling window L2 variation (W=5)</text>
+
+    <rect x="15" y="98" width="285" height="34" rx="6" fill="#0f172a" stroke="#1e293b" />
+    <text x="25" y="113" class="box-sub" font-weight="600">2. Cosine Consistency:</text>
+    <text x="155" y="113" class="code-text">C = (cos(Δw, Δw_prev) + 1)/2</text>
+    <text x="25" y="126" class="subtitle" font-size="10">Trajectory alignment across rounds</text>
+
+    <rect x="15" y="138" width="285" height="34" rx="6" fill="#0f172a" stroke="#1e293b" />
+    <text x="25" y="153" class="box-sub" font-weight="600">3. Magnitude Norm:</text>
+    <text x="155" y="153" class="code-text">M = 2 / (1 + e^(||Δw||/10))</text>
+    <text x="25" y="166" class="subtitle" font-size="10">Suppresses exploding/vanishing steps</text>
+
+    <!-- Composite Quality Formula -->
+    <rect x="15" y="177" width="285" height="1" fill="#334155" />
+    <text x="25" y="190" class="code-text" fill="#34d399">Q_k = 0.5·S + 0.3·M + 0.2·C  ∈ [0, 1]</text>
+  </g>
+
+  <!-- Server Component 3: PPO Agent & Selection Policy -->
+  <g transform="translate(65, 275)">
+    <rect width="280" height="180" rx="10" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.3" />
+    <rect x="15" y="15" width="10" height="10" rx="2" fill="#8b5cf6" />
+    <text x="32" y="24" class="box-title">PPO Client Selection Agent</text>
+    
+    <text x="15" y="46" class="box-sub"><tspan font-weight="700">State s_t:</tspan> [Acc, Loss, Ep/T, Q_avg, N_noisy, σ_Q]</text>
+    <text x="15" y="66" class="box-sub"><tspan font-weight="700">Actor Policy:</tspan> PPO discrete distribution <tspan class="code-text">P_ppo(k)</tspan></text>
+    
+    <!-- Hybrid Selection Formula -->
+    <rect x="15" y="78" width="250" height="42" rx="6" fill="#0f172a" stroke="#334155" />
+    <text x="22" y="94" class="box-sub" font-weight="600">Selection Score:</text>
+    <text x="22" y="110" class="code-text" fill="#a78bfa">Score_k = 0.7·P_ppo(k) + 0.3·Q_k</text>
+
+    <text x="15" y="138" class="box-sub"><tspan font-weight="700">ε-Greedy Exploration:</tspan> 20% budget allocated</text>
+    <text x="15" y="152" class="box-sub">to test recovering low-quality clients (ε decays)</text>
+    <text x="15" y="168" class="code-text" font-size="10.5">Top-K Clients Dispatched to FL Round</text>
+  </g>
+
+  <!-- Server Component 4: Quality-Weighted Aggregator -->
+  <g transform="translate(65, 475)">
+    <rect width="625" height="95" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="1.4" />
+    <rect x="15" y="14" width="10" height="10" rx="2" fill="#f59e0b" />
+    <text x="32" y="23" class="box-title">Robust Quality-Weighted Aggregation</text>
+    
+    <rect x="15" y="34" width="595" height="48" rx="6" fill="#0f172a" stroke="#334155" />
+    <text x="28" y="52" class="box-sub">Replaces blind sample weighting <tspan class="code-text">|D_k| / Σ|D_j|</tspan> with dual-balanced weighting:</text>
+    <text x="28" y="71" class="code-text" font-size="13" fill="#fbbf24">w_(t+1) = Σ [ 0.6 · (|D_k| / Σ|D|) + 0.4 · (Q_k / Σ Q) ] · w_(local, k)</text>
+  </g>
+
+  <!-- ================= CLIENTS CONTAINER ================= -->
+  <g transform="translate(745, 95)">
+    <rect width="315" height="495" rx="14" fill="url(#card-server)" stroke="#475569" stroke-width="1.5" filter="url(#card-shadow)" />
+    <rect x="20" y="15" width="170" height="26" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1" />
+    <text x="105" y="32" class="badge" fill="#94a3b8">DISTRIBUTED CLIENTS</text>
+
+    <!-- Client 1: Clean Client -->
+    <g transform="translate(20, 58)">
+      <rect width="275" height="95" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.3" />
+      <circle cx="20" cy="22" r="7" fill="#10b981" />
+      <text x="35" y="26" class="box-title">Client #22 (Clean / High-Q)</text>
+      <text x="15" y="48" class="box-sub">Non-IID Partition: Dirichlet (α=10.0)</text>
+      <text x="15" y="65" class="box-sub">Local SGD: 10 epochs, Batch=10</text>
+      <text x="15" y="82" class="code-text" fill="#34d399">Quality: 0.85 - 0.92 | Selected: 30/30</text>
+    </g>
+
+    <!-- Client 2: Heterogeneous Client -->
+    <g transform="translate(20, 168)">
+      <rect width="275" height="95" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.3" />
+      <circle cx="20" cy="22" r="7" fill="#3b82f6" />
+      <text x="35" y="26" class="box-title">Client #03 (Class Heterogeneous)</text>
+      <text x="15" y="48" class="box-sub">Skewed class distribution (p=0.7)</text>
+      <text x="15" y="65" class="box-sub">Local SGD: Stable convergence</text>
+      <text x="15" y="82" class="code-text" fill="#38bdf8">Quality: 0.65 - 0.78 | Selected: 29/30</text>
+    </g>
+
+    <!-- Client 3: Noisy / Byzantine Client -->
+    <g transform="translate(20, 278)">
+      <rect width="275" height="95" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.3" />
+      <circle cx="20" cy="22" r="7" fill="#f43f5e" />
+      <text x="35" y="26" class="box-title">Client #47 (Noisy / Outlier)</text>
+      <text x="15" y="48" class="box-sub">Noisy labels / corrupted sensor data</text>
+      <text x="15" y="65" class="box-sub">Inconsistent gradient trajectories</text>
+      <text x="15" y="82" class="code-text" fill="#fb7185">Quality: 0.18 - 0.28 (Deprioritized)</text>
+    </g>
+
+    <!-- Client 4: Straggler / Exploration Client -->
+    <g transform="translate(20, 388)">
+      <rect width="275" height="90" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.3" />
+      <circle cx="20" cy="22" r="7" fill="#f59e0b" />
+      <text x="35" y="26" class="box-title">Client #38 (Exploration Pool)</text>
+      <text x="15" y="48" class="box-sub">Periodic probe via ε-greedy exploration</text>
+      <text x="15" y="65" class="box-sub">Monitored for gradient stabilization</text>
+      <text x="15" y="80" class="code-text" fill="#fbbf24">Quality: 0.35 | Selected: 1 round</text>
+    </g>
+  </g>
+
+  <!-- ================= FLOW CONNECTORS ================= -->
+  <!-- Top-K Selection Dispatch to Clients -->
+  <path d="M 345 365 L 735 250" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arrow-purple)" />
+  <rect x="490" y="285" width="135" height="22" rx="4" fill="#0f172a" stroke="#a78bfa" stroke-width="0.8" />
+  <text x="557" y="300" class="badge" fill="#c4b5fd">Top-K Selection Dispatch</text>
+
+  <!-- Local Weights Upload to Gradient Monitor -->
+  <path d="M 745 220 L 695 220" fill="none" stroke="#34d399" stroke-width="2.2" marker-end="url(#arrow-emerald)" />
+  <rect x="700" y="195" width="85" height="20" rx="4" fill="#0f172a" stroke="#34d399" stroke-width="0.8" />
+  <text x="742" y="209" class="badge" fill="#6ee7b7">Δw_k Upload</text>
+
+  <!-- Quality Scores Flow to PPO State -->
+  <path d="M 450 345 L 345 345" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-blue)" />
+  <rect x="360" y="330" width="80" height="20" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="0.8" />
+  <text x="400" y="344" class="badge" fill="#7dd3fc">Q_k to State</text>
+
+  <!-- Quality Aggregation to Global Model -->
+  <path d="M 200 475 L 200 255" fill="none" stroke="#fbbf24" stroke-width="2.2" marker-end="url(#arrow-blue)" />
+  <rect x="135" y="355" width="115" height="20" rx="4" fill="#0f172a" stroke="#fbbf24" stroke-width="0.8" />
+  <text x="192" y="369" class="badge" fill="#fde68a">w_(t+1) Model Update</text>
+
+</svg>

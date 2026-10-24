@@ -114,7 +114,7 @@ def test_imports():
     imports_to_test = [
         ("src.options", "args_parser"),
         ("src.utils", "get_dataset"),
-        ("src.models", "ResNet10"),
+        ("src.models", "ResNet10Cifar"),
         ("src.sampling", "cifar_noniid"),
         ("src.gradient_monitor", "GradientMonitor"),
         ("src.ppo_server.gradfed_ppo_update", "GradFedPPO"),
@@ -186,7 +186,7 @@ def print_quick_start_guide(missing_files):
         print("\nPlease add the following files:")
         for filepath in missing_files:
             print(f"  - {filepath}")
-        print("\nRefer to the artifacts provided by Claude to get the file contents.")
+        print("\nPlease check that all repository files are present according to README.md.")
     else:
         print("\n✅ All files are present!")
         print("\nYou can now:")

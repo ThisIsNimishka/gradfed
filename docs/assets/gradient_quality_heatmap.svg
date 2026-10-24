@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="chart-bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #f8fafc; }
+    .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; fill: #94a3b8; }
+    .cell-text { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; font-weight: 700; text-anchor: middle; }
+    .cell-id { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 9px; fill: rgba(255,255,255,0.7); text-anchor: middle; }
+    .axis-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 600; fill: #94a3b8; }
+    .legend-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #cbd5e1; }
+  </style>
+
+  <!-- Background -->
+  <rect width="900" height="480" rx="14" fill="url(#chart-bg4)" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="50" y="42" class="title">Client Gradient Quality Profiling Heatmap (50 Clients)</text>
+  <text x="50" y="62" class="subtitle">Composite Quality Score Q_k ∈ [0, 1] Evaluated by GradientMonitor Across Communication Rounds</text>
+
+  <!-- Heatmap Grid: 5 Rows x 10 Cols -->
+  <!-- Cell width: 68px, height: 48px, spacing: 6px -->
+  <!-- Starting X: 75, Starting Y: 95 -->
+  <!-- Total Width: 10 * 74 - 6 = 734px -->
+
+  <!-- ROW 0 (Clients 0 to 9) -->
+  <!-- C0: 0.88, C1: 0.86, C2: 0.84, C3: 0.91, C4: 0.72, C5: 0.65, C6: 0.58, C7: 0.45, C8: 0.62, C9: 0.54 -->
+  <g transform="translate(75, 95)">
+    <!-- Row Labels -->
+    <text x="-15" y="30" class="axis-label" text-anchor="end">C00-09</text>
+    <text x="-15" y="84" class="axis-label" text-anchor="end">C10-19</text>
+    <text x="-15" y="138" class="axis-label" text-anchor="end">C20-29</text>
+    <text x="-15" y="192" class="axis-label" text-anchor="end">C30-39</text>
+    <text x="-15" y="246" class="axis-label" text-anchor="end">C40-49</text>
+
+    <!-- Column Labels -->
+    <text x="34" y="-10" class="axis-label" text-anchor="middle">+0</text>
+    <text x="108" y="-10" class="axis-label" text-anchor="middle">+1</text>
+    <text x="182" y="-10" class="axis-label" text-anchor="middle">+2</text>
+    <text x="256" y="-10" class="axis-label" text-anchor="middle">+3</text>
+    <text x="330" y="-10" class="axis-label" text-anchor="middle">+4</text>
+    <text x="404" y="-10" class="axis-label" text-anchor="middle">+5</text>
+    <text x="478" y="-10" class="axis-label" text-anchor="middle">+6</text>
+    <text x="552" y="-10" class="axis-label" text-anchor="middle">+7</text>
+    <text x="626" y="-10" class="axis-label" text-anchor="middle">+8</text>
+    <text x="700" y="-10" class="axis-label" text-anchor="middle">+9</text>
+
+    <!-- ROW 0 -->
+    <rect x="0" y="0" width="68" height="48" rx="6" fill="#047857" />
+    <text x="34" y="22" class="cell-id">C#00</text><text x="34" y="38" class="cell-text" fill="#ffffff">0.88</text>
+
+    <rect x="74" y="0" width="68" height="48" rx="6" fill="#047857" />
+    <text x="108" y="22" class="cell-id">C#01</text><text x="108" y="38" class="cell-text" fill="#ffffff">0.86</text>
+
+    <rect x="148" y="0" width="68" height="48" rx="6" fill="#059669" />
+    <text x="182" y="22" class="cell-id">C#02</text><text x="182" y="38" class="cell-text" fill="#ffffff">0.84</text>
+
+    <rect x="222" y="0" width="68" height="48" rx="6" fill="#065f46" />
+    <text x="256" y="22" class="cell-id">C#03</text><text x="256" y="38" class="cell-text" fill="#ffffff">0.91</text>
+
+    <rect x="296" y="0" width="68" height="48" rx="6" fill="#10b981" />
+    <text x="330" y="22" class="cell-id">C#04</text><text x="330" y="38" class="cell-text" fill="#ffffff">0.72</text>
+
+    <rect x="370" y="0" width="68" height="48" rx="6" fill="#34d399" />
+    <text x="404" y="22" class="cell-id">C#05</text><text x="404" y="38" class="cell-text" fill="#0f172a">0.65</text>
+
+    <rect x="444" y="0" width="68" height="48" rx="6" fill="#6ee7b7" />
+    <text x="478" y="22" class="cell-id">C#06</text><text x="478" y="38" class="cell-text" fill="#0f172a">0.58</text>
+
+    <rect x="518" y="0" width="68" height="48" rx="6" fill="#f59e0b" />
+    <text x="552" y="22" class="cell-id">C#07</text><text x="552" y="38" class="cell-text" fill="#ffffff">0.45</text>
+
+    <rect x="592" y="0" width="68" height="48" rx="6" fill="#34d399" />
+    <text x="626" y="22" class="cell-id">C#08</text><text x="626" y="38" class="cell-text" fill="#0f172a">0.62</text>
+
+    <rect x="666" y="0" width="68" height="48" rx="6" fill="#6ee7b7" />
+    <text x="700" y="22" class="cell-id">C#09</text><text x="700" y="38" class="cell-text" fill="#0f172a">0.54</text>
+
+    <!-- ROW 1 (Clients 10 to 19) -->
+    <rect x="0" y="54" width="68" height="48" rx="6" fill="#f59e0b" />
+    <text x="34" y="76" class="cell-id">C#10</text><text x="34" y="92" class="cell-text" fill="#ffffff">0.48</text>
+
+    <rect x="74" y="54" width="68" height="48" rx="6" fill="#047857" />
+    <text x="108" y="76" class="cell-id">C#11</text><text x="108" y="92" class="cell-text" fill="#ffffff">0.87</text>
+
+    <rect x="148" y="54" width="68" height="48" rx="6" fill="#fbbf24" />
+    <text x="182" y="76" class="cell-id">C#12</text><text x="182" y="92" class="cell-text" fill="#0f172a">0.42</text>
+
+    <rect x="222" y="54" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="256" y="76" class="cell-id">C#13</text><text x="256" y="92" class="cell-text" fill="#ffffff">0.36</text>
+
+    <rect x="296" y="54" width="68" height="48" rx="6" fill="#fbbf24" />
+    <text x="330" y="76" class="cell-id">C#14</text><text x="330" y="92" class="cell-text" fill="#0f172a">0.41</text>
+
+    <rect x="370" y="54" width="68" height="48" rx="6" fill="#34d399" />
+    <text x="404" y="76" class="cell-id">C#15</text><text x="404" y="92" class="cell-text" fill="#0f172a">0.68</text>
+
+    <rect x="444" y="54" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="478" y="76" class="cell-id">C#16</text><text x="478" y="92" class="cell-text" fill="#ffffff">0.38</text>
+
+    <rect x="518" y="54" width="68" height="48" rx="6" fill="#ef4444" />
+    <text x="552" y="76" class="cell-id">C#17</text><text x="552" y="92" class="cell-text" fill="#ffffff">0.27</text>
+
+    <rect x="592" y="54" width="68" height="48" rx="6" fill="#f59e0b" />
+    <text x="626" y="76" class="cell-id">C#18</text><text x="626" y="92" class="cell-text" fill="#ffffff">0.49</text>
+
+    <rect x="666" y="54" width="68" height="48" rx="6" fill="#34d399" />
+    <text x="700" y="76" class="cell-id">C#19</text><text x="700" y="92" class="cell-text" fill="#0f172a">0.64</text>
+
+    <!-- ROW 2 (Clients 20 to 29) -->
+    <rect x="0" y="108" width="68" height="48" rx="6" fill="#059669" />
+    <text x="34" y="130" class="cell-id">C#20</text><text x="34" y="146" class="cell-text" fill="#ffffff">0.85</text>
+
+    <rect x="74" y="108" width="68" height="48" rx="6" fill="#f59e0b" />
+    <text x="108" y="130" class="cell-id">C#21</text><text x="108" y="146" class="cell-text" fill="#ffffff">0.46</text>
+
+    <rect x="148" y="108" width="68" height="48" rx="6" fill="#065f46" />
+    <text x="182" y="130" class="cell-id">C#22</text><text x="182" y="146" class="cell-text" fill="#ffffff">0.94</text>
+
+    <rect x="222" y="108" width="68" height="48" rx="6" fill="#fbbf24" />
+    <text x="256" y="130" class="cell-id">C#23</text><text x="256" y="146" class="cell-text" fill="#0f172a">0.44</text>
+
+    <rect x="296" y="108" width="68" height="48" rx="6" fill="#f59e0b" />
+    <text x="330" y="130" class="cell-id">C#24</text><text x="330" y="146" class="cell-text" fill="#ffffff">0.47</text>
+
+    <rect x="370" y="108" width="68" height="48" rx="6" fill="#10b981" />
+    <text x="404" y="130" class="cell-id">C#25</text><text x="404" y="146" class="cell-text" fill="#ffffff">0.71</text>
+
+    <rect x="444" y="108" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="478" y="130" class="cell-id">C#26</text><text x="478" y="146" class="cell-text" fill="#ffffff">0.34</text>
+
+    <rect x="518" y="108" width="68" height="48" rx="6" fill="#6ee7b7" />
+    <text x="552" y="130" class="cell-id">C#27</text><text x="552" y="146" class="cell-text" fill="#0f172a">0.59</text>
+
+    <rect x="592" y="108" width="68" height="48" rx="6" fill="#ef4444" />
+    <text x="626" y="130" class="cell-id">C#28</text><text x="626" y="146" class="cell-text" fill="#ffffff">0.24</text>
+
+    <rect x="666" y="108" width="68" height="48" rx="6" fill="#fbbf24" />
+    <text x="700" y="130" class="cell-id">C#29</text><text x="700" y="146" class="cell-text" fill="#0f172a">0.43</text>
+
+    <!-- ROW 3 (Clients 30 to 39) -->
+    <rect x="0" y="162" width="68" height="48" rx="6" fill="#34d399" />
+    <text x="34" y="184" class="cell-id">C#30</text><text x="34" y="200" class="cell-text" fill="#0f172a">0.61</text>
+
+    <rect x="74" y="162" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="108" y="184" class="cell-id">C#31</text><text x="108" y="200" class="cell-text" fill="#ffffff">0.37</text>
+
+    <rect x="148" y="162" width="68" height="48" rx="6" fill="#6ee7b7" />
+    <text x="182" y="184" class="cell-id">C#32</text><text x="182" y="200" class="cell-text" fill="#0f172a">0.57</text>
+
+    <rect x="222" y="162" width="68" height="48" rx="6" fill="#ef4444" />
+    <text x="256" y="184" class="cell-id">C#33</text><text x="256" y="200" class="cell-text" fill="#ffffff">0.22</text>
+
+    <rect x="296" y="162" width="68" height="48" rx="6" fill="#f59e0b" />
+    <text x="330" y="184" class="cell-id">C#34</text><text x="330" y="200" class="cell-text" fill="#ffffff">0.45</text>
+
+    <rect x="370" y="162" width="68" height="48" rx="6" fill="#fbbf24" />
+    <text x="404" y="184" class="cell-id">C#35</text><text x="404" y="200" class="cell-text" fill="#0f172a">0.41</text>
+
+    <rect x="444" y="162" width="68" height="48" rx="6" fill="#10b981" />
+    <text x="478" y="184" class="cell-id">C#36</text><text x="478" y="200" class="cell-text" fill="#ffffff">0.76</text>
+
+    <rect x="518" y="162" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="552" y="184" class="cell-id">C#37</text><text x="552" y="200" class="cell-text" fill="#ffffff">0.35</text>
+
+    <rect x="592" y="162" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="626" y="184" class="cell-id">C#38</text><text x="626" y="200" class="cell-text" fill="#ffffff">0.35</text>
+
+    <rect x="666" y="162" width="68" height="48" rx="6" fill="#fbbf24" />
+    <text x="700" y="184" class="cell-id">C#39</text><text x="700" y="200" class="cell-text" fill="#0f172a">0.43</text>
+
+    <!-- ROW 4 (Clients 40 to 49) -->
+    <rect x="0" y="216" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="34" y="238" class="cell-id">C#40</text><text x="34" y="254" class="cell-text" fill="#ffffff">0.35</text>
+
+    <rect x="74" y="216" width="68" height="48" rx="6" fill="#059669" />
+    <text x="108" y="238" class="cell-id">C#41</text><text x="108" y="254" class="cell-text" fill="#ffffff">0.89</text>
+
+    <rect x="148" y="216" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="182" y="238" class="cell-id">C#42</text><text x="182" y="254" class="cell-text" fill="#ffffff">0.32</text>
+
+    <rect x="222" y="216" width="68" height="48" rx="6" fill="#ef4444" />
+    <text x="256" y="238" class="cell-id">C#43</text><text x="256" y="254" class="cell-text" fill="#ffffff">0.26</text>
+
+    <rect x="296" y="216" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="330" y="238" class="cell-id">C#44</text><text x="330" y="254" class="cell-text" fill="#ffffff">0.31</text>
+
+    <rect x="370" y="216" width="68" height="48" rx="6" fill="#059669" />
+    <text x="404" y="238" class="cell-id">C#45</text><text x="404" y="254" class="cell-text" fill="#ffffff">0.86</text>
+
+    <rect x="444" y="216" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="478" y="238" class="cell-id">C#46</text><text x="478" y="254" class="cell-text" fill="#ffffff">0.35</text>
+
+    <rect x="518" y="216" width="68" height="48" rx="6" fill="#ef4444" />
+    <text x="552" y="238" class="cell-id">C#47</text><text x="552" y="254" class="cell-text" fill="#ffffff">0.21</text>
+
+    <rect x="592" y="216" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="626" y="238" class="cell-id">C#48</text><text x="626" y="254" class="cell-text" fill="#ffffff">0.35</text>
+
+    <rect x="666" y="216" width="68" height="48" rx="6" fill="#f97316" />
+    <text x="700" y="238" class="cell-id">C#49</text><text x="700" y="254" class="cell-text" fill="#ffffff">0.35</text>
+  </g>
+
+  <!-- Color Scale Bar -->
+  <g transform="translate(180, 410)">
+    <text x="-15" y="14" class="axis-label" text-anchor="end">Score Spectrum:</text>
+    <rect x="0" y="2" width="90" height="15" rx="3" fill="#ef4444" />
+    <text x="45" y="14" class="cell-text" fill="#ffffff" font-size="9">0.0 - 0.3 (Noisy)</text>
+
+    <rect x="95" y="2" width="90" height="15" rx="3" fill="#f97316" />
+    <text x="140" y="14" class="cell-text" fill="#ffffff" font-size="9">0.3 - 0.4 (Low)</text>
+
+    <rect x="190" y="2" width="90" height="15" rx="3" fill="#fbbf24" />
+    <text x="235" y="14" class="cell-text" fill="#0f172a" font-size="9">0.4 - 0.5 (Moderate)</text>
+
+    <rect x="285" y="2" width="90" height="15" rx="3" fill="#34d399" />
+    <text x="330" y="14" class="cell-text" fill="#0f172a" font-size="9">0.5 - 0.7 (Good)</text>
+
+    <rect x="380" y="2" width="100" height="15" rx="3" fill="#059669" />
+    <text x="430" y="14" class="cell-text" fill="#ffffff" font-size="9">0.7 - 1.0 (Optimal)</text>
+  </g>
+</svg>

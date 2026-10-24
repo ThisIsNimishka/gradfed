@@ -43,31 +43,35 @@ def args_parser():
                         strided convolutions")
 
     # other arguments
-    parser.add_argument('--dataset', type=str, default='cifar-10', help="name \
-                        of dataset")
-    parser.add_argument('--num_classes', type=int, default=10, help="number \
-                        of classes")
-    parser.add_argument('--gpu_id', default=None, help="To use cuda, set \
-                        to a specific GPU ID. Default set to use CPU.")
-    parser.add_argument('--optimizer', type=str, default='sgd', help="type \
-                        of optimizer")
+    parser.add_argument('--dataset', type=str, default='cifar-10', help="name of dataset")
+    parser.add_argument('--num_classes', type=int, default=10, help="number of classes")
+    parser.add_argument('--gpu', '--gpu_id', dest='gpu_id', default=None,
+                        help="To use CUDA, set to a specific GPU ID (e.g. 0). Default is CPU.")
+    parser.add_argument('--optimizer', type=str, default='sgd', help="type of optimizer")
     parser.add_argument('--iid', type=int, default=1,
                         help='Default set to IID. Set to 0 for non-IID.')
     parser.add_argument('--unequal', type=int, default=0,
-                        help='whether to use unequal data splits for  \
-                        non-i.i.d setting (use 0 for equal splits)')
+                        help='whether to use unequal data splits for non-i.i.d setting (use 0 for equal splits)')
     parser.add_argument('--stopping_rounds', type=int, default=10,
                         help='rounds of early stopping')
     parser.add_argument('--verbose', type=int, default=1, help='verbose')
     parser.add_argument('--seed', type=int, default=1, help='random seed')
 
-    #add arguments
+    # GradFed specific arguments
+    parser.add_argument('--window_size', type=int, default=5,
+                        help="Window size for gradient tracking in GradientMonitor")
+    parser.add_argument('--quality_threshold', type=float, default=0.3,
+                        help="Threshold below which client is considered noisy")
+    parser.add_argument('--train_ppo', action='store_true', default=False,
+                        help="Enable PPO actor-critic network parameter updates")
+
+    # Additional arguments
     parser.add_argument('--non_iid_prob_class', type=float, default=0.7, help="non iid sampling prob for class")
     parser.add_argument('--alpha_dirichlet', type=float, default=10)
     parser.add_argument('--level_n_system', type=float, default=0.0, help="fraction of noisy clients")
     parser.add_argument('--level_n_lowerb', type=float, default=0.0, help="lower bound of noise level")
     parser.add_argument('--noise_type', type=str, default='symmetric', help='noise type of dataset')
-    parser.add_argument('--train_mode', type=str, default='true', help='train mode of d3qn') #设置训练模式为True
+    parser.add_argument('--train_mode', type=str, default='true', help='train mode of d3qn')
     parser.add_argument('--max_episodes', type=int, default=1, help='training episodes of d3qn')
     parser.add_argument('--target_acc', type=float, default=0.8, help='target accuracy of cifar')
     parser.add_argument('--mu', type=float, default=0.01, help='heterogeneity of the system')
@@ -77,6 +81,6 @@ def args_parser():
     parser.add_argument('--max_words', type=int, default=10000, help='max words of imdb dataset')
     parser.add_argument('--RL_name', type=str, default='ddqn', help='only for favor')
 
-
     args = parser.parse_args()
     return args
+

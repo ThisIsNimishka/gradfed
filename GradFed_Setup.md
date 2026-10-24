@@ -1,79 +1,53 @@
-# GradFed Setup Instructions
+# GradFed Setup & User Guide
 
 ## Overview
-This guide will help you integrate the **GradFed (Gradient-Aware Federated Learning)** framework into your existing FedPPO codebase.
+**GradFed (Gradient-Aware Federated Learning)** is an intelligent client selection and robust aggregation framework designed for non-IID and noisy federated learning environments.
 
-## Files to Add
-
-### 1. Core Components
-
-Create these new files in your repository:
+## Repository Layout
 
 ```
-fedppo/
+gradfed/
 ├── src/
-│   ├── gradient_monitor.py          # NEW - Gradient quality tracking
-│   ├── gradfed_main.py               # NEW - Main training script
+│   ├── gradient_monitor.py           # Gradient quality, stability & cosine similarity tracking
+│   ├── gradfed_main.py               # Main GradFed training pipeline
+│   ├── models.py                     # ResNet, CNN, and MLP model architectures
+│   ├── options.py                    # Hyperparameter & CLI parsing
+│   ├── sampling.py                   # Dirichlet Non-IID and IID dataset partitioners
+│   ├── update.py                     # Local updates and validation inference
+│   ├── utils.py                      # Data loaders and dataset preprocessors
+│   ├── visualize_results.py          # Results analysis and plotting suite
 │   └── ppo_server/
-│       └── gradfed_ppo_update.py     # NEW - Enhanced PPO with gradient awareness
-├── run_comparison.sh                  # NEW - Comparison script
-└── requirements_gradfed.txt          # NEW - Additional dependencies
+│       ├── gradfed_ppo_update.py     # Quality-aware client selection & weighted aggregation
+│       └── ppo.py                    # Actor-Critic PPO implementation
+├── baseline/                         # Baseline FL algorithms (FedAvg, FedProx, etc.)
+├── run_comparison.sh                 # End-to-end benchmark comparison script
+├── setup_verification.py             # System verification and diagnostics script
+├── requirements.txt                  # Python dependencies
+└── environment.yml                   # Cross-platform Conda environment
 ```
-
-### 2. File Placement
-
-**Copy the artifacts I provided:**
-
-1. `gradient_monitor.py` → `src/gradient_monitor.py`
-2. `gradfed_ppo_update.py` → `src/ppo_server/gradfed_ppo_update.py`
-3. `gradfed_main.py` → `src/gradfed_main.py`
-4. `run_comparison.sh` → `run_comparison.sh` (root directory)
 
 ## Installation Steps
 
-### Step 1: Install Dependencies
+### Step 1: Set Up Python Environment
 
+Using **Conda** (recommended):
 ```bash
-cd ~/fedppo
-
-# Activate your environment
-conda activate base  # or your env name
-
-# Install any missing packages
-pip install torch torchvision numpy matplotlib
+conda env create -f environment.yml
+conda activate gradfed
 ```
 
-### Step 2: Verify Existing Code
-
-Make sure your existing files are working:
-
+Or using **Pip**:
 ```bash
-# Test FedPPO baseline
-python src/ppo_remove_main.py --dataset cifar10 --model resnet10 \
-    --num_users 50 --frac 0.2 --local_ep 5 --epochs 10 --gpu 0
+pip install -r requirements.txt
 ```
 
-### Step 3: Add GradFed Files
+### Step 2: Verify Setup
 
+Run the built-in diagnostic tool to verify environment and components:
 ```bash
-# Create the new files using the artifacts I provided
-# Copy gradient_monitor.py
-nano src/gradient_monitor.py
-# Paste content from artifact 1
-
-# Copy gradfed_ppo_update.py
-nano src/ppo_server/gradfed_ppo_update.py
-# Paste content from artifact 2
-
-# Copy gradfed_main.py
-nano src/gradfed_main.py
-# Paste content from artifact 3
-
-# Create comparison script
-nano run_comparison.sh
-# Paste content from artifact 4
-chmod +x run_comparison.sh
+python setup_verification.py
 ```
+
 
 ### Step 4: Test GradFed
 

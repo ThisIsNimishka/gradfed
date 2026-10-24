@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="bar-high" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="bar-med" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+    <linearGradient id="bar-low" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 20px; font-weight: 700; fill: #f8fafc; }
+    .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; fill: #94a3b8; }
+    .axis-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #cbd5e1; }
+    .tick-label { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 10.5px; fill: #64748b; text-anchor: middle; }
+    .tick-label-y { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 10.5px; fill: #64748b; text-anchor: end; }
+    .legend-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11.5px; font-weight: 600; fill: #e2e8f0; }
+    .count-label { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 10px; font-weight: 700; fill: #f8fafc; text-anchor: middle; }
+  </style>
+
+  <!-- Background -->
+  <rect width="900" height="480" rx="14" fill="url(#bg-grad2)" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Title -->
+  <text x="50" y="42" class="title">Client Participation Distribution Across 30 Rounds</text>
+  <text x="50" y="62" class="subtitle">Demonstrating Quality-Prioritized Selection with Controlled ε-Greedy Diversity Exploration (50 Total Clients)</text>
+
+  <!-- Y-Axis Grid: Y=390 to 110 (280px total height, max 30 rounds => 9.33px per round) -->
+  <g stroke="#334155" stroke-dasharray="4,4" stroke-width="0.8">
+    <line x1="75" y1="390" x2="840" y2="390" stroke="#475569" stroke-width="1.2" stroke-dasharray="none" />
+    <line x1="75" y1="343" x2="840" y2="343" />
+    <line x1="75" y1="297" x2="840" y2="297" />
+    <line x1="75" y1="250" x2="840" y2="250" />
+    <line x1="75" y1="203" x2="840" y2="203" />
+    <line x1="75" y1="157" x2="840" y2="157" />
+    <line x1="75" y1="110" x2="840" y2="110" />
+  </g>
+
+  <text x="65" y="394" class="tick-label-y">0</text>
+  <text x="65" y="347" class="tick-label-y">5</text>
+  <text x="65" y="301" class="tick-label-y">10</text>
+  <text x="65" y="254" class="tick-label-y">15</text>
+  <text x="65" y="207" class="tick-label-y">20</text>
+  <text x="65" y="161" class="tick-label-y">25</text>
+  <text x="65" y="114" class="tick-label-y">30</text>
+
+  <text x="460" y="445" class="axis-label" text-anchor="middle">Ranked Client Index</text>
+  <text x="25" y="250" class="axis-label" transform="rotate(-90 25 250)" text-anchor="middle">Rounds Participated</text>
+
+  <!-- Bars for Top Clients (High Quality) -->
+  <!-- Width: 28px, Spacing: 38px, Starting X: 90 -->
+  <!-- Client 22: 30 rounds -> h = 30*9.33 = 280, y = 390-280 = 110 -->
+  <rect x="90" y="110" width="28" height="280" rx="4" fill="url(#bar-high)" />
+  <text x="104" y="103" class="count-label">30</text>
+  <text x="104" y="410" class="tick-label">C#22</text>
+
+  <!-- Client 3: 29 rounds -> h = 270.6, y = 119.4 -->
+  <rect x="130" y="119" width="28" height="271" rx="4" fill="url(#bar-high)" />
+  <text x="144" y="112" class="count-label">29</text>
+  <text x="144" y="410" class="tick-label">C#3</text>
+
+  <!-- Client 41: 26 rounds -> h = 242.6, y = 147.4 -->
+  <rect x="170" y="147" width="28" height="243" rx="4" fill="url(#bar-high)" />
+  <text x="184" y="140" class="count-label">26</text>
+  <text x="184" y="410" class="tick-label">C#41</text>
+
+  <!-- Client 0: 25 rounds -> h = 233.3, y = 156.7 -->
+  <rect x="210" y="157" width="28" height="233" rx="4" fill="url(#bar-high)" />
+  <text x="224" y="150" class="count-label">25</text>
+  <text x="224" y="410" class="tick-label">C#0</text>
+
+  <!-- Client 1: 25 rounds -->
+  <rect x="250" y="157" width="28" height="233" rx="4" fill="url(#bar-high)" />
+  <text x="264" y="150" class="count-label">25</text>
+  <text x="264" y="410" class="tick-label">C#1</text>
+
+  <!-- Client 2: 25 rounds -->
+  <rect x="290" y="157" width="28" height="233" rx="4" fill="url(#bar-high)" />
+  <text x="304" y="150" class="count-label">25</text>
+  <text x="304" y="410" class="tick-label">C#2</text>
+
+  <!-- Client 11: 25 rounds -->
+  <rect x="330" y="157" width="28" height="233" rx="4" fill="url(#bar-high)" />
+  <text x="344" y="150" class="count-label">25</text>
+  <text x="344" y="410" class="tick-label">C#11</text>
+
+  <!-- Client 20: 24 rounds -> h = 224, y = 166 -->
+  <rect x="370" y="166" width="28" height="224" rx="4" fill="url(#bar-high)" />
+  <text x="384" y="159" class="count-label">24</text>
+  <text x="384" y="410" class="tick-label">C#20</text>
+
+  <!-- Client 45: 24 rounds -->
+  <rect x="410" y="166" width="28" height="224" rx="4" fill="url(#bar-high)" />
+  <text x="424" y="159" class="count-label">24</text>
+  <text x="424" y="410" class="tick-label">C#45</text>
+
+  <!-- Client 36: 17 rounds -> h = 158.6, y = 231.4 -->
+  <rect x="450" y="231" width="28" height="159" rx="4" fill="url(#bar-med)" />
+  <text x="464" y="224" class="count-label">17</text>
+  <text x="464" y="410" class="tick-label">C#36</text>
+
+  <!-- Client 15: 8 rounds -> h = 74.6, y = 315.4 -->
+  <rect x="490" y="315" width="28" height="75" rx="4" fill="url(#bar-med)" />
+  <text x="504" y="308" class="count-label">8</text>
+  <text x="504" y="410" class="tick-label">C#15</text>
+
+  <!-- Client 19: 6 rounds -> h = 56, y = 334 -->
+  <rect x="530" y="334" width="28" height="56" rx="4" fill="url(#bar-med)" />
+  <text x="544" y="327" class="count-label">6</text>
+  <text x="544" y="410" class="tick-label">C#19</text>
+
+  <!-- Client 48: 3 rounds -> h = 28, y = 362 -->
+  <rect x="570" y="362" width="28" height="28" rx="4" fill="url(#bar-low)" />
+  <text x="584" y="355" class="count-label">3</text>
+  <text x="584" y="410" class="tick-label">C#48</text>
+
+  <!-- Clients 37-49 (Exploration Pool: 1-2 rounds each) -->
+  <rect x="610" y="371" width="28" height="19" rx="3" fill="url(#bar-low)" />
+  <text x="624" y="364" class="count-label">2</text>
+  <text x="624" y="410" class="tick-label">C#37</text>
+
+  <rect x="650" y="380" width="28" height="10" rx="3" fill="url(#bar-low)" />
+  <text x="664" y="373" class="count-label">1</text>
+  <text x="664" y="410" class="tick-label">C#38</text>
+
+  <rect x="690" y="380" width="28" height="10" rx="3" fill="url(#bar-low)" />
+  <text x="704" y="373" class="count-label">1</text>
+  <text x="704" y="410" class="tick-label">C#42</text>
+
+  <rect x="730" y="380" width="28" height="10" rx="3" fill="url(#bar-low)" />
+  <text x="744" y="373" class="count-label">1</text>
+  <text x="744" y="410" class="tick-label">C#44</text>
+
+  <rect x="770" y="380" width="28" height="10" rx="3" fill="url(#bar-low)" />
+  <text x="784" y="373" class="count-label">1</text>
+  <text x="784" y="410" class="tick-label">C#47</text>
+
+  <rect x="810" y="380" width="28" height="10" rx="3" fill="url(#bar-low)" />
+  <text x="824" y="373" class="count-label">1</text>
+  <text x="824" y="410" class="tick-label">C#49</text>
+
+  <!-- Legend -->
+  <g transform="translate(570, 75)">
+    <rect width="270" height="75" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="14" width="14" height="14" rx="3" fill="url(#bar-high)" />
+    <text x="38" y="25" class="legend-text">Core Contributors (Q ≥ 0.70)</text>
+
+    <rect x="15" y="34" width="14" height="14" rx="3" fill="url(#bar-med)" />
+    <text x="38" y="45" class="legend-text">Moderate Contributors (0.40 ≤ Q &lt; 0.70)</text>
+
+    <rect x="15" y="54" width="14" height="14" rx="3" fill="url(#bar-low)" />
+    <text x="38" y="65" class="legend-text">ε-Greedy Exploration Pool (Q &lt; 0.40)</text>
+  </g>
+</svg>

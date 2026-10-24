@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you find this research or code useful in your academic work, please cite it as below."
+title: "GradFed: Gradient-Aware Client Selection in Federated Learning"
+authors:
+  - family-names: "Jain"
+    given-names: "Nimishka"
+    affiliation: "National Institute of Technology Goa, India"
+year: 2025
+type: thesis
+thesis-type: "Master's Thesis"
+institution:
+  name: "National Institute of Technology Goa"
+keywords:
+  - "Federated Learning"
+  - "Reinforcement Learning"
+  - "Client Selection"
+  - "Gradient Monitoring"
+  - "Proximal Policy Optimization"
+  - "Non-IID Data"
+repository-code: "https://github.com/ThisIsNimishka/gradfed"
+license: "MIT"

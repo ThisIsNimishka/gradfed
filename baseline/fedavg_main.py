@@ -3,6 +3,7 @@
 # Python version: 3.6
 
 
+import sys
 import os
 import copy
 import time
@@ -12,12 +13,24 @@ from tqdm import tqdm
 
 import torch
 
+# Ensure src and root are in sys.path
+baseline_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(baseline_dir)
+src_dir = os.path.join(parent_dir, 'src')
+for p in [src_dir, parent_dir, baseline_dir]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
 from options import args_parser
-from ppo_server.ppo_nlp_update import nlpLocalUpdate, nlp_test_inference
 from update import LocalUpdate, test_inference
 from models import ResNet10Cifar, ResNet50Cifar, ResNet18Cifar, CNNEmnist, ResNet10Emnist, LSTM, TextClassificationModel
 from utils import get_dataset, average_weights, exp_details
 from sampling import add_noise
+
+try:
+    from ppo_server.ppo_nlp_update import nlpLocalUpdate, nlp_test_inference
+except ImportError:
+    nlpLocalUpdate, nlp_test_inference = None, None
 
 
 

@@ -73,11 +73,15 @@ echo "2. Running FedProx (Baseline)"
 echo "==================================================================="
 run_experiment "FedProx" "baseline/fedprox_main.py"
 
-# 3. Run FAVOR baseline
-echo "==================================================================="
-echo "3. Running FAVOR (RL Baseline)"
-echo "==================================================================="
-run_experiment "FAVOR" "baseline/favor_main.py"
+# 3. Run FAVOR baseline (if ddqn dependencies present)
+if [ -d "ddqn_server" ] || [ -f "baseline/ddqn_server/DDQN.py" ]; then
+    echo "==================================================================="
+    echo "3. Running FAVOR (RL Baseline)"
+    echo "==================================================================="
+    run_experiment "FAVOR" "baseline/favor_main.py"
+else
+    echo "Skipping FAVOR baseline (ddqn_server submodule not present)."
+fi
 
 # 4. Run original FedPPO
 echo "==================================================================="

@@ -15,6 +15,14 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset
 
+# Ensure src and root are in sys.path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+parent_dir = os.path.dirname(current_dir)
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
+
 # Import from existing files
 from utils import get_dataset, exp_details
 from options import args_parser
@@ -179,8 +187,8 @@ def gradfed_train():
     
     # Initialize GradientMonitor
     gradient_monitor = GradientMonitor(
-        window_size=5,
-        quality_threshold=0.3,
+        window_size=getattr(args, 'window_size', 5),
+        quality_threshold=getattr(args, 'quality_threshold', 0.3),
         stability_weight=0.5,
         magnitude_weight=0.3,
         consistency_weight=0.2
@@ -339,9 +347,9 @@ def gradfed_train():
         ppo.buffer.state_values.append(torch.tensor(0.0))
         ppo.buffer.is_terminals.append(done)
         
-        # Update PPO policy every K rounds
-        if False:  # Disabled PPO updates
-            # logger.info("Updating PPO policy...")
+        # Update PPO policy every K rounds if enabled
+        if getattr(args, 'train_ppo', False):
+            logger.info("Updating PPO policy...")
             ppo.update()
         
         # Log round statistics
