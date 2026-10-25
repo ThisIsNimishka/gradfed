@@ -479,36 +479,291 @@
   <section id="architecture" class="section">
     <div class="container">
       <div class="section-head">
-        <span class="section-tag">System Design</span>
-        <h2 class="section-title">GradFed Architecture &amp; Methodology</h2>
+        <span class="section-tag">System Architecture &amp; Methodology</span>
+        <h2 class="section-title">GradFed Architecture &amp; Algorithmic Pipeline</h2>
         <p class="section-desc">
-          How the GradientMonitor, PPO Reinforcement Learning policy, and Dual-Balanced Aggregator work in unison to protect federated training.
+          An interactive walkthrough of the dual-loop federated learning system: combining zero-leakage pseudo-gradient quality profiling, PPO reinforcement client selection, and robust dual-balanced parameter aggregation under extreme non-IID conditions.
         </p>
       </div>
 
-      <div class="arch-card">
-        <!-- Interactive Vector Diagram -->
-        <div class="arch-viewer">
-          <img src="docs/assets/gradfed_architecture.svg" alt="GradFed System Architecture" loading="lazy">
+      <!-- Main Architecture Hub -->
+      <div class="arch-container">
+        
+        <!-- Part 1: Interactive System Vector Diagram Viewer -->
+        <div class="arch-diagram-card">
+          <div class="arch-diagram-toolbar">
+            <div class="arch-toolbar-info">
+              <span class="arch-live-pulse"></span>
+              <span class="arch-toolbar-title">End-to-End System Vector Map</span>
+              <span class="arch-toolbar-badge">K=50 Clients • Dirichlet &alpha;=10.0</span>
+            </div>
+            <div class="arch-toolbar-actions">
+              <button id="btnArchModalOpen" class="btn btn-outline btn-sm" title="Expand Fullscreen Vector View">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                <span>Full Diagram</span>
+              </button>
+              <a href="docs/assets/gradfed_architecture.svg" target="_blank" rel="noopener" class="btn btn-outline btn-sm" title="Open Vector Graphic File">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                <span>Raw SVG</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Vector Diagram Frame -->
+          <div class="arch-viewer" id="archViewer">
+            <img src="docs/assets/gradfed_architecture.svg" alt="GradFed System Architecture Diagram" id="archMainSvg" loading="lazy">
+          </div>
+
+          <!-- Subsystem Explorer Pills -->
+          <div class="arch-subsystem-nav" id="archSubsystemNav">
+            <button class="arch-sub-btn active" data-sub="all">Architecture Overview</button>
+            <button class="arch-sub-btn" data-sub="model">1. Global Model ($w_t$)</button>
+            <button class="arch-sub-btn" data-sub="clients">2. Non-IID Edge Nodes</button>
+            <button class="arch-sub-btn" data-sub="monitor">3. GradientMonitor</button>
+            <button class="arch-sub-btn" data-sub="ppo">4. PPO Policy &amp; &epsilon;-Probe</button>
+            <button class="arch-sub-btn" data-sub="aggregator">5. Dual-Balanced Aggregator</button>
+            <button class="arch-sub-btn" data-sub="reward">6. RL Reward &amp; Rollout</button>
+          </div>
+
+          <!-- Dynamic Subsystem Callout Box -->
+          <div class="arch-sub-callout" id="archSubCallout">
+            <div class="arch-sub-callout-header">
+              <span class="badge" id="archSubBadge">System Topology</span>
+              <h4 id="archSubTitle">End-to-End Privacy-Preserving Coordination</h4>
+              <span class="arch-sub-file" id="archSubFile">gradfed_main.py</span>
+            </div>
+            <p id="archSubDesc">
+              GradFed separates the training loop into two synchronized tiers: the central server orchestrates reinforcement learning client selection and gradient quality aggregation, while edge clients train on private, non-IID local data without transmitting raw samples.
+            </p>
+            <div class="arch-sub-equation" id="archSubEq">Inner Loop: w_{k,t} = w_t - &eta;&sum; &nabla;L(w)  &bull;  Outer Loop: &Delta;w_k = w_t - w_{k,t} &rarr; Q_k &rarr; w_{t+1}</div>
+          </div>
         </div>
 
-        <!-- Component Tabs -->
-        <div class="arch-tabs">
-          <button class="arch-tab-btn active" data-tab="monitor">1. Pseudo-Gradient Engine</button>
-          <button class="arch-tab-btn" data-tab="cosine">2. Stability &amp; Quality Metric</button>
-          <button class="arch-tab-btn" data-tab="ppo">3. PPO Selection &amp; Exploration</button>
-          <button class="arch-tab-btn" data-tab="aggregator">4. Dual-Balanced Aggregator</button>
+        <!-- Part 2: Interactive 6-Stage Round Operational Pipeline -->
+        <div class="arch-pipeline-card">
+          <div class="arch-pipeline-head">
+            <div class="arch-pipeline-title-group">
+              <span class="section-tag" style="margin-bottom: 0;">Operational Workflow</span>
+              <h3 class="arch-block-title">6-Stage Communication Round Pipeline</h3>
+              <p class="arch-block-desc">Walk through the step-by-step mathematical lifecycle executed in each communication round.</p>
+            </div>
+            <div class="arch-pipeline-controls">
+              <button id="btnPrevStage" class="btn btn-outline btn-sm" title="Previous Phase">
+                &larr; Prev
+              </button>
+              <button id="btnAutoPlayStage" class="btn btn-primary btn-sm" title="Auto-advance through all 6 phases">
+                <span id="autoPlayIcon">&#9654;</span> <span id="autoPlayLabel">Auto-Play Loop</span>
+              </button>
+              <button id="btnNextStage" class="btn btn-outline btn-sm" title="Next Phase">
+                Next &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Stepper Step Indicators -->
+          <div class="arch-stepper-track" id="archStepperTrack">
+            <!-- 6 stages dynamically populated -->
+          </div>
+
+          <!-- Active Stage Card -->
+          <div class="arch-stage-display" id="archStageDisplay">
+            <!-- Active Stage Content injected via JavaScript -->
+          </div>
         </div>
 
-        <div class="arch-content-box">
-          <h3 id="archTabTitle" style="margin-bottom: 10px; font-size: 1.25rem;">1. Pseudo-Gradient Extraction &amp; L2 Norm Tracking</h3>
-          <div id="archMathBlock" class="math-block">Δw_k^(t) = w_global^(t) - w_local,k^(t)
-CV_k = σ(||Δw_k||) / (μ(||Δw_k||) + ε)
+        <!-- Part 3: Algorithmic Component Deep-Dive Tabs -->
+        <div class="arch-deepdive-card">
+          <div class="arch-deepdive-head">
+            <h3 class="arch-block-title">Core Subsystems &amp; Mathematical Rigor</h3>
+            <p class="arch-block-desc">Inspect the foundational equations, convergence mechanisms, and code implementations.</p>
+          </div>
+
+          <div class="arch-tabs">
+            <button class="arch-tab-btn active" data-tab="monitor">
+              <span class="tab-num">01</span>
+              <span class="tab-label">Pseudo-Gradient Quality Engine</span>
+            </button>
+            <button class="arch-tab-btn" data-tab="cosine">
+              <span class="tab-num">02</span>
+              <span class="tab-label">Directional Consistency &amp; Bounds</span>
+            </button>
+            <button class="arch-tab-btn" data-tab="ppo">
+              <span class="tab-num">03</span>
+              <span class="tab-label">PPO Policy &amp; &epsilon;-Greedy Exploration</span>
+            </button>
+            <button class="arch-tab-btn" data-tab="aggregator">
+              <span class="tab-num">04</span>
+              <span class="tab-label">Dual-Balanced Quality Aggregator</span>
+            </button>
+          </div>
+
+          <div class="arch-content-box">
+            <div class="arch-tab-meta">
+              <h4 id="archTabTitle" class="arch-tab-heading">1. Pseudo-Gradient Extraction &amp; L2 Norm Tracking</h4>
+              <span class="badge" id="archTabBadge">Privacy-Preserving</span>
+            </div>
+            <div id="archMathBlock" class="math-block">&Delta;w_k^(t) = w_global^(t) - w_local,k^(t)
+CV_k = &sigma;(||&Delta;w_k||) / (&mu;(||&Delta;w_k||) + &epsilon;)
 Stability S_k = 1 / (1 + CV_k)</div>
-          <p id="archTabDesc" style="font-size: 0.95rem; line-height: 1.7;">
-            Rather than sharing private training batches, clients send back parameter updates. The server calculates the exact shift vector. The GradientMonitor tracks historical norm variability across communication rounds over window W=5 to identify unstable or drifting updates.
-          </p>
+            <p id="archTabDesc" class="arch-tab-text">
+              Rather than sharing private training batches, clients send back parameter updates. The server calculates the exact shift vector. The GradientMonitor tracks historical norm variability across communication rounds over window W=5 to identify unstable or drifting updates.
+            </p>
+            <div class="arch-tab-footer">
+              <div class="arch-code-link">
+                <span class="arch-code-lbl">Implementation:</span>
+                <code id="archTabFile">src/gradient_monitor.py</code>
+              </div>
+              <div class="arch-properties" id="archTabProps">
+                <span class="pill-spec">&#10003; Zero Data Leakage</span>
+                <span class="pill-spec">&#10003; Sliding Window W=5</span>
+                <span class="pill-spec">&#10003; L2 Drift Detection</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Part 4: Interactive Live Gradient Quality & Aggregation Sandbox -->
+        <div class="arch-sandbox-card">
+          <div class="arch-sandbox-head">
+            <div class="arch-sandbox-title-wrap">
+              <span class="section-tag" style="margin-bottom: 0;">Interactive Laboratory</span>
+              <h3 class="arch-block-title">Gradient Quality &amp; Aggregation Sandbox</h3>
+              <p class="arch-block-desc">
+                Adjust gradient metrics to see how GradFed's online monitoring formula dynamically scores edge participants, routes exploration, and balances aggregation weights.
+              </p>
+            </div>
+            <button id="btnResetSandbox" class="btn btn-outline btn-sm">Reset Defaults</button>
+          </div>
+
+          <div class="arch-sandbox-grid">
+            <!-- Controls Column -->
+            <div class="arch-controls-panel">
+              <div class="sandbox-slider-group">
+                <div class="slider-header">
+                  <label for="sbNormCv" class="slider-label">
+                    <span>L2 Norm Variance (<code class="code-sm">CV = &sigma;/&mu;</code>)</span>
+                    <span class="slider-desc">Rolling gradient magnitude fluctuations over W=5 rounds</span>
+                  </label>
+                  <span class="slider-val" id="sbNormCvVal">0.15</span>
+                </div>
+                <input type="range" id="sbNormCv" min="0" max="2.5" step="0.05" value="0.15" class="range-slider">
+                <div class="slider-hints">
+                  <span>0.0 (Perfect stability)</span>
+                  <span>1.0</span>
+                  <span>2.5 (Severe oscillation)</span>
+                </div>
+              </div>
+
+              <div class="sandbox-slider-group">
+                <div class="slider-header">
+                  <label for="sbCosine" class="slider-label">
+                    <span>Directional Alignment (<code class="code-sm">cos &theta;</code>)</span>
+                    <span class="slider-desc">Cosine similarity with historical gradient shift vector</span>
+                  </label>
+                  <span class="slider-val" id="sbCosineVal">+0.85</span>
+                </div>
+                <input type="range" id="sbCosine" min="-1.0" max="1.0" step="0.05" value="0.85" class="range-slider">
+                <div class="slider-hints">
+                  <span>-1.0 (Opposite / Byzantine)</span>
+                  <span>0.0 (Orthogonal)</span>
+                  <span>+1.0 (Aligned)</span>
+                </div>
+              </div>
+
+              <div class="sandbox-slider-group">
+                <div class="slider-header">
+                  <label for="sbMagnitude" class="slider-label">
+                    <span>Gradient Norm (<code class="code-sm">||&Delta;w_k||</code>)</span>
+                    <span class="slider-desc">Absolute magnitude of parameter displacement</span>
+                  </label>
+                  <span class="slider-val" id="sbMagnitudeVal">7.5</span>
+                </div>
+                <input type="range" id="sbMagnitude" min="0.5" max="40.0" step="0.5" value="7.5" class="range-slider">
+                <div class="slider-hints">
+                  <span>0.5 (Vanishing)</span>
+                  <span>10.0 (Nominal)</span>
+                  <span>40.0 (Exploding)</span>
+                </div>
+              </div>
+
+              <div class="sandbox-slider-group">
+                <div class="slider-header">
+                  <label for="sbSamples" class="slider-label">
+                    <span>Client Local Samples (<code class="code-sm">|D_k|</code>)</span>
+                    <span class="slider-desc">Data partition size from Dirichlet partition</span>
+                  </label>
+                  <span class="slider-val" id="sbSamplesVal">1,000</span>
+                </div>
+                <input type="range" id="sbSamples" min="100" max="2500" step="50" value="1000" class="range-slider">
+                <div class="slider-hints">
+                  <span>100 (Small edge node)</span>
+                  <span>1,000</span>
+                  <span>2,500 (Large data silo)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Real-Time Metrics & Decision Panel -->
+            <div class="arch-verdict-panel">
+              <div class="verdict-card">
+                <div class="verdict-top">
+                  <span class="verdict-label">GradFed Composite Quality ($Q_k$)</span>
+                  <span class="verdict-score" id="sbQualityScore">0.865</span>
+                </div>
+                <div class="quality-gauge">
+                  <div class="quality-gauge-bar" id="sbQualityBar" style="width: 86.5%;"></div>
+                </div>
+
+                <!-- Sub-score Pills -->
+                <div class="subscore-row">
+                  <div class="subscore-item">
+                    <span class="subscore-name">Stability (S_k &bull; 0.5)</span>
+                    <strong class="subscore-num" id="sbScoreS">0.435</strong>
+                  </div>
+                  <div class="subscore-item">
+                    <span class="subscore-name">Magnitude (M_k &bull; 0.3)</span>
+                    <strong class="subscore-num" id="sbScoreM">0.248</strong>
+                  </div>
+                  <div class="subscore-item">
+                    <span class="subscore-name">Cosine (C_k &bull; 0.2)</span>
+                    <strong class="subscore-num" id="sbScoreC">0.185</strong>
+                  </div>
+                </div>
+
+                <!-- Server Action Verdict Banner -->
+                <div class="verdict-action-box" id="sbVerdictBox">
+                  <div class="verdict-action-head">
+                    <span class="verdict-badge approved" id="sbVerdictBadge">&#10003; Approved for Aggregation</span>
+                  </div>
+                  <p class="verdict-action-desc" id="sbVerdictDesc">
+                    Gradient update displays stable rolling variance and aligned trajectory. The server grants primary contribution status with full weight contribution.
+                  </p>
+                </div>
+
+                <!-- Dual-Balanced Weight Estimation -->
+                <div class="weight-estimate-box">
+                  <div class="weight-est-title">Dual-Balanced Aggregation Weight Preview (&alpha;_k):</div>
+                  <div class="weight-bars-comparison">
+                    <div class="weight-row">
+                      <span class="weight-lbl">FedAvg (Data only 100%):</span>
+                      <div class="weight-meter"><div class="weight-fill fedavg" id="sbFedAvgWeightBar" style="width: 20%;"></div></div>
+                      <span class="weight-pct" id="sbFedAvgWeightVal">20.0%</span>
+                    </div>
+                    <div class="weight-row">
+                      <span class="weight-lbl">GradFed (60% Data + 40% Q):</span>
+                      <div class="weight-meter"><div class="weight-fill gradfed" id="sbGradFedWeightBar" style="width: 22.8%;"></div></div>
+                      <span class="weight-pct emerald" id="sbGradFedWeightVal">22.8%</span>
+                    </div>
+                  </div>
+                  <p class="weight-note" id="sbWeightNote">
+                    GradFed enhances weight by +2.8% due to superior verified gradient reliability relative to the client cohort.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -658,6 +913,27 @@ Stability S_k = 1 / (1 + CV_k)</div>
       <div class="modal-action-box">
         <span class="modal-lbl">Server Recommendation:</span>
         <strong id="modalClientAction" class="modal-action-val">Included in primary aggregation</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Architecture Diagram Fullscreen Modal -->
+  <div id="archModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="archModalTitle">
+    <div class="modal-card modal-card-xl">
+      <div class="modal-header">
+        <div>
+          <span class="badge">Full-Resolution Vector</span>
+          <h3 id="archModalTitle" style="margin-top: 6px;">GradFed Complete System Architecture</h3>
+        </div>
+        <div class="modal-controls">
+          <button id="btnZoomIn" class="btn btn-outline btn-sm" title="Zoom In">+</button>
+          <button id="btnZoomReset" class="btn btn-outline btn-sm" title="Reset Zoom">100%</button>
+          <button id="btnZoomOut" class="btn btn-outline btn-sm" title="Zoom Out">&minus;</button>
+          <button class="modal-close" onclick="closeArchModal()">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body modal-body-scrollable" id="archModalZoomContainer">
+        <img id="archModalImg" src="docs/assets/gradfed_architecture.svg" alt="GradFed Architecture Vector Diagram" style="width: 100%; transition: transform 0.2s ease; transform-origin: top center;">
       </div>
     </div>
   </div>

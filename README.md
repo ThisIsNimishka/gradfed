@@ -47,7 +47,7 @@ Conventional algorithms like **FedAvg** aggregate local models blindly based sol
 - 🔄 **Adaptive Exploration Mechanism:** Implements an $\epsilon$-greedy rehabilitation pool to periodically probe low-performing or noisy clients, recovering clients whose local models stabilize.
 - ⚖️ **Dual-Balanced Quality Aggregation:** Replaces naive sample-count averaging with a dual-weighted scheme combining data proportion ($60\%$) and verified gradient quality ($40\%$).
 - 📈 **Fast Convergence:** Achieves **>60% accuracy in just 8 communication rounds** and a peak of **74.42% accuracy** in 30 rounds on Non-IID CIFAR-10 with ResNet-10.
-- 🎨 **Interactive Studio & Multi-Theme Engine:** Live web dashboard featuring an interactive 30-round simulator, dynamic trajectory charts, client profiling matrix, interactive quality formula calculator, CLI generator, and customizable color themes (*Emerald Aurora*, *Cosmic Violet*, *Quantum Cyan*, *Solar Flare*, and *Titanium Light*).
+- 🎨 **Interactive Showcase Studio & Architecture Lab:** Live web application featuring an interactive 30-round simulator, dynamic trajectory charts, a 6-stage operational architecture pipeline stepper, an interactive gradient quality & aggregation sandbox, a fullscreen vector diagram viewer, client matrix explorer, CLI command generator, and 5 curated color themes (*Emerald Aurora*, *Cosmic Violet*, *Quantum Cyan*, *Solar Flare*, and *Titanium Light*).
 
 ---
 

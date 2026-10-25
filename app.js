@@ -105,7 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initClientGrid();
   updateRoundView(0);
   setupEventListeners();
+  setupArchSubsystems();
+  setupArchPipeline();
   setupArchTabs();
+  setupArchSandbox();
+  setupArchModal();
   setupQualityCalculator();
   setupCliGenerator();
   setupMatrixFilters();
@@ -577,29 +581,305 @@ function copyCliCommand() {
   });
 }
 
-// Architecture Tabs logic
+// ============================================================================
+// Architecture Hub: Subsystems, Pipeline Stepper, Tabs, Sandbox & Modal
+// ============================================================================
+
+// 1. Subsystem Explorer Navigator
+function setupArchSubsystems() {
+  const subBtns = document.querySelectorAll('.arch-sub-btn');
+  const badgeEl = document.getElementById('archSubBadge');
+  const titleEl = document.getElementById('archSubTitle');
+  const fileEl = document.getElementById('archSubFile');
+  const descEl = document.getElementById('archSubDesc');
+  const eqEl = document.getElementById('archSubEq');
+
+  if (!subBtns.length || !titleEl) return;
+
+  const SUBSYSTEMS = {
+    all: {
+      badge: "System Topology",
+      title: "End-to-End Privacy-Preserving Coordination",
+      file: "src/gradfed_main.py",
+      desc: "GradFed separates the training loop into two synchronized tiers: the central server orchestrates reinforcement learning client selection and gradient quality aggregation, while edge clients train on private, non-IID local data without transmitting raw samples.",
+      eq: "Inner Loop: w_{k,t} = w_t - η∑ ∇L(w)  •  Outer Loop: Δw_k = w_t - w_{k,t} → Q_k → w_{t+1}"
+    },
+    model: {
+      badge: "Server Core",
+      title: "1. Global Model State & Parameter Broadcast",
+      file: "src/models.py",
+      desc: "Maintains the central deep learning architecture (ResNet-10 / CNN) and tracks the canonical parameter tensor w_t across communication rounds. At each round, w_t is broadcast to selected edge clients.",
+      eq: "w_t ∈ ℝ^d  —  Parameterized with ResNet-10 backbone (CIFAR-10 / Non-IID)"
+    },
+    clients: {
+      badge: "Edge Mesh",
+      title: "2. Distributed Non-IID Edge Nodes (K=50)",
+      file: "src/update.py",
+      desc: "50 heterogeneous edge clients partitioned according to Dirichlet distribution Dir(α=10.0). Clients perform 10 local SGD epochs on local mini-batches. No raw user data leaves the edge device.",
+      eq: "D_k ~ Dir(α=10.0),  |B|=10,  E=10 local epochs  •  w_{k,t} = w_t - η·∇F_k(w)"
+    },
+    monitor: {
+      badge: "Online Profiling",
+      title: "3. GradientMonitor Quality Profiling Engine",
+      file: "src/gradient_monitor.py",
+      desc: "Extracts pseudo-gradient vectors Δw_k = w_t - w_{k,t}. Calculates coefficient of variation CV over rolling window W=5, directional cosine similarity, and magnitude bounds without server validation sets.",
+      eq: "Q_k = 0.5·(1/(1+CV_k)) + 0.3·(2/(1+exp(||Δw||/10))) + 0.2·((cosθ+1)/2) ∈ [0, 1]"
+    },
+    ppo: {
+      badge: "RL Controller",
+      title: "4. PPO Selection Policy & Adaptive Exploration",
+      file: "src/ppo_server/ppo.py",
+      desc: "An Actor-Critic neural network that maps global convergence states to client selection probabilities. Employs adaptive ε-greedy exploration (20% budget) to probe dormant or recovering clients.",
+      eq: "State s_t = [Acc_t, Loss_t, t/T, Q̄, N_noisy/K, σ_Q]  •  Score_k = 0.7·P_ppo(k) + 0.3·Q_k"
+    },
+    aggregator: {
+      badge: "Aggregation",
+      title: "5. Robust Dual-Balanced Model Aggregator",
+      file: "src/ppo_server/gradfed_ppo_update.py",
+      desc: "Replaces naive sample-count weighting with dual-balanced weighting: 60% sample volume and 40% verified gradient quality. Penalizes corrupted gradients by up to 85% to protect the global model trajectory.",
+      eq: "α_k = 0.6·(|D_k| / ∑|D_j|) + 0.4·(Q_k / ∑Q_j)  •  w_{t+1} = ∑ α_k · w_{k,t}"
+    },
+    reward: {
+      badge: "RL Optimization",
+      title: "6. Global Evaluation & Multi-Objective Reward",
+      file: "src/gradfed_main.py",
+      desc: "Computes global accuracy improvement ΔAcc_t, loss reduction, and cohort quality reward. Populates the PPO rollout buffer to trigger clipped surrogate policy updates.",
+      eq: "R_t = ΔAcc_t + λ_1·Q̄_t - λ_2·Loss_t  •  L^CLIP(θ) = Ê_t [min(r_t·Â_t, clip(r_t, 1-ε, 1+ε)·Â_t)]"
+    }
+  };
+
+  subBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      subBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const key = btn.dataset.sub;
+      const data = SUBSYSTEMS[key];
+      if (data) {
+        if (badgeEl) badgeEl.textContent = data.badge;
+        if (titleEl) titleEl.textContent = data.title;
+        if (fileEl) fileEl.textContent = data.file;
+        if (descEl) descEl.textContent = data.desc;
+        if (eqEl) eqEl.textContent = data.eq;
+      }
+    });
+  });
+}
+
+// 2. 6-Stage Round Lifecycle Pipeline Stepper
+let currentStageIdx = 0;
+let stageAutoPlayTimer = null;
+let isStageAutoPlaying = false;
+
+function setupArchPipeline() {
+  const trackEl = document.getElementById('archStepperTrack');
+  const displayEl = document.getElementById('archStageDisplay');
+  const prevBtn = document.getElementById('btnPrevStage');
+  const nextBtn = document.getElementById('btnNextStage');
+  const autoPlayBtn = document.getElementById('btnAutoPlayStage');
+  const autoPlayIcon = document.getElementById('autoPlayIcon');
+  const autoPlayLabel = document.getElementById('autoPlayLabel');
+
+  if (!trackEl || !displayEl) return;
+
+  const PIPELINE_STAGES = [
+    {
+      num: "01",
+      shortTitle: "Global Dispatch",
+      title: "Phase 1: Global Model Serialization & Broadcast",
+      subsystem: "Server Dispatcher",
+      file: "src/gradfed_main.py",
+      desc: "At the start of communication round t, the server serializes global parameter weights w_t and broadcasts them to the selected edge client cohort S_t. Client communication payloads are optimized via state serialization.",
+      math: "Broadcast: w_t ∈ ℝ^d  ⟶  Edge Cohort S_t ⊂ {1, 2, ..., K}",
+      props: ["ResNet-10 Backbone", "Round t State", "Zero Leakage"]
+    },
+    {
+      num: "02",
+      shortTitle: "Edge Local SGD",
+      title: "Phase 2: Edge Client Local Training on Non-IID Data",
+      subsystem: "Edge Client Mesh",
+      file: "src/update.py",
+      desc: "Selected edge devices perform E=10 local SGD epochs using mini-batches of size B=10 on their private Dirichlet-partitioned data. Unbeknownst to the server, certain corrupted clients execute label flips or noisy updates.",
+      math: "w_{k,t} = w_t - η ∑_{e=1}^E ∇ℒ(w; ℬ_{k,e})  where  D_k ~ Dir(α=10.0)",
+      props: ["Private Local Data", "Non-IID Partitions", "Local Mini-Batches"]
+    },
+    {
+      num: "03",
+      shortTitle: "Pseudo-Gradients",
+      title: "Phase 3: Privacy-Preserving Shift Vector Extraction",
+      subsystem: "Delta Extractor",
+      file: "src/gradient_monitor.py",
+      desc: "Rather than uploading private gradients or training batches, clients transmit updated model weights w_{k,t}. The central server computes the exact parameter displacement without inspecting private user features.",
+      math: "Δw_k^(t) = w_t - w_{k,t}  •  ||Δw_k^(t)||_2 = √(∑ (Δw_{k,i})^2)",
+      props: ["Differential Privacy", "Exact Shift Vector", "100% Privacy Compliant"]
+    },
+    {
+      num: "04",
+      shortTitle: "Quality Profiling",
+      title: "Phase 4: GradientMonitor Online Reliability Profiling",
+      subsystem: "GradientMonitor Engine",
+      file: "src/gradient_monitor.py",
+      desc: "Tracks rolling window statistics (W=5) for each client. Evaluates norm stability (inverse CV), directional cosine consistency with previous rounds, and sigmoidal magnitude bounds to output composite quality score Q_k ∈ [0, 1].",
+      math: "S_k = 1 / (1 + CV_k)  •  M_k = 2 / (1 + e^(||Δw||/10))  •  C_k = (cosθ+1)/2\nComposite: Q_k = 0.5·S_k + 0.3·M_k + 0.2·C_k",
+      props: ["Sliding Window W=5", "Zero Server Validation", "Outlier Suppression"]
+    },
+    {
+      num: "05",
+      shortTitle: "PPO Selection",
+      title: "Phase 5: PPO Policy Selection & Adaptive ε-Exploration",
+      subsystem: "PPO Server Agent",
+      file: "src/ppo_server/gradfed_ppo_update.py",
+      desc: "A Proximal Policy Optimization agent observes the global environment state and produces client selection probabilities. Combined with historical Q_k, an adaptive ε-greedy scheduler probes candidate clients to prevent starvation.",
+      math: "Score_k = 0.7·P_ppo(k) + 0.3·Q_k  •  ε(t) = max(0.1, 0.3 - 0.2·(t/T))\nExploration Pool: Probes penalized clients to detect recovery",
+      props: ["Actor-Critic MLP", "Hybrid Scoring", "Starvation Prevention"]
+    },
+    {
+      num: "06",
+      shortTitle: "Robust Aggregation",
+      title: "Phase 6: Robust Dual-Balanced Model Aggregation",
+      subsystem: "Dual-Balanced Aggregator",
+      file: "src/ppo_server/gradfed_ppo_update.py",
+      desc: "The server calculates normalized aggregation weights combining empirical client data size (60%) and verified gradient reliability (40%). Updates with Q_k < 0.3 are attenuated or discarded to safeguard global convergence.",
+      math: "α_k = 0.6·(|D_k| / ∑|D_j|) + 0.4·(Q_k / ∑Q_j)  •  w_{t+1} = ∑_{k ∈ S_t} α_k · w_{k,t}",
+      props: ["Dual-Balanced", "Noise Filtered (Q<0.3)", "Global Model Convergence"]
+    }
+  ];
+
+  // Render stepper buttons
+  trackEl.innerHTML = '';
+  PIPELINE_STAGES.forEach((stage, idx) => {
+    const node = document.createElement('div');
+    node.className = `arch-step-node ${idx === 0 ? 'active' : ''}`;
+    node.id = `archStepNode-${idx}`;
+    node.innerHTML = `
+      <div class="arch-step-node-top">
+        <span class="arch-step-num">${stage.num}</span>
+        <span class="arch-step-indicator"></span>
+      </div>
+      <div class="arch-step-title">${stage.shortTitle}</div>
+    `;
+    node.addEventListener('click', () => {
+      stopStageAutoPlay();
+      renderStage(idx);
+    });
+    trackEl.appendChild(node);
+  });
+
+  function renderStage(idx) {
+    currentStageIdx = (idx + PIPELINE_STAGES.length) % PIPELINE_STAGES.length;
+    const stage = PIPELINE_STAGES[currentStageIdx];
+
+    document.querySelectorAll('.arch-step-node').forEach((node, i) => {
+      node.classList.toggle('active', i === currentStageIdx);
+    });
+
+    displayEl.innerHTML = `
+      <div class="stage-display-header">
+        <div class="stage-display-tag-group">
+          <span class="badge">${stage.subsystem}</span>
+          <span class="arch-toolbar-badge">${stage.num} / 06</span>
+        </div>
+        <div class="arch-code-link">
+          <span class="arch-code-lbl">Module:</span>
+          <code>${stage.file}</code>
+        </div>
+      </div>
+      <h4 class="stage-display-title">${stage.title}</h4>
+      <p class="stage-display-desc">${stage.desc}</p>
+      <div class="stage-display-math">${stage.math}</div>
+      <div class="stage-display-footer">
+        <div class="stage-display-props">
+          ${stage.props.map(p => `<span class="pill-spec">✓ ${p}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function startStageAutoPlay() {
+    isStageAutoPlaying = true;
+    if (autoPlayIcon) autoPlayIcon.innerHTML = '&#10074;&#10074;';
+    if (autoPlayLabel) autoPlayLabel.textContent = 'Pause Loop';
+    if (autoPlayBtn) autoPlayBtn.classList.add('active');
+
+    stageAutoPlayTimer = setInterval(() => {
+      renderStage(currentStageIdx + 1);
+    }, 3800);
+  }
+
+  function stopStageAutoPlay() {
+    isStageAutoPlaying = false;
+    clearInterval(stageAutoPlayTimer);
+    if (autoPlayIcon) autoPlayIcon.innerHTML = '&#9654;';
+    if (autoPlayLabel) autoPlayLabel.textContent = 'Auto-Play Loop';
+    if (autoPlayBtn) autoPlayBtn.classList.remove('active');
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      stopStageAutoPlay();
+      renderStage(currentStageIdx - 1);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      stopStageAutoPlay();
+      renderStage(currentStageIdx + 1);
+    });
+  }
+
+  if (autoPlayBtn) {
+    autoPlayBtn.addEventListener('click', () => {
+      if (isStageAutoPlaying) stopStageAutoPlay();
+      else startStageAutoPlay();
+    });
+  }
+
+  renderStage(0);
+}
+
+// 3. Algorithmic Component Deep-Dive Tabs
 function setupArchTabs() {
   const tabBtns = document.querySelectorAll('.arch-tab-btn');
-  const contents = {
+  const titleEl = document.getElementById('archTabTitle');
+  const mathEl = document.getElementById('archMathBlock');
+  const descEl = document.getElementById('archTabDesc');
+  const badgeEl = document.getElementById('archTabBadge');
+  const fileEl = document.getElementById('archTabFile');
+  const propsEl = document.getElementById('archTabProps');
+
+  const ARCH_TABS = {
     monitor: {
       title: "1. Pseudo-Gradient Extraction & L2 Norm Tracking",
+      badge: "Privacy-Preserving",
       formula: "Δw_k^(t) = w_global^(t) - w_local,k^(t)\nCV_k = σ(||Δw_k||) / (μ(||Δw_k||) + ε)\nStability S_k = 1 / (1 + CV_k)",
-      desc: "Rather than sharing private training batches, clients send back parameter updates. The server calculates the exact shift vector. The GradientMonitor tracks historical norm variability across communication rounds over window W=5 to identify unstable or drifting updates."
+      desc: "Rather than sharing private training batches, clients send back parameter updates. The server calculates the exact shift vector. The GradientMonitor tracks historical norm variability across communication rounds over window W=5 to identify unstable or drifting updates.",
+      file: "src/gradient_monitor.py",
+      props: ["Zero Data Leakage", "Sliding Window W=5", "L2 Drift Detection"]
     },
     cosine: {
       title: "2. Directional Alignment & Magnitude Bounds",
+      badge: "Robust Dynamics",
       formula: "Cosine Consistency C_k = (cos(Δw_k^(t), Δw_k^(t-1)) + 1) / 2\nMagnitude Score M_k = 2 / (1 + exp(||Δw_k|| / 10))\nQuality Q_k = 0.5·S_k + 0.3·M_k + 0.2·C_k",
-      desc: "Measures whether the client is moving cohesively towards the global minimum or oscillating randomly due to label corruption. A sigmoidal scaler penalizes exploding or vanishing gradients, yielding an online composite quality score Q_k ∈ [0, 1]."
+      desc: "Measures whether the client is moving cohesively towards the global minimum or oscillating randomly due to label corruption. A sigmoidal scaler penalizes exploding or vanishing gradients, yielding an online composite quality score Q_k ∈ [0, 1].",
+      file: "src/gradient_monitor.py",
+      props: ["Cosine Angle Tracking", "Sigmoid Magnitude Bounds", "Bounded Metric [0, 1]"]
     },
     ppo: {
       title: "3. PPO Policy with Adaptive ε-Greedy Exploration",
+      badge: "Actor-Critic RL",
       formula: "State s_t = [Acc_t, Loss_t, t/T, Q_avg, N_noisy/K, σ_Q]\nSelection Score_k = 0.7·P_ppo(k) + 0.3·Q_k\nExploration: ε(t) = max(0.1, 0.3 - 0.2·(t/T))",
-      desc: "A discrete-action Proximal Policy Optimization network generates client selection probabilities. To prevent straggler starvation, an ε-greedy exploration pool periodically probes low-quality clients to detect if their models stabilize, decaying exploration as the global model converges."
+      desc: "A discrete-action Proximal Policy Optimization network generates client selection probabilities. To prevent straggler starvation, an ε-greedy exploration pool periodically probes low-quality clients to detect if their models stabilize, decaying exploration as the global model converges.",
+      file: "src/ppo_server/ppo.py",
+      props: ["6D State Representation", "Clipped Surrogate Objective", "Adaptive ε-Decay"]
     },
     aggregator: {
       title: "4. Dual-Balanced Quality Aggregator",
-      formula: "w_global^(t+1) = Σ [ 0.6·(|D_k| / Σ|D|) + 0.4·(Q_k / Σ Q) ] · w_local,k^(t)",
-      desc: "Conventional FedAvg is vulnerable to corrupted gradients from high-data clients. GradFed balances data volume (60%) with verified gradient reliability (40%), completely filtering out corrupted client weights without requiring trusted benchmark test sets on the server."
+      badge: "Convergence Protection",
+      formula: "α_k = 0.6·(|D_k| / ∑|D_j|) + 0.4·(Q_k / ∑Q_j)\nw_global^(t+1) = ∑_{k ∈ S_t} α_k · w_local,k^(t)",
+      desc: "Conventional FedAvg is vulnerable to corrupted gradients from high-data clients. GradFed balances data volume (60%) with verified gradient reliability (40%), completely filtering out corrupted client weights without requiring trusted benchmark test sets on the server.",
+      file: "src/ppo_server/gradfed_ppo_update.py",
+      props: ["60/40 Ratio Balance", "Noise Attenuation ≤ 85%", "Dirichlet Robustness"]
     }
   };
 
@@ -609,14 +889,203 @@ function setupArchTabs() {
       btn.classList.add('active');
 
       const tabKey = btn.dataset.tab;
-      const data = contents[tabKey];
+      const data = ARCH_TABS[tabKey];
       if (data) {
-        document.getElementById('archTabTitle').textContent = data.title;
-        document.getElementById('archMathBlock').textContent = data.formula;
-        document.getElementById('archTabDesc').textContent = data.desc;
+        if (titleEl) titleEl.textContent = data.title;
+        if (mathEl) mathEl.textContent = data.formula;
+        if (descEl) descEl.textContent = data.desc;
+        if (badgeEl) badgeEl.textContent = data.badge;
+        if (fileEl) fileEl.textContent = data.file;
+        if (propsEl) {
+          propsEl.innerHTML = data.props.map(p => `<span class="pill-spec">✓ ${p}</span>`).join('');
+        }
       }
     });
   });
+}
+
+// 4. Interactive Live Gradient Quality & Aggregation Sandbox
+function setupArchSandbox() {
+  const normCvSlider = document.getElementById('sbNormCv');
+  const cosineSlider = document.getElementById('sbCosine');
+  const magSlider = document.getElementById('sbMagnitude');
+  const samplesSlider = document.getElementById('sbSamples');
+  const resetBtn = document.getElementById('btnResetSandbox');
+
+  if (!normCvSlider || !cosineSlider || !magSlider || !samplesSlider) return;
+
+  function updateSandbox() {
+    const cv = parseFloat(normCvSlider.value);
+    const cos = parseFloat(cosineSlider.value);
+    const mag = parseFloat(magSlider.value);
+    const samples = parseInt(samplesSlider.value, 10);
+
+    const normCvVal = document.getElementById('sbNormCvVal');
+    const cosineVal = document.getElementById('sbCosineVal');
+    const magVal = document.getElementById('sbMagnitudeVal');
+    const samplesVal = document.getElementById('sbSamplesVal');
+
+    if (normCvVal) normCvVal.textContent = cv.toFixed(2);
+    if (cosineVal) cosineVal.textContent = (cos >= 0 ? '+' : '') + cos.toFixed(2);
+    if (magVal) magVal.textContent = mag.toFixed(1);
+    if (samplesVal) samplesVal.textContent = samples.toLocaleString();
+
+    // Stability score S_k = 1 / (1 + CV)
+    const s = 1.0 / (1.0 + cv);
+    // Magnitude score M_k = 2 / (1 + exp(mag / 10))
+    const m = 2.0 / (1.0 + Math.exp(mag / 10.0));
+    // Consistency score C_k = (cos + 1) / 2
+    const c = (cos + 1.0) / 2.0;
+
+    const weightedS = 0.5 * s;
+    const weightedM = 0.3 * m;
+    const weightedC = 0.2 * c;
+    const q = Math.max(0, Math.min(1, weightedS + weightedM + weightedC));
+
+    const qScoreEl = document.getElementById('sbQualityScore');
+    const qBarEl = document.getElementById('sbQualityBar');
+    const scoreSEl = document.getElementById('sbScoreS');
+    const scoreMEl = document.getElementById('sbScoreM');
+    const scoreCEl = document.getElementById('sbScoreC');
+
+    if (qScoreEl) qScoreEl.textContent = q.toFixed(3);
+    if (qBarEl) {
+      qBarEl.style.width = `${(q * 100).toFixed(1)}%`;
+      if (q >= 0.55) {
+        qBarEl.style.background = 'var(--accent-emerald)';
+      } else if (q >= 0.35) {
+        qBarEl.style.background = 'var(--accent-amber)';
+      } else {
+        qBarEl.style.background = 'var(--accent-rose)';
+      }
+    }
+
+    if (scoreSEl) scoreSEl.textContent = weightedS.toFixed(3);
+    if (scoreMEl) scoreMEl.textContent = weightedM.toFixed(3);
+    if (scoreCEl) scoreCEl.textContent = weightedC.toFixed(3);
+
+    // Update Verdict Display
+    const badge = document.getElementById('sbVerdictBadge');
+    const desc = document.getElementById('sbVerdictDesc');
+    if (badge && desc) {
+      if (q >= 0.55) {
+        badge.className = 'verdict-badge approved';
+        badge.innerHTML = '&#10003; Approved for Primary Aggregation';
+        desc.textContent = 'Gradient trajectory is stable and aligned with global descent. Client is prioritized with full dual-balanced data and quality weighting.';
+      } else if (q >= 0.35) {
+        badge.className = 'verdict-badge warning';
+        badge.innerHTML = '&#9888; Marginal Quality — Routed to &epsilon;-Exploration';
+        desc.textContent = 'Moderate variance or drift detected. Client is held in the candidate pool and probed periodically via ε-greedy exploration.';
+      } else {
+        badge.className = 'verdict-badge danger';
+        badge.innerHTML = '&#10007; Flagged as Noisy / Corrupted — Weight Suppressed';
+        desc.textContent = 'Severe gradient oscillation or conflicting direction detected (Q < 0.35). Contribution is attenuated by up to 85% to protect the global model.';
+      }
+    }
+
+    // Weight Calculation Simulation
+    const totalData = 4000 + samples;
+    const totalQ = 3.0 + q;
+
+    const fedavgPct = (samples / totalData) * 100;
+    const dataPart = samples / totalData;
+    const qPart = q / totalQ;
+    const gradfedPct = (0.6 * dataPart + 0.4 * qPart) * 100;
+
+    const fedAvgBar = document.getElementById('sbFedAvgWeightBar');
+    const fedAvgVal = document.getElementById('sbFedAvgWeightVal');
+    const gradFedBar = document.getElementById('sbGradFedWeightBar');
+    const gradFedVal = document.getElementById('sbGradFedWeightVal');
+    const weightNote = document.getElementById('sbWeightNote');
+
+    if (fedAvgBar && fedAvgVal && gradFedBar && gradFedVal) {
+      fedAvgBar.style.width = `${Math.min(100, fedavgPct * 2.5).toFixed(1)}%`;
+      fedAvgVal.textContent = `${fedavgPct.toFixed(1)}%`;
+      gradFedBar.style.width = `${Math.min(100, gradfedPct * 2.5).toFixed(1)}%`;
+      gradFedVal.textContent = `${gradfedPct.toFixed(1)}%`;
+
+      if (weightNote) {
+        const diff = gradfedPct - fedavgPct;
+        if (diff >= 0) {
+          weightNote.textContent = `GradFed enhances weight by +${diff.toFixed(1)}% relative to naive FedAvg due to high verified reliability.`;
+        } else {
+          weightNote.textContent = `GradFed safely dampens weight by ${Math.abs(diff).toFixed(1)}% relative to FedAvg to guard against unreliable gradients.`;
+        }
+      }
+    }
+  }
+
+  [normCvSlider, cosineSlider, magSlider, samplesSlider].forEach(slider => {
+    slider.addEventListener('input', updateSandbox);
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      normCvSlider.value = 0.15;
+      cosineSlider.value = 0.85;
+      magSlider.value = 7.5;
+      samplesSlider.value = 1000;
+      updateSandbox();
+    });
+  }
+
+  updateSandbox();
+}
+
+// 5. Architecture Fullscreen Vector Modal
+let archZoomLevel = 1.0;
+
+function setupArchModal() {
+  const openBtn = document.getElementById('btnArchModalOpen');
+  const modal = document.getElementById('archModal');
+  const zoomIn = document.getElementById('btnZoomIn');
+  const zoomOut = document.getElementById('btnZoomOut');
+  const zoomReset = document.getElementById('btnZoomReset');
+  const modalImg = document.getElementById('archModalImg');
+
+  if (openBtn && modal) {
+    openBtn.addEventListener('click', () => {
+      archZoomLevel = 1.0;
+      if (modalImg) modalImg.style.transform = `scale(${archZoomLevel})`;
+      modal.style.display = 'flex';
+    });
+  }
+
+  if (zoomIn && modalImg) {
+    zoomIn.addEventListener('click', () => {
+      archZoomLevel = Math.min(2.5, archZoomLevel + 0.25);
+      modalImg.style.transform = `scale(${archZoomLevel})`;
+    });
+  }
+
+  if (zoomOut && modalImg) {
+    zoomOut.addEventListener('click', () => {
+      archZoomLevel = Math.max(0.6, archZoomLevel - 0.25);
+      modalImg.style.transform = `scale(${archZoomLevel})`;
+    });
+  }
+
+  if (zoomReset && modalImg) {
+    zoomReset.addEventListener('click', () => {
+      archZoomLevel = 1.0;
+      modalImg.style.transform = 'scale(1.0)';
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeArchModal();
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeArchModal();
+  });
+}
+
+function closeArchModal() {
+  const modal = document.getElementById('archModal');
+  if (modal) modal.style.display = 'none';
 }
 
 // Client inspection modal
