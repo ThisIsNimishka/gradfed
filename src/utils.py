@@ -5,13 +5,15 @@
 import copy
 import torch
 from torchvision import datasets, transforms
-from sampling import mnist_iid, mnist_noniid, mnist_noniid_unequal
-from sampling import cifar_iid, cifar_noniid, iid_sampling, non_iid_dirichlet_sampling
+try:
+    from sampling import mnist_iid, mnist_noniid, mnist_noniid_unequal
+    from sampling import cifar_iid, cifar_noniid, iid_sampling, non_iid_dirichlet_sampling
+except ImportError:
+    from src.sampling import mnist_iid, mnist_noniid, mnist_noniid_unequal
+    from src.sampling import cifar_iid, cifar_noniid, iid_sampling, non_iid_dirichlet_sampling
 import numpy as np
 from PIL import Image
 import os
-from keras.datasets import imdb 
-from keras.preprocessing.sequence import pad_sequences 
 from torch.utils.data import TensorDataset, RandomSampler, DataLoader, SequentialSampler
 
 
@@ -167,7 +169,14 @@ def get_dataset(args):
                 user_groups = mnist_noniid(train_dataset, args.num_users)
     
     elif args.dataset == 'imdb':
-        print("!!!!!!!!数据集是imdb")
+        try:
+            from keras.datasets import imdb
+            from keras.preprocessing.sequence import pad_sequences
+        except ImportError:
+            raise ImportError(
+                "The 'keras' library is required to process the IMDB dataset. "
+                "Install it using 'pip install keras' or use CIFAR10/MNIST datasets."
+            )
         MAX_WORDS = 10000 
         MAX_LEN = 200 
         (x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=MAX_WORDS)

@@ -50,6 +50,21 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def resolve_device(gpu_id):
+    """Resolve torch.device safely handling None, -1, string values, and CUDA availability"""
+    if gpu_id is None:
+        return torch.device('cpu')
+    gpu_str = str(gpu_id).strip().lower()
+    if gpu_str in ['-1', 'none', 'cpu']:
+        return torch.device('cpu')
+    if torch.cuda.is_available():
+        try:
+            return torch.device(f'cuda:{gpu_id}')
+        except Exception:
+            return torch.device('cpu')
+    return torch.device('cpu')
+
+
 class DatasetSplit(Dataset):
     """An abstract Dataset class wrapped around Pytorch Dataset class"""
     
@@ -62,7 +77,7 @@ class DatasetSplit(Dataset):
 
     def __getitem__(self, item):
         image, label = self.dataset[self.idxs[item]]
-        return torch.tensor(image), torch.tensor(label)
+        return torch.as_tensor(image), torch.as_tensor(label)
 
 
 class LocalUpdate:
@@ -73,8 +88,7 @@ class LocalUpdate:
         self.trainloader = DataLoader(DatasetSplit(dataset, idxs), 
                                       batch_size=self.args.local_bs, 
                                       shuffle=True)
-        self.device = torch.device(f'cuda:{args.gpu_id}' if torch.cuda.is_available() 
-                                   and args.gpu_id != -1 else 'cpu')
+        self.device = resolve_device(getattr(args, 'gpu_id', None))
         self.criterion = torch.nn.CrossEntropyLoss().to(self.device)
     
     def update_weights(self, model, global_round):
@@ -116,8 +130,7 @@ def test_inference(args, model, test_dataset):
     model.eval()
     loss, total, correct = 0.0, 0.0, 0.0
     
-    device = torch.device(f'cuda:{args.gpu_id}' if torch.cuda.is_available() 
-                         and args.gpu_id != -1 else 'cpu')
+    device = resolve_device(getattr(args, 'gpu_id', None))
     criterion = torch.nn.CrossEntropyLoss().to(device)
     testloader = DataLoader(test_dataset, batch_size=128, shuffle=False)
     
@@ -151,8 +164,7 @@ def gradfed_train():
     exp_details(args)
     
     # Set device
-    device = torch.device(f'cuda:{args.gpu_id}' if torch.cuda.is_available() 
-                         and args.gpu_id != -1 else 'cpu')
+    device = resolve_device(getattr(args, 'gpu_id', None))
     
     # Load dataset and split users
     train_dataset, test_dataset, dict_users = get_dataset(args)

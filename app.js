@@ -100,6 +100,7 @@ let currentMatrixFilter = 'all';
 
 // Initialize application on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   setupStudioTabs();
   initClientGrid();
   updateRoundView(0);
@@ -249,11 +250,18 @@ function renderSimChart(activeIdx) {
 
   const pointsCount = activeIdx + 1;
 
-  // 1. Draw Accuracy Area Fill & Curve (Cyan)
+  // Resolve active theme palette for chart curves
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'emerald';
+  const themeCfg = THEMES[currentTheme] || THEMES.emerald;
+  const accColor = themeCfg.chartAccColor;
+  const accGlow = themeCfg.chartAccGlow;
+  const accStroke = themeCfg.chartAccStroke;
+
+  // 1. Draw Accuracy Area Fill & Curve (Theme Accent)
   if (pointsCount > 0) {
     const gradAcc = ctx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
-    gradAcc.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
-    gradAcc.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
+    gradAcc.addColorStop(0, accGlow);
+    gradAcc.addColorStop(1, 'transparent');
 
     ctx.beginPath();
     ctx.moveTo(getX(0), getYAcc(ROUNDS_DATA[0].acc));
@@ -272,17 +280,17 @@ function renderSimChart(activeIdx) {
     for (let i = 1; i < pointsCount; i++) {
       ctx.lineTo(getX(i), getYAcc(ROUNDS_DATA[i].acc));
     }
-    ctx.strokeStyle = '#38bdf8';
+    ctx.strokeStyle = accColor;
     ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    // 2. Draw Loss Curve (Amber)
+    // 2. Draw Loss Curve (Amber / Warning)
     ctx.beginPath();
     ctx.moveTo(getX(0), getYLoss(ROUNDS_DATA[0].loss));
     for (let i = 1; i < pointsCount; i++) {
       ctx.lineTo(getX(i), getYLoss(ROUNDS_DATA[i].loss));
     }
-    ctx.strokeStyle = '#fbbf24';
+    ctx.strokeStyle = '#f59e0b';
     ctx.lineWidth = 2;
     ctx.setLineDash([4, 3]);
     ctx.stroke();
@@ -296,18 +304,18 @@ function renderSimChart(activeIdx) {
     // Glowing head for Accuracy
     ctx.beginPath();
     ctx.arc(headX, headYAcc, 6, 0, Math.PI * 2);
-    ctx.fillStyle = '#38bdf8';
+    ctx.fillStyle = accColor;
     ctx.fill();
     ctx.beginPath();
     ctx.arc(headX, headYAcc, 10, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+    ctx.strokeStyle = accStroke;
     ctx.lineWidth = 2;
     ctx.stroke();
 
     // Head for Loss
     ctx.beginPath();
     ctx.arc(headX, headYLoss, 5, 0, Math.PI * 2);
-    ctx.fillStyle = '#fbbf24';
+    ctx.fillStyle = '#f59e0b';
     ctx.fill();
   }
 }
@@ -695,5 +703,104 @@ function setupStudioTabs() {
 
   window.addEventListener('hashchange', handleHash);
   handleHash();
+}
+
+// ============================================================================
+// Multi-Theme Controller Engine
+// ============================================================================
+const THEMES = {
+  emerald: {
+    name: 'Emerald Aurora',
+    dotColor: '#10b981',
+    chartAccColor: '#10b981',
+    chartAccGlow: 'rgba(16, 185, 129, 0.25)',
+    chartAccStroke: 'rgba(16, 185, 129, 0.5)'
+  },
+  violet: {
+    name: 'Cosmic Violet',
+    dotColor: '#c084fc',
+    chartAccColor: '#c084fc',
+    chartAccGlow: 'rgba(192, 132, 252, 0.25)',
+    chartAccStroke: 'rgba(192, 132, 252, 0.5)'
+  },
+  cyan: {
+    name: 'Quantum Cyan',
+    dotColor: '#38bdf8',
+    chartAccColor: '#38bdf8',
+    chartAccGlow: 'rgba(56, 189, 248, 0.25)',
+    chartAccStroke: 'rgba(56, 189, 248, 0.5)'
+  },
+  solar: {
+    name: 'Solar Flare',
+    dotColor: '#fbbf24',
+    chartAccColor: '#fbbf24',
+    chartAccGlow: 'rgba(251, 191, 36, 0.25)',
+    chartAccStroke: 'rgba(251, 191, 36, 0.5)'
+  },
+  light: {
+    name: 'Titanium Light',
+    dotColor: '#059669',
+    chartAccColor: '#059669',
+    chartAccGlow: 'rgba(5, 150, 105, 0.2)',
+    chartAccStroke: 'rgba(5, 150, 105, 0.4)'
+  }
+};
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('gradfed_theme') || 'emerald';
+  setTheme(savedTheme, false);
+
+  const dropdown = document.getElementById('themeDropdown');
+  const toggleBtn = document.getElementById('themeToggleBtn');
+
+  if (toggleBtn && dropdown) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  const options = document.querySelectorAll('.theme-option-item');
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const selected = opt.dataset.themeVal;
+      setTheme(selected, true);
+      if (dropdown) dropdown.classList.remove('open');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+function setTheme(themeKey, shouldToast = false) {
+  if (!THEMES[themeKey]) themeKey = 'emerald';
+  document.documentElement.setAttribute('data-theme', themeKey);
+  localStorage.setItem('gradfed_theme', themeKey);
+
+  const config = THEMES[themeKey];
+  const dot = document.getElementById('themeActiveDot');
+  const label = document.getElementById('themeActiveName');
+
+  if (dot) dot.style.backgroundColor = config.dotColor;
+  if (label) label.textContent = config.name;
+
+  document.querySelectorAll('.theme-option-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.themeVal === themeKey);
+  });
+
+  if (typeof renderSimChart === 'function') {
+    renderSimChart(currentRoundIdx);
+  }
+
+  if (shouldToast && typeof showToast === 'function') {
+    showToast(`Active Palette: ${config.name}`);
+  }
 }
 

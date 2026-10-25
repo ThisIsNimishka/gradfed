@@ -11,6 +11,8 @@ jobs:
   verify-and-test:
     name: Lint, Import & Diagnostics Check
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       - name: Checkout Repository
@@ -33,6 +35,7 @@ jobs:
 
       - name: Execute Setup Verification Diagnostics
         run: |
+          chmod +x scripts/run_comparison.sh || true
           python scripts/setup_verification.py
 
       - name: Validate Fast CPU Smoke-Test (2 Rounds)

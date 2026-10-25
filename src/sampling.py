@@ -6,8 +6,10 @@
 import numpy as np
 from torchvision import datasets, transforms
 import copy
-from numpy.testing import assert_array_almost_equal
-from options import args_parser
+try:
+    from options import args_parser
+except ImportError:
+    from src.options import args_parser
 
 def mnist_iid(dataset, num_users):
     """
