@@ -6,8 +6,7 @@ authors:
     given-names: "Nimishka"
     affiliation: "National Institute of Technology Goa, India"
 year: 2025
-type: thesis
-thesis-type: "Master's Thesis"
+type: generic
 institution:
   name: "National Institute of Technology Goa"
 keywords:

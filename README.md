@@ -7,7 +7,7 @@
 [![CI](https://github.com/ThisIsNimishka/gradfed/actions/workflows/ci.yml/badge.svg)](https://github.com/ThisIsNimishka/gradfed/actions)
 [![Live Demo](https://img.shields.io/badge/Live%20Showcase-Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://gradfed.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Thesis](https://img.shields.io/badge/Academic-Master's%20Thesis-purple.svg)](file:///c:/Users/Nimis/Downloads/1_PROJECTS/gradfed/CITATION.cff)
+[![Paper](https://img.shields.io/badge/Research-Paper-purple.svg)](CITATION.cff)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ThisIsNimishka/gradfed/pulls)
 
 **A Reinforcement Learning &amp; Gradient-Aware Client Profiling Framework for Robust Federated Learning under Extreme Non-IID and Noisy Data Distributions.**
@@ -262,15 +262,15 @@ chmod +x scripts/run_comparison.sh
 
 ## 📖 Citation
 
-If you use **GradFed** or find this work helpful in your research, please cite the Master's thesis:
+If you use **GradFed** or find this work helpful in your research, please cite our research publication:
 
 ```bibtex
-@mastersthesis{jain2025gradfed,
+@article{jain2025gradfed,
   title={GradFed: Gradient-Aware Client Selection in Federated Learning},
   author={Jain, Nimishka},
+  journal={arXiv preprint},
   year={2025},
-  school={National Institute of Technology Goa},
-  address={Goa, India}
+  institution={National Institute of Technology Goa}
 }
 ```
 

@@ -101,7 +101,6 @@ let currentMatrixFilter = 'all';
 // Initialize application on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
-  setupStudioTabs();
   initClientGrid();
   updateRoundView(0);
   setupEventListeners();
@@ -110,12 +109,39 @@ document.addEventListener('DOMContentLoaded', () => {
   setupArchTabs();
   setupArchSandbox();
   setupArchModal();
-  setupQualityCalculator();
   setupCliGenerator();
   setupMatrixFilters();
   setupKeyboardShortcuts();
   window.addEventListener('resize', () => renderSimChart(currentRoundIdx));
+  
+  // Mathematical Typesetting initialization
+  renderAllMath();
+  setTimeout(() => {
+    renderAllMath();
+    renderSimChart(currentRoundIdx);
+  }, 250);
 });
+
+window.addEventListener('load', () => {
+  renderAllMath();
+  renderSimChart(currentRoundIdx);
+});
+
+// Render KaTeX mathematical formulations
+function renderAllMath(target) {
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(target || document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      throwOnError: false
+    });
+  }
+}
 
 // Render 50-client matrix
 function initClientGrid() {
@@ -166,14 +192,14 @@ function updateRoundView(idx) {
   const allNodes = document.querySelectorAll('.client-node');
   allNodes.forEach(node => {
     node.classList.remove('selected');
-    node.style.background = 'var(--bg-secondary)';
+    node.style.background = '';
   });
 
   data.selected.forEach(clientId => {
     const node = document.getElementById(`client-node-${clientId}`);
     if (node) {
       node.classList.add('selected');
-      node.style.background = 'rgba(56, 189, 248, 0.2)';
+      node.style.background = '';
     }
   });
 
@@ -198,20 +224,31 @@ function renderSimChart(activeIdx) {
   // Handle high-DPI displays
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
+  const w = rect.width > 0 ? rect.width : (canvas.clientWidth > 0 ? canvas.clientWidth : 1050);
+  const h = rect.height > 0 ? rect.height : (canvas.clientHeight > 0 ? canvas.clientHeight : 230);
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
   ctx.scale(dpr, dpr);
 
-  const w = rect.width;
-  const h = rect.height;
   const pad = { top: 25, right: 45, bottom: 35, left: 45 };
   const plotW = w - pad.left - pad.right;
   const plotH = h - pad.top - pad.bottom;
 
   ctx.clearRect(0, 0, w, h);
 
+  // Resolve active theme palette for chart styling
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const themeCfg = THEMES[currentTheme] || THEMES.light;
+  const isLight = currentTheme === 'light';
+  const gridColor = themeCfg.gridColor || (isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.05)');
+  const axisColor = themeCfg.axisColor || (isLight ? '#475569' : '#64748b');
+  const accColor = themeCfg.chartAccColor || '#0284c7';
+  const accGlow = themeCfg.chartAccGlow || 'rgba(2, 132, 199, 0.2)';
+  const accStroke = themeCfg.chartAccStroke || 'rgba(2, 132, 199, 0.45)';
+  const lossColor = themeCfg.lossColor || (isLight ? '#d97706' : '#f59e0b');
+
   // Draw background grid lines
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+  ctx.strokeStyle = gridColor;
   ctx.lineWidth = 1;
   for (let i = 0; i <= 4; i++) {
     const y = pad.top + (plotH / 4) * i;
@@ -222,7 +259,7 @@ function renderSimChart(activeIdx) {
 
     // Accuracy labels (Left Y-axis)
     const accVal = Math.round(80 - i * 20);
-    ctx.fillStyle = '#64748b';
+    ctx.fillStyle = axisColor;
     ctx.font = '10px Inter, sans-serif';
     ctx.textAlign = 'right';
     ctx.fillText(`${accVal}%`, pad.left - 8, y + 3);
@@ -237,12 +274,12 @@ function renderSimChart(activeIdx) {
   for (let r = 5; r <= 30; r += 5) {
     const x = pad.left + ((r - 1) / 29) * plotW;
     ctx.beginPath();
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.strokeStyle = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.08)';
     ctx.moveTo(x, pad.top);
     ctx.lineTo(x, pad.top + plotH);
     ctx.stroke();
 
-    ctx.fillStyle = '#64748b';
+    ctx.fillStyle = axisColor;
     ctx.textAlign = 'center';
     ctx.fillText(`R${r}`, x, h - 12);
   }
@@ -253,13 +290,6 @@ function renderSimChart(activeIdx) {
   const getYLoss = (loss) => pad.top + plotH - (loss / 2.5) * plotH;
 
   const pointsCount = activeIdx + 1;
-
-  // Resolve active theme palette for chart curves
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'emerald';
-  const themeCfg = THEMES[currentTheme] || THEMES.emerald;
-  const accColor = themeCfg.chartAccColor;
-  const accGlow = themeCfg.chartAccGlow;
-  const accStroke = themeCfg.chartAccStroke;
 
   // 1. Draw Accuracy Area Fill & Curve (Theme Accent)
   if (pointsCount > 0) {
@@ -294,7 +324,7 @@ function renderSimChart(activeIdx) {
     for (let i = 1; i < pointsCount; i++) {
       ctx.lineTo(getX(i), getYLoss(ROUNDS_DATA[i].loss));
     }
-    ctx.strokeStyle = '#f59e0b';
+    ctx.strokeStyle = lossColor;
     ctx.lineWidth = 2;
     ctx.setLineDash([4, 3]);
     ctx.stroke();
@@ -319,7 +349,7 @@ function renderSimChart(activeIdx) {
     // Head for Loss
     ctx.beginPath();
     ctx.arc(headX, headYLoss, 5, 0, Math.PI * 2);
-    ctx.fillStyle = '#f59e0b';
+    ctx.fillStyle = lossColor;
     ctx.fill();
   }
 }
@@ -482,59 +512,7 @@ function setupKeyboardShortcuts() {
   });
 }
 
-// Interactive Quality Calculator
-function setupQualityCalculator() {
-  const sSlider = document.getElementById('sliderStability');
-  const mSlider = document.getElementById('sliderMagnitude');
-  const cSlider = document.getElementById('sliderCosine');
 
-  if (!sSlider || !mSlider || !cSlider) return;
-
-  const updateCalc = () => {
-    const s = parseInt(sSlider.value) / 100;
-    const m = parseInt(mSlider.value) / 100;
-    const c = parseInt(cSlider.value) / 100;
-
-    document.getElementById('valStability').textContent = s.toFixed(2);
-    document.getElementById('valMagnitude').textContent = m.toFixed(2);
-    document.getElementById('valCosine').textContent = c.toFixed(2);
-
-    const partS = 0.5 * s;
-    const partM = 0.3 * m;
-    const partC = 0.2 * c;
-    const q = partS + partM + partC;
-
-    document.getElementById('calcCompositeQ').textContent = q.toFixed(3);
-    document.getElementById('calcPartS').textContent = partS.toFixed(3);
-    document.getElementById('calcPartM').textContent = partM.toFixed(3);
-    document.getElementById('calcPartC').textContent = partC.toFixed(3);
-
-    const badge = document.getElementById('calcStatusBadge');
-    const desc = document.getElementById('calcActionDesc');
-    badge.className = 'calc-status-badge';
-
-    if (q >= 0.75) {
-      badge.classList.add('badge-optimal');
-      badge.textContent = 'Optimal Participant (Prioritized in Aggregation)';
-      desc.textContent = 'Client gradients exhibit stable norm progression and consistent trajectory alignment. Full aggregation contribution (40% quality weight + data volume) granted.';
-    } else if (q >= 0.45) {
-      badge.classList.add('badge-standard');
-      badge.textContent = 'Standard Contributor (Acceptable Stability)';
-      desc.textContent = 'Client displays moderate class variance or acceptable drift. Admitted into aggregation with standard quality-proportional weighting.';
-    } else if (q >= 0.30) {
-      badge.classList.add('badge-explore');
-      badge.textContent = 'Candidate for ε-Greedy Probe (Recovering Pool)';
-      desc.textContent = 'Client stability is sub-threshold. Excluded from primary round selection but eligible for periodic ε-greedy probing to detect gradient recovery.';
-    } else {
-      badge.classList.add('badge-noisy');
-      badge.textContent = 'Flagged as Noisy Outlier (Filtered / Downweighted)';
-      desc.textContent = 'Severe gradient norm oscillation or sign conflict detected. Client updates are aggressively attenuated by up to 85% to protect global model convergence.';
-    }
-  };
-
-  [sSlider, mSlider, cSlider].forEach(slider => slider.addEventListener('input', updateCalc));
-  updateCalc();
-}
 
 // Interactive CLI Generator
 function setupCliGenerator() {
@@ -602,49 +580,49 @@ function setupArchSubsystems() {
       title: "End-to-End Privacy-Preserving Coordination",
       file: "src/gradfed_main.py",
       desc: "GradFed separates the training loop into two synchronized tiers: the central server orchestrates reinforcement learning client selection and gradient quality aggregation, while edge clients train on private, non-IID local data without transmitting raw samples.",
-      eq: "Inner Loop: w_{k,t} = w_t - η∑ ∇L(w)  •  Outer Loop: Δw_k = w_t - w_{k,t} → Q_k → w_{t+1}"
+      eq: "$$\\Delta \\mathbf{w}_k^{(t)} = \\mathbf{w}^{(t)} - \\mathbf{w}_{k}^{(t)} \\quad \\Longrightarrow \\quad Q_k^{(t)} \\quad \\Longrightarrow \\quad \\mathbf{w}^{(t+1)} = \\sum_{k=1}^K \\alpha_k \\mathbf{w}_{k}^{(t)}$$"
     },
     model: {
       badge: "Server Core",
       title: "1. Global Model State & Parameter Broadcast",
       file: "src/models.py",
       desc: "Maintains the central deep learning architecture (ResNet-10 / CNN) and tracks the canonical parameter tensor w_t across communication rounds. At each round, w_t is broadcast to selected edge clients.",
-      eq: "w_t ∈ ℝ^d  —  Parameterized with ResNet-10 backbone (CIFAR-10 / Non-IID)"
+      eq: "$$\\mathbf{w}_t \\in \\mathbb{R}^d, \\qquad \\mathbf{w}^{(t+1)} \\leftarrow \\mathbf{w}^{(t)} - \\eta_g \\sum_{k \\in \\mathcal{S}_t} \\alpha_k \\Delta \\mathbf{w}_k^{(t)}$$"
     },
     clients: {
       badge: "Edge Mesh",
       title: "2. Distributed Non-IID Edge Nodes (K=50)",
       file: "src/update.py",
       desc: "50 heterogeneous edge clients partitioned according to Dirichlet distribution Dir(α=10.0). Clients perform 10 local SGD epochs on local mini-batches. No raw user data leaves the edge device.",
-      eq: "D_k ~ Dir(α=10.0),  |B|=10,  E=10 local epochs  •  w_{k,t} = w_t - η·∇F_k(w)"
+      eq: "$$\\mathcal{D}_k \\sim \\text{Dir}(\\alpha=10.0), \\quad |\\mathcal{B}|=10, \\quad \\mathbf{w}_{k,\\tau+1} = \\mathbf{w}_{k,\\tau} - \\eta_l \\nabla \\mathcal{F}_k(\\mathbf{w}_{k,\\tau}; \\mathcal{B}_{k,\\tau})$$"
     },
     monitor: {
       badge: "Online Profiling",
       title: "3. GradientMonitor Quality Profiling Engine",
       file: "src/gradient_monitor.py",
       desc: "Extracts pseudo-gradient vectors Δw_k = w_t - w_{k,t}. Calculates coefficient of variation CV over rolling window W=5, directional cosine similarity, and magnitude bounds without server validation sets.",
-      eq: "Q_k = 0.5·(1/(1+CV_k)) + 0.3·(2/(1+exp(||Δw||/10))) + 0.2·((cosθ+1)/2) ∈ [0, 1]"
+      eq: "$$Q_k = 0.5 \\cdot S_k + 0.3 \\cdot M_k + 0.2 \\cdot C_k \\in [0, 1], \\quad S_k = \\frac{1}{1 + \\text{CV}_k}$$"
     },
     ppo: {
       badge: "RL Controller",
       title: "4. PPO Selection Policy & Adaptive Exploration",
       file: "src/ppo_server/ppo.py",
       desc: "An Actor-Critic neural network that maps global convergence states to client selection probabilities. Employs adaptive ε-greedy exploration (20% budget) to probe dormant or recovering clients.",
-      eq: "State s_t = [Acc_t, Loss_t, t/T, Q̄, N_noisy/K, σ_Q]  •  Score_k = 0.7·P_ppo(k) + 0.3·Q_k"
+      eq: "$$\\mathbf{s}_t = [\\text{Acc}_t, \\text{Loss}_t, t/T, \\bar{Q}, N_{\\text{noisy}}/K, \\sigma_Q], \\quad \\text{Score}_k = 0.7 \\cdot \\pi_\\theta(k \\mid \\mathbf{s}_t) + 0.3 \\cdot Q_k$$"
     },
     aggregator: {
       badge: "Aggregation",
       title: "5. Robust Dual-Balanced Model Aggregator",
       file: "src/ppo_server/gradfed_ppo_update.py",
       desc: "Replaces naive sample-count weighting with dual-balanced weighting: 60% sample volume and 40% verified gradient quality. Penalizes corrupted gradients by up to 85% to protect the global model trajectory.",
-      eq: "α_k = 0.6·(|D_k| / ∑|D_j|) + 0.4·(Q_k / ∑Q_j)  •  w_{t+1} = ∑ α_k · w_{k,t}"
+      eq: "$$\\alpha_k = 0.6 \\cdot \\frac{|\\mathcal{D}_k|}{\\sum_j |\\mathcal{D}_j|} + 0.4 \\cdot \\frac{Q_k}{\\sum_j Q_j}, \\qquad \\mathbf{w}_{t+1} = \\sum_{k \\in \\mathcal{S}_t} \\alpha_k \\mathbf{w}_{k,t}$$"
     },
     reward: {
       badge: "RL Optimization",
       title: "6. Global Evaluation & Multi-Objective Reward",
       file: "src/gradfed_main.py",
       desc: "Computes global accuracy improvement ΔAcc_t, loss reduction, and cohort quality reward. Populates the PPO rollout buffer to trigger clipped surrogate policy updates.",
-      eq: "R_t = ΔAcc_t + λ_1·Q̄_t - λ_2·Loss_t  •  L^CLIP(θ) = Ê_t [min(r_t·Â_t, clip(r_t, 1-ε, 1+ε)·Â_t)]"
+      eq: "$$R_t = \\Delta \\text{Acc}_t + \\lambda_1 \\bar{Q}_t - \\lambda_2 \\text{Loss}_t, \\quad \\mathcal{L}^{\\text{CLIP}}(\\theta) = \\hat{\\mathbb{E}}_t [\\min(r_t \\hat{A}_t, \\text{clip}(r_t, 1-\\epsilon, 1+\\epsilon)\\hat{A}_t)]$$"
     }
   };
 
@@ -660,7 +638,10 @@ function setupArchSubsystems() {
         if (titleEl) titleEl.textContent = data.title;
         if (fileEl) fileEl.textContent = data.file;
         if (descEl) descEl.textContent = data.desc;
-        if (eqEl) eqEl.textContent = data.eq;
+        if (eqEl) {
+          eqEl.innerHTML = data.eq;
+          renderAllMath(eqEl);
+        }
       }
     });
   });
@@ -690,7 +671,7 @@ function setupArchPipeline() {
       subsystem: "Server Dispatcher",
       file: "src/gradfed_main.py",
       desc: "At the start of communication round t, the server serializes global parameter weights w_t and broadcasts them to the selected edge client cohort S_t. Client communication payloads are optimized via state serialization.",
-      math: "Broadcast: w_t ∈ ℝ^d  ⟶  Edge Cohort S_t ⊂ {1, 2, ..., K}",
+      math: "$$\\text{Broadcast: } \\mathbf{w}_t \\in \\mathbb{R}^d \\longrightarrow \\text{Edge Cohort } \\mathcal{S}_t \\subset \\{1, 2, \\dots, K\\}$$",
       props: ["ResNet-10 Backbone", "Round t State", "Zero Leakage"]
     },
     {
@@ -700,7 +681,7 @@ function setupArchPipeline() {
       subsystem: "Edge Client Mesh",
       file: "src/update.py",
       desc: "Selected edge devices perform E=10 local SGD epochs using mini-batches of size B=10 on their private Dirichlet-partitioned data. Unbeknownst to the server, certain corrupted clients execute label flips or noisy updates.",
-      math: "w_{k,t} = w_t - η ∑_{e=1}^E ∇ℒ(w; ℬ_{k,e})  where  D_k ~ Dir(α=10.0)",
+      math: "$$\\mathbf{w}_{k,t} = \\mathbf{w}_t - \\eta \\sum_{e=1}^E \\nabla \\mathcal{L}(\\mathbf{w}; \\mathcal{B}_{k,e}) \\quad \\text{where } \\mathcal{D}_k \\sim \\text{Dir}(\\alpha=10.0)$$",
       props: ["Private Local Data", "Non-IID Partitions", "Local Mini-Batches"]
     },
     {
@@ -710,7 +691,7 @@ function setupArchPipeline() {
       subsystem: "Delta Extractor",
       file: "src/gradient_monitor.py",
       desc: "Rather than uploading private gradients or training batches, clients transmit updated model weights w_{k,t}. The central server computes the exact parameter displacement without inspecting private user features.",
-      math: "Δw_k^(t) = w_t - w_{k,t}  •  ||Δw_k^(t)||_2 = √(∑ (Δw_{k,i})^2)",
+      math: "$$\\Delta \\mathbf{w}_k^{(t)} = \\mathbf{w}_t - \\mathbf{w}_{k,t}, \\qquad \\|\\Delta \\mathbf{w}_k^{(t)}\\|_2 = \\sqrt{\\sum_{i=1}^d (\\Delta w_{k,i})^2}$$",
       props: ["Differential Privacy", "Exact Shift Vector", "100% Privacy Compliant"]
     },
     {
@@ -720,7 +701,7 @@ function setupArchPipeline() {
       subsystem: "GradientMonitor Engine",
       file: "src/gradient_monitor.py",
       desc: "Tracks rolling window statistics (W=5) for each client. Evaluates norm stability (inverse CV), directional cosine consistency with previous rounds, and sigmoidal magnitude bounds to output composite quality score Q_k ∈ [0, 1].",
-      math: "S_k = 1 / (1 + CV_k)  •  M_k = 2 / (1 + e^(||Δw||/10))  •  C_k = (cosθ+1)/2\nComposite: Q_k = 0.5·S_k + 0.3·M_k + 0.2·C_k",
+      math: "$$S_k = \\frac{1}{1 + \\text{CV}_k}, \\quad M_k = \\frac{2}{1 + e^{\\|\\Delta \\mathbf{w}_k\\|/10}}, \\quad C_k = \\frac{\\cos \\theta + 1}{2} \\implies Q_k = 0.5 S_k + 0.3 M_k + 0.2 C_k$$",
       props: ["Sliding Window W=5", "Zero Server Validation", "Outlier Suppression"]
     },
     {
@@ -730,7 +711,7 @@ function setupArchPipeline() {
       subsystem: "PPO Server Agent",
       file: "src/ppo_server/gradfed_ppo_update.py",
       desc: "A Proximal Policy Optimization agent observes the global environment state and produces client selection probabilities. Combined with historical Q_k, an adaptive ε-greedy scheduler probes candidate clients to prevent starvation.",
-      math: "Score_k = 0.7·P_ppo(k) + 0.3·Q_k  •  ε(t) = max(0.1, 0.3 - 0.2·(t/T))\nExploration Pool: Probes penalized clients to detect recovery",
+      math: "$$\\text{Score}_k = 0.7 \\cdot \\pi_\\theta(k \\mid \\mathbf{s}_t) + 0.3 \\cdot Q_k, \\qquad \\epsilon(t) = \\max\\left(0.1, \\, 0.3 - 0.2 \\frac{t}{T}\\right)$$",
       props: ["Actor-Critic MLP", "Hybrid Scoring", "Starvation Prevention"]
     },
     {
@@ -740,7 +721,7 @@ function setupArchPipeline() {
       subsystem: "Dual-Balanced Aggregator",
       file: "src/ppo_server/gradfed_ppo_update.py",
       desc: "The server calculates normalized aggregation weights combining empirical client data size (60%) and verified gradient reliability (40%). Updates with Q_k < 0.3 are attenuated or discarded to safeguard global convergence.",
-      math: "α_k = 0.6·(|D_k| / ∑|D_j|) + 0.4·(Q_k / ∑Q_j)  •  w_{t+1} = ∑_{k ∈ S_t} α_k · w_{k,t}",
+      math: "$$\\alpha_k = 0.6 \\frac{|\\mathcal{D}_k|}{\\sum_j |\\mathcal{D}_j|} + 0.4 \\frac{Q_k}{\\sum_j Q_j}, \\qquad \\mathbf{w}_{t+1} = \\sum_{k \\in \\mathcal{S}_t} \\alpha_k \\mathbf{w}_{k,t}$$",
       props: ["Dual-Balanced", "Noise Filtered (Q<0.3)", "Global Model Convergence"]
     }
   ];
@@ -793,6 +774,7 @@ function setupArchPipeline() {
         </div>
       </div>
     `;
+    renderAllMath(displayEl);
   }
 
   function startStageAutoPlay() {
@@ -852,7 +834,7 @@ function setupArchTabs() {
     monitor: {
       title: "1. Pseudo-Gradient Extraction & L2 Norm Tracking",
       badge: "Privacy-Preserving",
-      formula: "Δw_k^(t) = w_global^(t) - w_local,k^(t)\nCV_k = σ(||Δw_k||) / (μ(||Δw_k||) + ε)\nStability S_k = 1 / (1 + CV_k)",
+      formula: "$$\\Delta \\mathbf{w}_k^{(t)} = \\mathbf{w}_{\\text{global}}^{(t)} - \\mathbf{w}_{\\text{local},k}^{(t)}$$\n$$\\text{CV}_k = \\frac{\\sigma(\\|\\Delta \\mathbf{w}_k\\|_W)}{\\mu(\\|\\Delta \\mathbf{w}_k\\|_W) + \\epsilon}, \\qquad S_k = \\frac{1}{1 + \\text{CV}_k}$$",
       desc: "Rather than sharing private training batches, clients send back parameter updates. The server calculates the exact shift vector. The GradientMonitor tracks historical norm variability across communication rounds over window W=5 to identify unstable or drifting updates.",
       file: "src/gradient_monitor.py",
       props: ["Zero Data Leakage", "Sliding Window W=5", "L2 Drift Detection"]
@@ -860,7 +842,7 @@ function setupArchTabs() {
     cosine: {
       title: "2. Directional Alignment & Magnitude Bounds",
       badge: "Robust Dynamics",
-      formula: "Cosine Consistency C_k = (cos(Δw_k^(t), Δw_k^(t-1)) + 1) / 2\nMagnitude Score M_k = 2 / (1 + exp(||Δw_k|| / 10))\nQuality Q_k = 0.5·S_k + 0.3·M_k + 0.2·C_k",
+      formula: "$$C_k = \\frac{1}{2}\\left(1 + \\frac{\\langle \\Delta \\mathbf{w}_k^{(t)}, \\, \\Delta \\mathbf{w}_k^{(t-1)} \\rangle}{\\|\\Delta \\mathbf{w}_k^{(t)}\\|_2 \\cdot \\|\\Delta \\mathbf{w}_k^{(t-1)}\\|_2 + \\epsilon}\\right)$$\n$$M_k = \\frac{2}{1 + \\exp\\left(\\frac{\\|\\Delta \\mathbf{w}_k\\|_2}{10}\\right)}, \\qquad Q_k = 0.5 \\cdot S_k + 0.3 \\cdot M_k + 0.2 \\cdot C_k$$",
       desc: "Measures whether the client is moving cohesively towards the global minimum or oscillating randomly due to label corruption. A sigmoidal scaler penalizes exploding or vanishing gradients, yielding an online composite quality score Q_k ∈ [0, 1].",
       file: "src/gradient_monitor.py",
       props: ["Cosine Angle Tracking", "Sigmoid Magnitude Bounds", "Bounded Metric [0, 1]"]
@@ -868,7 +850,7 @@ function setupArchTabs() {
     ppo: {
       title: "3. PPO Policy with Adaptive ε-Greedy Exploration",
       badge: "Actor-Critic RL",
-      formula: "State s_t = [Acc_t, Loss_t, t/T, Q_avg, N_noisy/K, σ_Q]\nSelection Score_k = 0.7·P_ppo(k) + 0.3·Q_k\nExploration: ε(t) = max(0.1, 0.3 - 0.2·(t/T))",
+      formula: "$$\\mathbf{s}_t = \\left[\\text{Acc}_t, \\, \\text{Loss}_t, \\, \\frac{t}{T}, \\, \\bar{Q}_t, \\, \\frac{N_{\\text{noisy}}}{K}, \\, \\sigma_Q\\right] \\in \\mathbb{R}^6$$\n$$\\text{Score}_k = 0.7 \\cdot \\pi_\\theta(k \\mid \\mathbf{s}_t) + 0.3 \\cdot Q_k, \\qquad \\epsilon(t) = \\max\\left(0.1, \\, 0.3 - 0.2 \\frac{t}{T}\\right)$$",
       desc: "A discrete-action Proximal Policy Optimization network generates client selection probabilities. To prevent straggler starvation, an ε-greedy exploration pool periodically probes low-quality clients to detect if their models stabilize, decaying exploration as the global model converges.",
       file: "src/ppo_server/ppo.py",
       props: ["6D State Representation", "Clipped Surrogate Objective", "Adaptive ε-Decay"]
@@ -876,7 +858,7 @@ function setupArchTabs() {
     aggregator: {
       title: "4. Dual-Balanced Quality Aggregator",
       badge: "Convergence Protection",
-      formula: "α_k = 0.6·(|D_k| / ∑|D_j|) + 0.4·(Q_k / ∑Q_j)\nw_global^(t+1) = ∑_{k ∈ S_t} α_k · w_local,k^(t)",
+      formula: "$$\\alpha_k = 0.6 \\cdot \\frac{|\\mathcal{D}_k|}{\\sum_{j \\in \\mathcal{S}_t} |\\mathcal{D}_j|} + 0.4 \\cdot \\frac{Q_k}{\\sum_{j \\in \\mathcal{S}_t} Q_j}$$\n$$\\mathbf{w}_{\\text{global}}^{(t+1)} = \\sum_{k \\in \\mathcal{S}_t} \\alpha_k \\mathbf{w}_{\\text{local},k}^{(t)}$$",
       desc: "Conventional FedAvg is vulnerable to corrupted gradients from high-data clients. GradFed balances data volume (60%) with verified gradient reliability (40%), completely filtering out corrupted client weights without requiring trusted benchmark test sets on the server.",
       file: "src/ppo_server/gradfed_ppo_update.py",
       props: ["60/40 Ratio Balance", "Noise Attenuation ≤ 85%", "Dirichlet Robustness"]
@@ -892,7 +874,10 @@ function setupArchTabs() {
       const data = ARCH_TABS[tabKey];
       if (data) {
         if (titleEl) titleEl.textContent = data.title;
-        if (mathEl) mathEl.textContent = data.formula;
+        if (mathEl) {
+          mathEl.innerHTML = data.formula;
+          renderAllMath(mathEl);
+        }
         if (descEl) descEl.textContent = data.desc;
         if (badgeEl) badgeEl.textContent = data.badge;
         if (fileEl) fileEl.textContent = data.file;
@@ -1131,92 +1116,64 @@ function showToast(msg) {
   }, 2500);
 }
 
-// Studio Tabs Controller
-function setupStudioTabs() {
-  const tabs = document.querySelectorAll('.studio-tab-btn');
-  const panels = {
-    simulator: document.getElementById('studioPanelSimulator'),
-    calculator: document.getElementById('studioPanelCalculator'),
-    cli: document.getElementById('studioPanelCli')
-  };
-
-  function switchTab(targetStudio) {
-    tabs.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.studio === targetStudio);
-    });
-
-    Object.keys(panels).forEach(key => {
-      if (panels[key]) {
-        panels[key].classList.toggle('active', key === targetStudio);
-      }
-    });
-
-    if (targetStudio === 'simulator') {
-      setTimeout(() => renderSimChart(currentRoundIdx), 50);
-    }
-  }
-
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      switchTab(btn.dataset.studio);
-    });
-  });
-
-  // Handle URL hashes or links to specific sub-tools
-  const handleHash = () => {
-    const hash = window.location.hash;
-    if (hash === '#simulator') switchTab('simulator');
-    else if (hash === '#calculator') switchTab('calculator');
-    else if (hash === '#cli-generator' || hash === '#cli') switchTab('cli');
-  };
-
-  window.addEventListener('hashchange', handleHash);
-  handleHash();
-}
-
 // ============================================================================
 // Multi-Theme Controller Engine
 // ============================================================================
 const THEMES = {
+  light: {
+    name: 'Titanium Light',
+    dotColor: '#0284c7',
+    chartAccColor: '#0284c7',
+    chartAccGlow: 'rgba(2, 132, 199, 0.22)',
+    chartAccStroke: 'rgba(2, 132, 199, 0.45)',
+    gridColor: 'rgba(15, 23, 42, 0.08)',
+    axisColor: '#475569',
+    lossColor: '#d97706'
+  },
   emerald: {
     name: 'Emerald Aurora',
     dotColor: '#10b981',
     chartAccColor: '#10b981',
     chartAccGlow: 'rgba(16, 185, 129, 0.25)',
-    chartAccStroke: 'rgba(16, 185, 129, 0.5)'
+    chartAccStroke: 'rgba(16, 185, 129, 0.5)',
+    gridColor: 'rgba(255, 255, 255, 0.05)',
+    axisColor: '#64748b',
+    lossColor: '#f59e0b'
   },
   violet: {
     name: 'Cosmic Violet',
     dotColor: '#c084fc',
     chartAccColor: '#c084fc',
     chartAccGlow: 'rgba(192, 132, 252, 0.25)',
-    chartAccStroke: 'rgba(192, 132, 252, 0.5)'
+    chartAccStroke: 'rgba(192, 132, 252, 0.5)',
+    gridColor: 'rgba(255, 255, 255, 0.05)',
+    axisColor: '#7c729e',
+    lossColor: '#f59e0b'
   },
   cyan: {
     name: 'Quantum Cyan',
     dotColor: '#38bdf8',
     chartAccColor: '#38bdf8',
     chartAccGlow: 'rgba(56, 189, 248, 0.25)',
-    chartAccStroke: 'rgba(56, 189, 248, 0.5)'
+    chartAccStroke: 'rgba(56, 189, 248, 0.5)',
+    gridColor: 'rgba(255, 255, 255, 0.05)',
+    axisColor: '#64748b',
+    lossColor: '#fbbf24'
   },
   solar: {
     name: 'Solar Flare',
     dotColor: '#fbbf24',
     chartAccColor: '#fbbf24',
     chartAccGlow: 'rgba(251, 191, 36, 0.25)',
-    chartAccStroke: 'rgba(251, 191, 36, 0.5)'
-  },
-  light: {
-    name: 'Titanium Light',
-    dotColor: '#059669',
-    chartAccColor: '#059669',
-    chartAccGlow: 'rgba(5, 150, 105, 0.2)',
-    chartAccStroke: 'rgba(5, 150, 105, 0.4)'
+    chartAccStroke: 'rgba(251, 191, 36, 0.5)',
+    gridColor: 'rgba(255, 255, 255, 0.05)',
+    axisColor: '#8c7b70',
+    lossColor: '#f97316'
   }
 };
 
 function initTheme() {
-  const savedTheme = localStorage.getItem('gradfed_theme') || 'emerald';
+  const savedTheme = localStorage.getItem('gradfed_theme') || 'light';
   setTheme(savedTheme, false);
 
   const dropdown = document.getElementById('themeDropdown');
@@ -1249,7 +1206,7 @@ function initTheme() {
 }
 
 function setTheme(themeKey, shouldToast = false) {
-  if (!THEMES[themeKey]) themeKey = 'emerald';
+  if (!THEMES[themeKey]) themeKey = 'light';
   document.documentElement.setAttribute('data-theme', themeKey);
   localStorage.setItem('gradfed_theme', themeKey);
 

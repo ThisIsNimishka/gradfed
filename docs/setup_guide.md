@@ -261,12 +261,12 @@ python src/gradfed_main.py --local_bs 5 --frac 0.1 --gpu 0
 If you use this work in your research, please cite:
 
 ```bibtex
-@mastersthesis{jain2025gradfed,
+@article{jain2025gradfed,
   title={GradFed: Gradient-Aware Client Selection in Federated Learning},
   author={Jain, Nimishka},
+  journal={arXiv preprint},
   year={2025},
-  school={National Institute of Technology Goa},
-  address={Goa, India}
+  institution={National Institute of Technology Goa}
 }
 ```
 
